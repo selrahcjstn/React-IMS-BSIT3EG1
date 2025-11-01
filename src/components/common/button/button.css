@@ -1,0 +1,16 @@
+.button {
+  padding: 10px 20px;
+  background-color: #4C8BF5;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: normal;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+/* Hover effect */
+.button:hover {
+  background-color: #3771dd; /* slightly darker blue */
+}

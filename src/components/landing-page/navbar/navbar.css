@@ -1,0 +1,80 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 10px 0;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px; 
+  box-sizing: border-box;
+}
+
+.header__title {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.header__logo-image {
+  height: 50px;
+  width: auto;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header__nav-links{
+  display: flex;
+  gap: 2rem;
+}
+
+.header__nav-link {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.header__nav-link:hover {
+  color: #007bff;
+}
+
+.header__button--login {
+  background-color: transparent !important; 
+  color: #121212 !important;
+  padding: 8px 16px !important;
+  border: none !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  transition: background-color 0.25s ease, color 0.25s ease !important;
+}
+
+/* Hover effect */
+.header__button--login:hover {
+  background-color: #e6e6e6 !important; /* slightly darker on hover */
+  color: #000 !important;
+}
+
+
+.header__buttons {
+  display: flex;
+  gap: 12px;
+}
+
+hr{
+  padding: 12px 0;
+  border: 1px solid rgba(128, 128, 128, 0.366);
+  margin-left: 10px;
+}
