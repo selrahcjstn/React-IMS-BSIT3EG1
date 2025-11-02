@@ -1,6 +1,6 @@
 import hero from "../../../assets/hero.png";
-import Button from "../../common/button/Button";
-import Highlight from "../highlight/Highlight";
+import Button from "../../../components/common/button/Button";
+import Highlight from "../../../components/landing-page/highlight/Highlight";
 import "./hero.css";
 
 function Hero() {

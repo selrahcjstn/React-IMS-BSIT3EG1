@@ -1,4 +1,4 @@
-import Card from "../features-card/Card";
+import Card from "../../../components/landing-page/features-card/Card";
 import "./features.css";
 
 function Features() {
