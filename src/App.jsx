@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 import LandingPage from "./pages/landing-page/LandingPage";
 import PublicLayout from "./route-layout/public-layout/PublicLayout";
-import Login from "./features/auth/login/Login";
-import Register from "./features/auth/register/Register";
+import Login from "./pages/auth/login/Login";
+import Register from "./pages/auth/register/Register";
 
 function App() {
   return (

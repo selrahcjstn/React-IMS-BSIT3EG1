@@ -1,3 +1,10 @@
+.illustrator {
+  width: 550px;
+  height: auto;
+  border-radius: 16px;
+  padding: 12px;
+}
+
 .blob-background {
   position: absolute;
   top: 50%;

@@ -1,8 +1,9 @@
 
 import Logo from "../../../components/logo/Logo";
-import "./login.css";
+import "../../../styles/auth.css"
 import illustrator from "../../../assets/auth/login.svg"
 import LoginForm from "../../../components/auth/login-form/LoginForm";
+import ImageHolder from "../../../features/auth/ImageHolder";
 function Login() {
   return (
     <div className="login container">
@@ -14,10 +15,7 @@ function Login() {
 
       <main className="login__main">
         <LoginForm />
-        <aside aria-label="Illustration">
-            <div className="blob-background"></div>
-          <img src={illustrator} alt="login-illustrator" className="illustrator"/>
-        </aside>
+        <ImageHolder illustrator={illustrator} />
       </main>
     </div>
   );
