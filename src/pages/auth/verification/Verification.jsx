@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./verification.css";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { auth } from "../../../firebase/config";
 import { useAuth } from "../../../context/AuthContext";
 
@@ -10,9 +13,17 @@ function Verification() {
   const [userEmail, setUserEmail] = useState(email || "");
 
   useEffect(() => {
+    let hasRun = false; // To prevent multiple executions
+
     const createAccount = async () => {
+      if (hasRun) return;
+      hasRun = true;
       try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
         await sendEmailVerification(userCredential.user);
         setUserEmail(userCredential.user.email);
         console.log("Verification email sent to:", userCredential.user.email);
@@ -39,7 +50,8 @@ function Verification() {
         <div className="verification__content">
           <h1 className="verification__title">Check your email</h1>
           <p className="verification__text">
-            To start using <strong>IMS Online</strong>, we need you to confirm your account.
+            To start using <strong>IMS Online</strong>, we need you to confirm
+            your account.
           </p>
           <p className="verification__subtext">
             Please click the link we sent to the following email:

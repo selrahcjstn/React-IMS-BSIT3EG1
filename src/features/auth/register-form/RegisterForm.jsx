@@ -1,24 +1,21 @@
-import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
-import Input from "../../../components/common/input/Input";
-import Button from "../../../components/common/button/Button";
-import CustomInput from "../../../components/auth/custom-input/CustomInput";
 import { Link, useNavigate } from "react-router-dom";
+import RegisterFormFields from "../../../components/auth/register-form-fields/RegisterFormFields";
 import "./register-form.css";
 import { useState } from "react";
 
 function RegisterForm({ email, setEmail, setPassword }) {
   const navigate = useNavigate();
-  const [tempPassword, setTempPassword] = useState ("");
-  const [confirmPassword, setConfirmPassword] = useState ("");
+  const [tempPassword, setTempPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-     if(tempPassword === confirmPassword){
-      setPassword (tempPassword);
-    }else{
-      setPassword ("");
-      alert ("Passwords do not match!");
+    if (tempPassword === confirmPassword) {
+      setPassword(tempPassword);
+    } else {
+      setPassword("");
+      alert("Passwords do not match!");
       return;
     }
 
@@ -48,66 +45,7 @@ function RegisterForm({ email, setEmail, setPassword }) {
         Register to manage your inventory and grow your business efficiently.
       </p>
 
-      <div className="register__form" noValidate>
-        <CustomInput label="Email" icon={AiOutlineMail}>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            required
-            autoComplete="email"
-            onChange={handleChange}
-          />
-        </CustomInput>
-
-        <CustomInput label="Password" icon={AiOutlineLock}>
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Create a password"
-            required
-            autoComplete="new-password"
-            onChange={handleChange}
-          />
-        </CustomInput>
-
-        <CustomInput label="Confirm Password" icon={AiOutlineLock}>
-          <Input
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm your password"
-            required
-            autoComplete="new-password"
-            onChange={handleChange}
-          />
-        </CustomInput>
-
-        <Button label="Register" type="submit" className="register__submit-btn" />
-
-        <div className="register__social">
-          <div className="register__divider">
-            <span>or</span>
-          </div>
-
-          <button type="button" className="register__social-btn google">
-            <img
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              alt="Google"
-            />
-            Continue with Google
-          </button>
-          <button type="button" className="register__social-btn facebook">
-            <img
-              src="https://www.svgrepo.com/show/475647/facebook-color.svg"
-              alt="Facebook"
-            />
-            Continue with Facebook
-          </button>
-        </div>
-      </div>
+      <RegisterFormFields handleChange={handleChange} />
 
       <footer className="register__footer">
         <p>
