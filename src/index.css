@@ -13,3 +13,10 @@ body{
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.illustrator {
+  width: 600px;
+  height: auto;
+  border-radius: 16px;
+  padding: 12px;
+}

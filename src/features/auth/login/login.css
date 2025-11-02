@@ -6,11 +6,3 @@
 .login__nav{
     padding: 16px 0;
 }
-
-.illustrator {
-  width: 600px;
-  height: auto;
-  backdrop-filter: blur(8px);
-  border-radius: 16px;
-  padding: 12px;
-}

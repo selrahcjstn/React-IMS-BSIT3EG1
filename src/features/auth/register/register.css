@@ -1,0 +1,13 @@
+.blob-background {
+  position: absolute;
+  top: 50%;
+  left: 72%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: #5C9BFF;
+  filter: blur(100px);
+  opacity: 0.4;
+  border-radius: 60% 40% 50% 70% / 60% 50% 70% 40%;
+  z-index: -1;
+}

@@ -10,3 +10,8 @@
   height: 50px;
   width: auto;
 }
+
+.logo__title{
+    text-decoration: none;
+    color: #333;
+}
