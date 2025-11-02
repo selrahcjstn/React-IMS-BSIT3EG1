@@ -1,0 +1,24 @@
+.highlight {
+  display: flex;
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+}
+
+.highlight__card {
+  flex: 1;
+  margin: 16px;
+}
+
+.highlight__description {
+    color: rgba(37, 34, 30, 0.70);
+}
+
+
+.highlight__icon {
+  font-size: 3rem;
+  color: #2F77EB;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35)); 
+}
+

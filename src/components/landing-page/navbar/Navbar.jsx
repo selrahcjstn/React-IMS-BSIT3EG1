@@ -8,19 +8,19 @@ function Navbar() {
       <div className="header__container">
         <section className="header__title">
           <img className="header__logo-image" src={logo} alt="Logo" />
-          <h5 className="header__logo-title">Application Title</h5>
+          <h5 className="header__logo-title">IMS Online</h5>
         </section>
 
         <nav className="header__nav">
           <div className="header__nav-links">
             <a className="header__nav-link" href="/">
-              Home
+              Features
             </a>
             <a className="header__nav-link" href="/about">
               About
             </a>
             <a className="header__nav-link" href="/services">
-              Products
+              Contact
             </a>
           </div>
           <hr />
