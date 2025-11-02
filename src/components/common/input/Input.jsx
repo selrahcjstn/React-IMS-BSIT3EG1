@@ -1,11 +1,12 @@
-function Input({ type, placeholder, value }) {
+function Input({ type, placeholder, name, value, onChange}) {
   return (
     <input
       className="input"
       type={type}
-      name={type}
+      name={name}
       value={value}
       placeholder={placeholder}
+      onChange={onChange}
     />
   );
 }
