@@ -5,7 +5,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import AccountVerification from "./route-layout/private-layout/onborad/AccountVerification";
 import AuthenticationLayout from "./route-layout/public-layout/AuthenticationLayout";
-import Verification from "./pages/auth/verification/Verification";
+import Verification from "./pages/auth/Verification"; 
 
 function App() {
   return (

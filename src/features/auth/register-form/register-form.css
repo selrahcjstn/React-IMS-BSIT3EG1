@@ -104,7 +104,6 @@
   transition: background-color 0.25s ease, transform 0.2s ease;
 }
 
-/* Hover effect */
 .register__submit-btn:hover {
   background-color: #1A3591; /* slightly darker blue */
 }

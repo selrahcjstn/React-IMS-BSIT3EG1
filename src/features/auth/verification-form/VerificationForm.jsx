@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./verification.css";
+import "./verification-form.css";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -8,7 +8,7 @@ import {
 import { auth } from "../../../firebase/config";
 import { useAuth } from "../../../context/AuthContext";
 
-function Verification() {
+function VerificationForm() {
   const { email, password } = useAuth();
   const [userEmail, setUserEmail] = useState(email || "");
 
@@ -74,14 +74,16 @@ function Verification() {
             </a>
           </div>
 
-          <p className="verification__change">
-            Not the right email? <Link to="/auth/register">Change account</Link>
-          </p>
+          <div className="register__footer">
+            <p className="verification__change">
+              Not the right email?{" "}
+              <Link to="/auth/register">Change account</Link>
+            </p>
+          </div>
         </div>
       </div>
-      
     </div>
   );
 }
 
-export default Verification;
+export default VerificationForm;
