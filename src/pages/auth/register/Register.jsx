@@ -1,8 +1,8 @@
 
 import Logo from "../../../components/logo/Logo";
 import illustrator from "../../../assets/auth/register3.svg"
-import RegisterForm from "../../../components/auth/register-form/RegisterForm";
-import ImageHolder from "../../../features/auth/ImageHolder";
+import RegisterForm from "../../../features/auth/register-form/RegisterForm";
+import ImageHolder from "../../../features/auth/image-holder/ImageHolder";
 import "../../../styles/auth.css"
 
 function Register() {

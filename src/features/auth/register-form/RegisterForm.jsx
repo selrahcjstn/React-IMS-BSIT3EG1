@@ -1,12 +1,7 @@
-import {
-  AiOutlineMail,
-  AiOutlineLock,
-  AiOutlineUser,
-  AiOutlineCalendar,
-} from "react-icons/ai";
-import Input from "../../common/input/Input";
-import Button from "../../common/button/Button";
-import CustomInput from "../custom-input/CustomInput";
+import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
+import Input from "../../../components/common/input/Input";
+import Button from "../../../components/common/button/Button";
+import CustomInput from "../../../components/auth/custom-input/CustomInput";
 import { Link } from "react-router";
 import "./register-form.css";
 
@@ -21,50 +16,6 @@ function RegisterForm() {
       </p>
 
       <div className="register__form" noValidate>
-        <div className="register__name-group">
-          <CustomInput label="First Name" icon={AiOutlineUser}>
-            <Input
-              id="firstName"
-              name="firstName"
-              type="text"
-              placeholder="First name"
-              required
-              autoComplete="given-name"
-            />
-          </CustomInput>
-
-          <CustomInput label="Last Name" icon={AiOutlineUser}>
-            <Input
-              id="lastName"
-              name="lastName"
-              type="text"
-              placeholder="Last name"
-              required
-              autoComplete="family-name"
-            />
-          </CustomInput>
-        </div>
-
-        <CustomInput label="Middle Name (Optional)" icon={AiOutlineUser}>
-          <Input
-            id="middleName"
-            name="middleName"
-            type="text"
-            placeholder="Middle name"
-            autoComplete="additional-name"
-          />
-        </CustomInput>
-
-        <CustomInput label="Birthdate" icon={AiOutlineCalendar}>
-          <Input
-            id="birthdate"
-            name="birthdate"
-            type="date"
-            required
-            autoComplete="bday"
-          />
-        </CustomInput>
-
         <CustomInput label="Email" icon={AiOutlineMail}>
           <Input
             id="email"
@@ -98,7 +49,28 @@ function RegisterForm() {
           />
         </CustomInput>
 
-        <Button label="Register" type="submit" />
+        <Button label="Register" type="submit" className="register__submit-btn" />
+
+        <div className="register__social">
+          <div className="register__divider">
+            <span>or</span>
+          </div>
+
+          <button type="button" className="register__social-btn google">
+            <img
+              src="https://www.svgrepo.com/show/475656/google-color.svg"
+              alt="Google"
+            />
+            Continue with Google
+          </button>
+          <button type="button" className="register__social-btn facebook">
+            <img
+              src="https://www.svgrepo.com/show/475647/facebook-color.svg"
+              alt="Facebook"
+            />
+            Continue with Facebook
+          </button>
+        </div>
       </div>
 
       <footer className="register__footer">

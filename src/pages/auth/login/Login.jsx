@@ -2,8 +2,8 @@
 import Logo from "../../../components/logo/Logo";
 import "../../../styles/auth.css"
 import illustrator from "../../../assets/auth/login.svg"
-import LoginForm from "../../../components/auth/login-form/LoginForm";
-import ImageHolder from "../../../features/auth/ImageHolder";
+import LoginForm from "../../../features/auth/login-form/LoginForm";
+import ImageHolder from "../../../features/auth/image-holder/ImageHolder";
 function Login() {
   return (
     <div className="login container">

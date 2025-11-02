@@ -1,7 +1,7 @@
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
-import Input from "../../common/input/Input";
-import Button from "../../common/button/Button";
-import CustomInput from "../custom-input/CustomInput";
+import Input from "../../../components/common/input/Input";
+import Button from "../../../components/common/button/Button";
+import CustomInput from "../../../components/auth/custom-input/CustomInput";
 import { Link } from "react-router";
 import "./login-form.css";
 
