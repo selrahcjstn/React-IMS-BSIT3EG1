@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 import LandingPage from "./pages/landing-page/LandingPage";
 import PublicLayout from "./route-layout/public-layout/PublicLayout";
-import Login from "./pages/auth/login/Login";
-import Register from "./pages/auth/register/Register";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 import AccountVerification from "./route-layout/private-layout/onborad/AccountVerification";
 import AuthenticationLayout from "./route-layout/public-layout/AuthenticationLayout";
 import Verification from "./pages/auth/verification/Verification";

@@ -1,0 +1,8 @@
+.illustrator__container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    padding: 40px 0;
+    height: calc(100vh - 112px);
+}
