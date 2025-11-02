@@ -1,34 +1,37 @@
-import Button from "../../common/button/Button";
-import logo from "../../../assets/logo.png";
+import Logo from "../../logo/Logo";
+import { Link } from "react-router"; 
 import "./navbar.css";
 
 function Navbar() {
+
   return (
     <header className="header">
       <div className="header__container">
-        <section className="header__title">
-          <img className="header__logo-image" src={logo} alt="Logo" />
-          <h5 className="header__logo-title">IMS Online</h5>
-        </section>
-
+        <Logo />  
         <nav className="header__nav">
           <div className="header__nav-links">
-            <a className="header__nav-link" href="/">
+            <Link className="header__nav-link" to="/">
               Features
-            </a>
-            <a className="header__nav-link" href="/about">
+            </Link>
+            <Link className="header__nav-link" to="/about">
               About
-            </a>
-            <a className="header__nav-link" href="/services">
+            </Link>
+            <Link className="header__nav-link" to="/services">
               Contact
-            </a>
+            </Link>
           </div>
           <hr />
           <div className="header__buttons">
-            <Button label="Log in" className="header__button--login" />
-            <Button label="Start for free" className="header__button--register" />
+            <Link
+              to={"/auth/login"}
+              className="header__button--login"
+            >Log in</Link>
+            <Link
+              to={"/auth/register"}
+              className="header__button--register"
+            >Start for free</Link>
           </div>
-        </nav>
+        </nav>  
       </div>
     </header>
   );

@@ -1,4 +1,4 @@
-import hero from "../../../assets/hero.png";
+import hero from "../../../assets/hero.svg";
 import Button from "../../../components/common/button/Button";
 import Highlight from "../../../components/landing-page/highlight/Highlight";
 import "./hero.css";
