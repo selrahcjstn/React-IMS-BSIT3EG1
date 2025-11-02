@@ -3,16 +3,15 @@ import RegisterFormFields from "../../../components/auth/register-form-fields/Re
 import "./register-form.css";
 import { useState } from "react";
 
-function RegisterForm({ email, setEmail, setPassword }) {
+function RegisterForm({ email, setEmail, password, setPassword }) {
   const navigate = useNavigate();
-  const [tempPassword, setTempPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (tempPassword === confirmPassword) {
-      setPassword(tempPassword);
+    if (password === confirmPassword) {
+      setPassword(password);
     } else {
       setPassword("");
       alert("Passwords do not match!");
@@ -28,12 +27,12 @@ function RegisterForm({ email, setEmail, setPassword }) {
     if (name === "email") {
       setEmail(value);
     } else if (name === "password") {
-      setTempPassword(value);
+      setPassword(value);
     } else if (name === "confirmPassword") {
       setConfirmPassword(value);
     }
-
-    console.log({ email, tempPassword, confirmPassword });
+    // For debugging purposes
+    console.log({ email, password, confirmPassword });
   }
 
   return (
@@ -47,14 +46,14 @@ function RegisterForm({ email, setEmail, setPassword }) {
 
       <RegisterFormFields handleChange={handleChange} />
 
-      <footer className="register__footer">
+      <div className="register__footer">
         <p>
           Already have an account?{" "}
           <Link className="register__helper-login" to="/auth/login">
             Log in here
           </Link>
         </p>
-      </footer>
+      </div>
     </form>
   );
 }

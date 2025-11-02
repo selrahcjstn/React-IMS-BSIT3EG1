@@ -43,14 +43,14 @@ function LoginForm() {
         <Button label="Log in" type="submit" />
       </div>
 
-      <footer className="login__footer">
+      <div className="login__footer">
         <p>
           Don't have an account?{" "}
           <Link className="login__helper-signup" to="/auth/register">
             Register here
           </Link>
         </p>
-      </footer>
+      </div>
     </form>
   );
 }

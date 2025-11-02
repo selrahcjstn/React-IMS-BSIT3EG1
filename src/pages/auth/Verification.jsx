@@ -4,7 +4,7 @@ import ImageHolder from "../../features/auth/image-holder/ImageHolder";
 import { useAuth } from "../../context/AuthContext";
 import "./common.css";
 
-function Register() {
+function Verification() {
   const { email, setEmail, password, setPassword } = useAuth();
 
   return (
@@ -20,4 +20,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Verification;
