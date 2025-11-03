@@ -3,48 +3,46 @@ import Input from "../../../components/common/input/Input";
 import Button from "../../../components/common/button/Button";
 import CustomInput from "../../../components/auth/custom-input/CustomInput";
 import Social from "../../auth/social/Social";
-import ErrorMessage from "../../auth/error-message/ErrorMessage";
 import { passwordRegex } from "../../../validation/password-regex";
 import { emailRegex } from "../../../validation/email-regex";
-import { useState } from "react";
 import "./register-form-fields.css";
 
-function RegisterFormFields({ handleChange }) {
-  const [error, setError] = useState("");
-  
-  function validateEmail(e) {
-    const email = e.target.value;
-    if (!emailRegex.test(email)) {
+function RegisterFormFields({ setError, setEmail, setPassword }) {
+
+  const validateEmail = (e) => {
+    const value = e.target.value;
+    if (!emailRegex.test(value)) {
       setError("Please enter a valid email address.");
     } else {
       setError("");
+      setEmail(value); 
     }
-  }
+  };
 
-  function validatePassword(e) {
-    const password = e.target.value;
+  const validatePassword = (e) => {
+    const value = e.target.value;
     for (let rule of passwordRegex) {
-      if (!rule.regex.test(password)) {
+      if (!rule.regex.test(value)) {
         setError(rule.message);
         return;
       }
     }
     setError("");
-  }
+  };
 
-  function validationConfirmPassword(e) {
-    const password = document.getElementById("password").value;
+  const validationConfirmPassword = (e) => {
+    const passwordValue = document.getElementById("password").value;
     const confirmPassword = e.target.value;
-    if (confirmPassword !== password) {
+    if (confirmPassword !== passwordValue) {
       setError("Passwords do not match.");
     } else {
       setError("");
+      setPassword(passwordValue); 
     }
-  }
+  };
 
   return (
-    <div className="form" noValidate>
-      {error && <ErrorMessage error={error} />}
+    <div className="field__container" noValidate>
       <CustomInput label="Email" icon={AiOutlineMail}>
         <Input
           id="email"
@@ -53,10 +51,7 @@ function RegisterFormFields({ handleChange }) {
           placeholder="Enter your email"
           required
           autoComplete="email"
-          onChange={(e) => {
-            handleChange(e);
-            validateEmail(e);
-          }}
+          onChange={validateEmail}
         />
       </CustomInput>
 
@@ -68,10 +63,7 @@ function RegisterFormFields({ handleChange }) {
           placeholder="Create a password"
           required
           autoComplete="new-password"
-          onChange={(e) => {
-            handleChange(e);
-            validatePassword(e);
-          }}
+          onChange={validatePassword}
         />
       </CustomInput>
 
@@ -83,14 +75,12 @@ function RegisterFormFields({ handleChange }) {
           placeholder="Confirm your password"
           required
           autoComplete="new-password"
-          onChange={(e) => {
-            handleChange(e);
-            validationConfirmPassword(e);
-          }}
+          onChange={validationConfirmPassword}
         />
       </CustomInput>
 
       <Button label="Register" type="submit" className="register__submit-btn" />
+
       {/* Social Media Registration Options */}
       <Social />
     </div>

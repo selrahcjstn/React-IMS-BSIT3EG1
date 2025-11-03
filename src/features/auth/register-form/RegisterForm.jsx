@@ -1,39 +1,42 @@
 import { Link, useNavigate } from "react-router-dom";
 import RegisterFormFields from "../../../components/auth/register-form-fields/RegisterFormFields";
-import "./register-form.css";
 import { useState } from "react";
+import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useAuth } from "../../../context/AuthContext";
+import { auth } from "../../../firebase/config";
+import "./register-form.css";
 
-function RegisterForm({ email, setEmail, password, setPassword }) {
+function RegisterForm() {
   const navigate = useNavigate();
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const { email, setEmail, password, setPassword } = useAuth();
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
-    if (password === confirmPassword) {
-      setPassword(password);
-    } else {
-      setPassword("");
-      alert("Passwords do not match!");
+    if (!email || !password) {
+      setError("Email and password are required.");
       return;
     }
 
-    navigate("/auth/verify-account");
-  };
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-
-    if (name === "email") {
-      setEmail(value);
-    } else if (name === "password") {
-      setPassword(value);
-    } else if (name === "confirmPassword") {
-      setConfirmPassword(value);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log("User registered:", userCredential.user);
+      navigate("/auth/verification"); 
+    } catch (err) {
+      if (err.code === "auth/email-already-in-use") {
+        setError("Email is already used!");
+        setEmail("");
+      } else if (err.code === "auth/weak-password") {
+        setError("Password is too weak!");
+        setPassword("");
+      } else {
+        setError(err.message);
+      }
     }
-    // For debugging purposes
-    console.log({ email, password, confirmPassword });
-  }
+  };
 
   return (
     <form className="register__form-container" onSubmit={handleSubmit}>
@@ -44,7 +47,9 @@ function RegisterForm({ email, setEmail, password, setPassword }) {
         Register to manage your inventory and grow your business efficiently.
       </p>
 
-      <RegisterFormFields handleChange={handleChange} />
+      {/* Fields component now updates context directly */}
+      {error && <ErrorMessage error={error} />}
+      <RegisterFormFields setEmail={setEmail} setPassword={setPassword} setError={setError} />
 
       <div className="register__footer">
         <p>

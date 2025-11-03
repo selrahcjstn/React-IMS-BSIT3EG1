@@ -1,41 +1,25 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./verification-form.css";
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-} from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
 import { auth } from "../../../firebase/config";
 import { useAuth } from "../../../context/AuthContext";
 
 function VerificationForm() {
-  const { email, password } = useAuth();
+  const { email } = useAuth();
   const [userEmail, setUserEmail] = useState(email || "");
 
   useEffect(() => {
-    let hasRun = false; // To prevent multiple executions
-
-    const createAccount = async () => {
-      if (hasRun) return;
-      hasRun = true;
-      try {
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        await sendEmailVerification(userCredential.user);
-        setUserEmail(userCredential.user.email);
-        console.log("Verification email sent to:", userCredential.user.email);
-      } catch (error) {
-        console.error("Error creating account:", error.message);
+    const sendVerification = async () => {
+      if (auth.currentUser) {
+        await sendEmailVerification(auth.currentUser);
+        console.log("Verification email sent to:", auth.currentUser.email);
+        setUserEmail(auth.currentUser.email);
       }
     };
 
-    if (email && password) {
-      createAccount();
-    }
-  }, [email, password]);
+    sendVerification();
+  }, []);
 
   const handleResend = async () => {
     if (auth.currentUser) {
