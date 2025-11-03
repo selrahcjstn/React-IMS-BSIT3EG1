@@ -1,17 +1,8 @@
-.register__form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  flex: 1;
-  max-width: 400px;
-}
-
-.register__form {
+.form {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
-
 
 .register__helper-login {
   font-size: 14px;

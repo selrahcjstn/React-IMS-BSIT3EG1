@@ -1,6 +1,7 @@
-function Input({ type, placeholder, name, value, onChange}) {
+function Input({id, type, placeholder, name, value, onChange}) {
   return (
     <input
+      id={id}
       className="input"
       type={type}
       name={name}
