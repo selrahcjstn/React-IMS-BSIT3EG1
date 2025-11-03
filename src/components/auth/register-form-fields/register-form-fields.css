@@ -6,6 +6,13 @@
   max-width: 400px;
 }
 
+.register__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+
 .register__helper-login {
   font-size: 14px;
   color: #007bff;

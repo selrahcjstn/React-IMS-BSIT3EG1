@@ -2,6 +2,7 @@ import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import Input from "../../../components/common/input/Input";
 import Button from "../../../components/common/button/Button";
 import CustomInput from "../../../components/auth/custom-input/CustomInput";
+import Social from "../../auth/social/Social";
 import "./register-form-fields.css";
 
 function RegisterFormFields({ handleChange}) {
@@ -45,27 +46,8 @@ function RegisterFormFields({ handleChange}) {
 
         <Button label="Register" type="submit" className="register__submit-btn" />
 
-        <div className="register__social">
-          <div className="register__divider">
-            <span>or</span>
-          </div>
-
-          <button type="button" className="register__social-btn google">
-            <img
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              alt="Google"
-            />
-            Continue with Google
-          </button>
-          <button type="button" className="register__social-btn facebook">
-            <img
-              src="https://www.svgrepo.com/show/475647/facebook-color.svg"
-              alt="Facebook"
-            />
-            Continue with Facebook
-          </button>
-        </div>
-      </div>
+        <Social />
+    </div>
   )
 }
 
