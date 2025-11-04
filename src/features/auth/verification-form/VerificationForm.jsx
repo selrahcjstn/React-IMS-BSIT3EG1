@@ -1,30 +1,42 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./verification-form.css";
 import { sendEmailVerification } from "firebase/auth";
 import { auth } from "../../../firebase/config";
-import { useAuth } from "../../../context/AuthContext";
 
 function VerificationForm() {
-  const { email } = useAuth();
-  const [userEmail, setUserEmail] = useState(email || "");
+  const [userEmail, setUserEmail] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const sendVerification = async () => {
-      if (auth.currentUser) {
-        await sendEmailVerification(auth.currentUser);
-        console.log("Verification email sent to:", auth.currentUser.email);
-        setUserEmail(auth.currentUser.email);
+      const currentUser = auth.currentUser;
+      if (!currentUser) {
+        navigate("/auth/login");
+        return;
+      }
+
+      try {
+        await sendEmailVerification(currentUser);
+        console.log("Verification email sent to:", currentUser.email);
+        setUserEmail(currentUser.email);
+      } catch (err) {
+        console.error("Failed to send verification email:", err.message);
       }
     };
 
     sendVerification();
-  }, []);
+  }, [navigate]);
 
   const handleResend = async () => {
-    if (auth.currentUser) {
-      await sendEmailVerification(auth.currentUser);
-      console.log("Resent verification email to:", auth.currentUser.email);
+    const currentUser = auth.currentUser;
+    if (!currentUser) return;
+
+    try {
+      await sendEmailVerification(currentUser);
+      console.log("Resent verification email to:", currentUser.email);
+    } catch (err) {
+      console.error("Failed to resend verification email:", err.message);
     }
   };
 
@@ -60,8 +72,7 @@ function VerificationForm() {
 
           <div className="register__footer">
             <p className="verification__change">
-              Not the right email?{" "}
-              <Link to="/auth/register">Change account</Link>
+              Not the right email? <Link to="/auth/register">Change account</Link>
             </p>
           </div>
         </div>
