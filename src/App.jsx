@@ -6,6 +6,7 @@ import Register from "./pages/auth/Register";
 import AccountVerification from "./route-layout/private-layout/onborad/AccountVerification";
 import AuthenticationLayout from "./route-layout/public-layout/AuthenticationLayout";
 import Verification from "./pages/auth/Verification"; 
+import PersonalInfo from "./pages/auth/PersonalInfo";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         </Route>
         <Route element={<AccountVerification />}>
           <Route path="/auth/verify-account" element={<Verification />} />
+          <Route path="/auth/personal-info" element={<PersonalInfo />} />
         </Route>
       </Routes>
     </BrowserRouter>

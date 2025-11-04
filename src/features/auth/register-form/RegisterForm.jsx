@@ -32,14 +32,26 @@ function RegisterForm() {
     }
   };
 
+  const handleSubmit = (e, data) => {
+    e.preventDefault();
+    handleValidData(data);
+  };
+
   return (
-    <div className="register__form-container">
+    <form
+      className="register__form-container"
+      onSubmit={(e) => e.preventDefault()} // prevent default on main form; child handles validation
+      noValidate
+    >
       <h1 className="register__heading">Create Account</h1>
       <p className="register__message">
         Register to manage your inventory and grow your business efficiently.
       </p>
+
       {error && <ErrorMessage error={error} />}
-      <RegisterFormFields onValidData={handleValidData} />
+
+      <RegisterFormFields onSubmit={handleSubmit} setError={setError} />
+
       <div className="register__footer">
         <p>
           Already have an account?{" "}
@@ -48,9 +60,8 @@ function RegisterForm() {
           </Link>
         </p>
       </div>
-    </div>
+    </form>
   );
 }
-
 
 export default RegisterForm;

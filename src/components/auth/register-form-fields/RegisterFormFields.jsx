@@ -4,79 +4,50 @@ import Input from "../../../components/common/input/Input";
 import Button from "../../../components/common/button/Button";
 import CustomInput from "../../../components/auth/custom-input/CustomInput";
 import Social from "../../auth/social/Social";
-import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
 import { emailRegex } from "../../../validation/email-regex";
 import { passwordRegex } from "../../../validation/password-regex";
 import "./register-form-fields.css";
 
-function RegisterFormFields({ onValidData }) {
+function RegisterFormFields({ onSubmit, setError }) {
   const [localEmail, setLocalEmail] = useState("");
   const [localPassword, setLocalPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
 
-  const handleEmailChange = (e) => {
-    const value = e.target.value.trim();
-    setLocalEmail(value);
+  const validateForm = () => {
+    if (!localEmail) return "Email is required.";
+    if (!emailRegex.test(localEmail)) return "Please enter a valid email address.";
 
-    if (!value) {
-      setError("Email is required.");
-    } else if (!emailRegex.test(value)) {
-      setError("Please enter a valid email address.");
-    } else {
-      setError("");
-    }
-  };
-
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setLocalPassword(value);
-
-    if (!value) {
-      setError("Password is required.");
-      return;
-    }
-
+    if (!localPassword) return "Password is required.";
     for (let rule of passwordRegex) {
-      if (!rule.regex.test(value)) {
-        setError(rule.message);
-        return;
-      }
+      if (!rule.regex.test(localPassword)) return rule.message;
     }
-    setError("");
-  };
 
-  const handleConfirmChange = (e) => {
-    const value = e.target.value;
-    setConfirmPassword(value);
+    if (!confirmPassword) return "Please confirm your password.";
+    if (localPassword !== confirmPassword) return "Passwords do not match.";
 
-    if (!value) {
-      setError("Please confirm your password.");
-    } else if (value !== localPassword) {
-      setError("Passwords do not match.");
-    } else {
-      setError("");
-    }
+    return "";
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!error && localEmail && localPassword && confirmPassword === localPassword) {
-      onValidData({ email: localEmail.trim(), password: localPassword });
-    } else if (!localEmail || !localPassword || !confirmPassword) {
-      setError("Please fill out all fields correctly.");
+    const validationError = validateForm();
+
+    if (validationError) {
+      setError(validationError);
+      return;
     }
+
+    setError("");
+    onSubmit(e, { email: localEmail.trim(), password: localPassword });
   };
 
   return (
-    <form className="field__container" onSubmit={handleSubmit} noValidate>
-      {error && <ErrorMessage error={error} />}
-
+    <div className="field__container">
       <CustomInput label="Email" icon={AiOutlineMail}>
         <Input
           type="email"
           value={localEmail}
-          onChange={handleEmailChange}
+          onChange={(e) => setLocalEmail(e.target.value.trim())}
           placeholder="Enter your email"
           required
         />
@@ -86,7 +57,7 @@ function RegisterFormFields({ onValidData }) {
         <Input
           type="password"
           value={localPassword}
-          onChange={handlePasswordChange}
+          onChange={(e) => setLocalPassword(e.target.value)}
           placeholder="Create a password"
           required
         />
@@ -96,15 +67,16 @@ function RegisterFormFields({ onValidData }) {
         <Input
           type="password"
           value={confirmPassword}
-          onChange={handleConfirmChange}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm your password"
           required
         />
       </CustomInput>
 
-      <Button label="Register" type="submit" className="register__submit-btn" />
+      <Button label="Register" type="button" onClick={handleSubmit} className="register__submit-btn" />
+
       <Social />
-    </form>
+    </div>
   );
 }
 
