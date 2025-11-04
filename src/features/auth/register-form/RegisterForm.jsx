@@ -1,24 +1,32 @@
 import { Link, useNavigate } from "react-router-dom";
-import RegisterFormFields from "../../../components/auth/register-form-fields/RegisterFormFields";
 import { useState } from "react";
-import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useAuth } from "../../../context/AuthContext";
 import { auth } from "../../../firebase/config";
+import RegisterFormFields from "../../../components/auth/register-form-fields/RegisterFormFields";
+import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
 import "./register-form.css";
 
 function RegisterForm() {
   const navigate = useNavigate();
-  const { setEmail, setPassword } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleValidData = async ({ email, password }) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setError("");
-    setEmail(email);
-    setPassword(password);
+
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return;
+    }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       console.log("User registered:", userCredential.user);
       navigate("/auth/verify-account");
     } catch (err) {
@@ -32,25 +40,28 @@ function RegisterForm() {
     }
   };
 
-  const handleSubmit = (e, data) => {
-    e.preventDefault();
-    handleValidData(data);
-  };
-
   return (
     <form
       className="register__form-container"
-      onSubmit={(e) => e.preventDefault()} // prevent default on main form; child handles validation
+      onSubmit={handleSubmit}
       noValidate
     >
-      <h1 className="register__heading">Create Account</h1>
+      <h1 id="register-heading" className="register__heading">
+        Create Account
+      </h1>
       <p className="register__message">
         Register to manage your inventory and grow your business efficiently.
       </p>
 
       {error && <ErrorMessage error={error} />}
 
-      <RegisterFormFields onSubmit={handleSubmit} setError={setError} />
+      <RegisterFormFields
+        email={email}
+        password={password}
+        setEmail={setEmail}
+        setPassword={setPassword}
+        setError={setError}
+      />
 
       <div className="register__footer">
         <p>

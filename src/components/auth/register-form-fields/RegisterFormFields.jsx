@@ -8,29 +8,47 @@ import { emailRegex } from "../../../validation/email-regex";
 import { passwordRegex } from "../../../validation/password-regex";
 import "./register-form-fields.css";
 
-function RegisterFormFields({ onSubmit, setError }) {
-  const [localEmail, setLocalEmail] = useState("");
-  const [localPassword, setLocalPassword] = useState("");
+function RegisterFormFields({ email, setEmail, password, setPassword, onSubmit, setError }) {
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const validateForm = () => {
-    if (!localEmail) return "Email is required.";
-    if (!emailRegex.test(localEmail)) return "Please enter a valid email address.";
+  // ✅ Central validation logic
+  const validateForm = (email, password, confirm) => {
+    if (!email) return "Email is required.";
+    if (!emailRegex.test(email)) return "Please enter a valid email address.";
 
-    if (!localPassword) return "Password is required.";
+    if (!password) return "Password is required.";
     for (let rule of passwordRegex) {
-      if (!rule.regex.test(localPassword)) return rule.message;
+      if (!rule.regex.test(password)) return rule.message;
     }
 
-    if (!confirmPassword) return "Please confirm your password.";
-    if (localPassword !== confirmPassword) return "Passwords do not match.";
+    if (!confirm) return "Please confirm your password.";
+    if (password !== confirm) return "Passwords do not match.";
 
     return "";
   };
 
+  // ✅ Live validation for each change
+  const handleChange = (field, value) => {
+    let newEmail = email;
+    let newPassword = password;
+    let newConfirm = confirmPassword;
+
+    if (field === "email") newEmail = value.trim();
+    if (field === "password") newPassword = value;
+    if (field === "confirm") newConfirm = value;
+
+    setEmail(newEmail);
+    setPassword(newPassword);
+    setConfirmPassword(newConfirm);
+
+    const error = validateForm(newEmail, newPassword, newConfirm);
+    setError(error);
+  };
+
+  // ✅ Final validation when clicking register
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationError = validateForm();
+    const validationError = validateForm(email, password, confirmPassword);
 
     if (validationError) {
       setError(validationError);
@@ -38,7 +56,7 @@ function RegisterFormFields({ onSubmit, setError }) {
     }
 
     setError("");
-    onSubmit(e, { email: localEmail.trim(), password: localPassword });
+    onSubmit(e, { email: email.trim(), password });
   };
 
   return (
@@ -46,8 +64,8 @@ function RegisterFormFields({ onSubmit, setError }) {
       <CustomInput label="Email" icon={AiOutlineMail}>
         <Input
           type="email"
-          value={localEmail}
-          onChange={(e) => setLocalEmail(e.target.value.trim())}
+          value={email}
+          onChange={(e) => handleChange("email", e.target.value)}
           placeholder="Enter your email"
           required
         />
@@ -56,8 +74,8 @@ function RegisterFormFields({ onSubmit, setError }) {
       <CustomInput label="Password" icon={AiOutlineLock}>
         <Input
           type="password"
-          value={localPassword}
-          onChange={(e) => setLocalPassword(e.target.value)}
+          value={password}
+          onChange={(e) => handleChange("password", e.target.value)}
           placeholder="Create a password"
           required
         />
@@ -67,13 +85,18 @@ function RegisterFormFields({ onSubmit, setError }) {
         <Input
           type="password"
           value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          onChange={(e) => handleChange("confirm", e.target.value)}
           placeholder="Confirm your password"
           required
         />
       </CustomInput>
 
-      <Button label="Register" type="button" onClick={handleSubmit} className="register__submit-btn" />
+      <Button
+        label="Register"
+        type="button"
+        onClick={handleSubmit}
+        className="register__submit-btn"
+      />
 
       <Social />
     </div>
