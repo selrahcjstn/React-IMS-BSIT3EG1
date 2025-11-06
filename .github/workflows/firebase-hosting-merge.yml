@@ -18,3 +18,4 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_REACT_IMS_BSIT3FG1 }}
           channelId: live
           projectId: react-ims-bsit3fg1
+          target: ims-site
