@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import AuthContext from "../../../context/AuthContext";
 import { auth } from "../../../firebase/config";
 import RegisterFormFields from "../../../components/auth/register-form-fields/RegisterFormFields";
 import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
@@ -8,6 +9,8 @@ import "./register-form.css";
 
 function RegisterForm() {
   const navigate = useNavigate();
+  const { setUid } = useContext(AuthContext); 
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -22,11 +25,11 @@ function RegisterForm() {
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(userCredential.user.uid);
+      
+      setUid(userCredential.user.uid);
+
       console.log("User registered:", userCredential.user);
       navigate("/auth/verify-account");
     } catch (err) {
@@ -41,11 +44,7 @@ function RegisterForm() {
   };
 
   return (
-    <form
-      className="register__form-container"
-      onSubmit={handleSubmit}
-      noValidate
-    >
+    <form className="register__form-container" onSubmit={handleSubmit} noValidate>
       <h1 id="register-heading" className="register__heading">
         Create Account
       </h1>

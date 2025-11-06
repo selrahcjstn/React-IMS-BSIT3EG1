@@ -1,10 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
+import AuthContext from "../../../context/AuthContext";
 import PersonalInfoField from "../../../components/auth/personal-info-field/PersonalInfoField";
+import { useContext } from "react";
 import "./personal-info-form.css";
 
 function PersonalInfoForm() {
+  const { uid } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
@@ -22,6 +26,7 @@ function PersonalInfoForm() {
     }
 
     console.log({
+      uid,
       firstName,
       middleName,
       lastName,
