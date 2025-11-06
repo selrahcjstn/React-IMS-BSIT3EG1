@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "inventory-management-system-online",
     "public": "dist",
     "ignore": [
       "firebase.json",

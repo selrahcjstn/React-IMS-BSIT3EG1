@@ -17,5 +17,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_REACT_IMS_BSIT3FG1 }}
-          projectId: react-ims-bsit3fg1
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LATERAL_REPLICA_477307_P6 }}
+          projectId: lateral-replica-477307-p6
