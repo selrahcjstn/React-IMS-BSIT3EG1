@@ -1,22 +1,28 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // 1. Import useEffect
 import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
-import AuthContext from "../../../context/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
 import PersonalInfoField from "../../../components/auth/personal-info-field/PersonalInfoField";
-import { useContext } from "react";
+import { getDatabase, ref, set } from "firebase/database";
 import "./personal-info-form.css";
 
 function PersonalInfoForm() {
-  const { uid } = useContext(AuthContext);
-
+  const { uid, email } = useAuth();
   const navigate = useNavigate();
+
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
   const [purpose, setPurpose] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (!uid) {
+      navigate("/auth/login");
+    }
+  }, [uid, navigate]); 
+
+  async function handleSubmit(e) {
     e.preventDefault();
     setError("");
 
@@ -25,17 +31,32 @@ function PersonalInfoForm() {
       return;
     }
 
-    console.log({
-      uid,
+    const userData = {
       firstName,
       middleName,
       lastName,
       purpose,
-    });
+      email,
+      uid,
+    };
 
-    navigate("/auth/register");
-  };
+    try {
+      const db = getDatabase();
+      await set(ref(db, "users/" + uid), userData);
+      
+      navigate("/dashboard"); 
+      
+    } catch (error) {
+      setError("Failed to save user data: " + error.message);
+    }
+  }
 
+
+  if (!uid) {
+    return null; 
+  }
+
+  // --- If we get here, uid is valid and we can render the form ---
   return (
     <form className="personal__form-container" onSubmit={handleSubmit}>
       <h1 className="personal__heading">Personal Information</h1>
