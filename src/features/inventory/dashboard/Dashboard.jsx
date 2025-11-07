@@ -9,10 +9,9 @@ function Dashboard() {
   const { currentUser } = useAuth();
 
   const handleClick = async () => {
-    await signOut(auth); // ✅ updates context automatically
+    await signOut(auth); // 
   };
 
-  // ✅ Redirect when context clears after logout
   if (!currentUser) return <Navigate to="/auth/login" replace />;
 
   return (

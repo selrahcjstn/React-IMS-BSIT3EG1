@@ -1,6 +1,8 @@
 import CustomInput from "../custom-input/CustomInput";
 import Input from "../../common/input/Input";
 import Button from "../../common/button/Button";
+import { nameRegex } from "../../../validation/name-regex";
+import "./personal-info-field.css";
 
 function PersonalInfoField({
   firstName,
@@ -11,44 +13,44 @@ function PersonalInfoField({
   setMiddleName,
   setLastName,
   setPurpose,
+  setError,
 }) {
+  const handleChange = (e, setter) => {
+    const value = e.target.value;
+    setter(value);
+
+    if (!nameRegex.test(value)) {
+      setError("Names must be letters only and at least 2 characters.");
+    } else {
+      setError("");
+    }
+  };
+
   return (
-    <div className="personal__form" noValidate>
+    <div className="personal__form">
       <CustomInput label="First Name">
         <Input
-          id="firstName"
-          name="firstName"
           type="text"
-          placeholder="Enter your first name"
           value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+          onChange={(e) => handleChange(e, setFirstName)}
           required
-          autoComplete="given-name"
         />
       </CustomInput>
 
       <CustomInput label="Middle Name (optional)">
         <Input
-          id="middleName"
-          name="middleName"
           type="text"
-          placeholder="Enter your middle name"
           value={middleName}
           onChange={(e) => setMiddleName(e.target.value)}
-          autoComplete="additional-name"
         />
       </CustomInput>
 
       <CustomInput label="Last Name">
         <Input
-          id="lastName"
-          name="lastName"
           type="text"
-          placeholder="Enter your last name"
           value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
+          onChange={(e) => handleChange(e, setLastName)}
           required
-          autoComplete="family-name"
         />
       </CustomInput>
 

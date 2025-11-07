@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
+import { getDatabase, ref, set } from "firebase/database";
+import { nameRegex } from "../../../validation/name-regex";
 import { useAuth } from "../../../context/AuthContext";
 import PersonalInfoField from "../../../components/auth/personal-info-field/PersonalInfoField";
-import { getDatabase, ref, set } from "firebase/database";
+import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
 import "./personal-info-form.css";
-
 
 function PersonalInfoForm() {
   const { currentUser, loading } = useAuth();
@@ -23,7 +23,7 @@ function PersonalInfoForm() {
     }
 
     if (!loading && currentUser && !currentUser.emailVerified) {
-      navigate("/auth/login");
+      navigate("/auth/verify-account");
     }
   }, [currentUser, loading, navigate]);
 
@@ -35,13 +35,20 @@ function PersonalInfoForm() {
       setError("Please fill in all required fields.");
       return;
     }
-    
+
+    if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
+      setError(
+        "Names must contain only letters and be at least 2 characters long."
+      );
+      return;
+    }
+
     const userData = {
       firstName,
       middleName,
       lastName,
       purpose,
-      email: currentUser.email, 
+      email: currentUser.email,
       uid: currentUser.uid,
     };
 
@@ -55,9 +62,8 @@ function PersonalInfoForm() {
   }
 
   if (loading || !currentUser) {
-    return null; 
+    return null;
   }
-
 
   return (
     <form className="personal__form-container" onSubmit={handleSubmit}>
@@ -73,10 +79,12 @@ function PersonalInfoForm() {
         middleName={middleName}
         lastName={lastName}
         purpose={purpose}
+        error={error}
         setFirstName={setFirstName}
         setMiddleName={setMiddleName}
         setLastName={setLastName}
         setPurpose={setPurpose}
+        setError={setError}
       />
     </form>
   );
