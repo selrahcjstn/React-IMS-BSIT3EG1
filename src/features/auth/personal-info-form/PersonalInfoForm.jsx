@@ -55,8 +55,7 @@ function PersonalInfoForm() {
   if (!uid) {
     return null; 
   }
-
-  // --- If we get here, uid is valid and we can render the form ---
+  
   return (
     <form className="personal__form-container" onSubmit={handleSubmit}>
       <h1 className="personal__heading">Personal Information</h1>
