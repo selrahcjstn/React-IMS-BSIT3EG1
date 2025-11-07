@@ -1,7 +1,7 @@
 import { Outlet, Navigate } from "react-router-dom"; 
 import AuthNav from "../../features/auth/auth-nav/AuthNav";
 
-function AuthenticationLayout() {
+function AuthenticationRoute() {
 
   return (
     <>
@@ -13,4 +13,4 @@ function AuthenticationLayout() {
   );
 }
 
-export default AuthenticationLayout;
+export default AuthenticationRoute;

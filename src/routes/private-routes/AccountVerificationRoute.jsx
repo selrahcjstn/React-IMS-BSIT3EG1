@@ -1,6 +1,6 @@
 import AuthNav from '../../features/auth/auth-nav/AuthNav'
 import { Outlet} from "react-router"
-function AccountVerification() {
+function AccountVerificationRoute() {
   return (
     <>
       <AuthNav />
@@ -11,4 +11,4 @@ function AccountVerification() {
   )
 }
 
-export default AccountVerification
+export default AccountVerificationRoute

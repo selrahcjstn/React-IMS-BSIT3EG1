@@ -1,27 +1,30 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "./pages/landing-page/LandingPage";
-import PublicLayout from "./route-layout/public-layout/PublicLayout";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-import AccountVerification from "./route-layout/private-layout/AccountVerification";
-import AuthenticationLayout from "./route-layout/public-layout/AuthenticationLayout";
+import AccountVerificationRoute from "./routes/private-routes/AccountVerificationRoute";
+import AuthenticationRoute from "./routes/public-routes/AuthenticationRoute";
 import Verification from "./pages/auth/Verification";
 import PersonalInfo from "./pages/auth/PersonalInfo";
-import DashboardRoute from "./route-layout/private-layout/DashboardRoute";
+import DashboardRoute from "./routes/private-routes/DashboardRoute";
 import Dashboard from "./features/inventory/dashboard/Dashboard";
+import LandingPageRoute from "./routes/public-routes/LandingPageRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<PublicLayout />}>
+        {/* Public Routes */}
+        <Route element={<LandingPageRoute />}>
           <Route path="/" element={<LandingPage />} />
         </Route>
-        <Route element={<AuthenticationLayout />}>
+        <Route element={<AuthenticationRoute />}>
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Register />} />
         </Route>
-        <Route element={<AccountVerification />}>
+
+        {/* Private Routes */}
+        <Route element={<AccountVerificationRoute />}>
           <Route path="/auth/verify-account" element={<Verification />} />
           <Route path="/auth/personal-info" element={<PersonalInfo />} />
         </Route>

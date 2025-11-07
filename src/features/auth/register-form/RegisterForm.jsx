@@ -23,9 +23,7 @@ function RegisterForm() {
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-      console.log("User registered:", userCredential.user);
+      await createUserWithEmailAndPassword(auth, email, password);
       navigate("/auth/verify-account");
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
