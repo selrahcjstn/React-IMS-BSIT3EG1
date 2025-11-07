@@ -23,7 +23,6 @@ function RegisterForm() {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      
       console.log("User registered:", userCredential.user);
       navigate("/auth/verify-account");
     } catch (err) {
