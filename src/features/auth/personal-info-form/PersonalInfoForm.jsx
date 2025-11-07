@@ -1,10 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
 import { useAuth } from "../../../context/AuthContext";
 import PersonalInfoField from "../../../components/auth/personal-info-field/PersonalInfoField";
 import { getDatabase, ref, set } from "firebase/database";
 import "./personal-info-form.css";
+
 
 function PersonalInfoForm() {
   const { currentUser, loading } = useAuth();
@@ -22,7 +23,7 @@ function PersonalInfoForm() {
     }
 
     if (!loading && currentUser && !currentUser.emailVerified) {
-      navigate("/auth/verify-account");
+      navigate("/auth/login");
     }
   }, [currentUser, loading, navigate]);
 
@@ -77,15 +78,6 @@ function PersonalInfoForm() {
         setLastName={setLastName}
         setPurpose={setPurpose}
       />
-
-      <div className="personal__footer">
-        <p>
-          Already registered?{" "}
-          <Link className="personal__helper-login" to="/auth/login">
-            Log in here
-          </Link>
-        </p>
-      </div>
     </form>
   );
 }

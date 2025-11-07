@@ -17,7 +17,7 @@ function VerificationForm() {
         return;
       }
 
-      if (currentUser.emailVerified) {
+      if (currentUser.emailVerified === true) {
         navigate("/dashboard");
         return;
       }
