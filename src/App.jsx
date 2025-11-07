@@ -3,10 +3,12 @@ import LandingPage from "./pages/landing-page/LandingPage";
 import PublicLayout from "./route-layout/public-layout/PublicLayout";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-import AccountVerification from "./route-layout/private-layout/onborad/AccountVerification";
+import AccountVerification from "./route-layout/private-layout/AccountVerification";
 import AuthenticationLayout from "./route-layout/public-layout/AuthenticationLayout";
 import Verification from "./pages/auth/Verification";
 import PersonalInfo from "./pages/auth/PersonalInfo";
+import DashboardRoute from "./route-layout/private-layout/DashboardRoute";
+import Dashboard from "./features/inventory/dashboard/Dashboard";
 
 function App() {
   return (
@@ -22,6 +24,9 @@ function App() {
         <Route element={<AccountVerification />}>
           <Route path="/auth/verify-account" element={<Verification />} />
           <Route path="/auth/personal-info" element={<PersonalInfo />} />
+        </Route>
+        <Route element={<DashboardRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
       </Routes>
     </BrowserRouter>

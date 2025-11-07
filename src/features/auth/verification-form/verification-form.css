@@ -96,3 +96,18 @@
 .verification__change a:hover {
   text-decoration: underline;
 }
+
+
+.verification__change-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: #007bff; 
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.verification__change-link:hover {
+  color: #0056b3; 
+}

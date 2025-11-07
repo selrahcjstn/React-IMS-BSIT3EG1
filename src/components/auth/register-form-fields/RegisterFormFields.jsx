@@ -8,7 +8,7 @@ import { emailRegex } from "../../../validation/email-regex";
 import { passwordRegex } from "../../../validation/password-regex";
 import "./register-form-fields.css";
 
-function RegisterFormFields({ email, setEmail, password, setPassword, onSubmit, setError }) {
+function RegisterFormFields({ email, setEmail, password, setPassword, setError }) {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   // ✅ Central validation logic
@@ -45,20 +45,6 @@ function RegisterFormFields({ email, setEmail, password, setPassword, onSubmit, 
     setError(error);
   };
 
-  // ✅ Final validation when clicking register
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationError = validateForm(email, password, confirmPassword);
-
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
-
-    setError("");
-    onSubmit(e, { email: email.trim(), password });
-  };
-
   return (
     <div className="field__container">
       <CustomInput label="Email" icon={AiOutlineMail}>
@@ -93,8 +79,7 @@ function RegisterFormFields({ email, setEmail, password, setPassword, onSubmit, 
 
       <Button
         label="Register"
-        type="button"
-        onClick={handleSubmit}
+        type="submit"
         className="register__submit-btn"
       />
 

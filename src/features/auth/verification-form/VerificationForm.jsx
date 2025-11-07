@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./verification-form.css";
-import { sendEmailVerification } from "firebase/auth";
+import { sendEmailVerification, signOut } from "firebase/auth";
 import { useAuth } from "../../../context/AuthContext";
+import { auth } from "../../../firebase/config";
 
 function VerificationForm() {
   const [userEmail, setUserEmail] = useState("");
@@ -21,26 +22,58 @@ function VerificationForm() {
         return;
       }
 
-      try {
-        await sendEmailVerification(currentUser);
-        console.log("Verification email sent to:", currentUser.email);
-        setUserEmail(currentUser.email);
-      } catch (err) {
-        console.error("Failed to send verification email:", err.message);
+      if (!userEmail) {
+        try {
+          await sendEmailVerification(currentUser);
+          setUserEmail(currentUser.email);
+        } catch (err) {
+          console.error("Failed to send verification email:", err.message);
+        }
       }
     };
 
     sendVerification();
-  }, [currentUser, navigate]);
+  }, [currentUser, navigate, userEmail]);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      if (auth.currentUser) {
+        try {
+          await auth.currentUser.reload();
+          
+          if (auth.currentUser.emailVerified) {
+            clearInterval(interval);
+            navigate("/dashboard");
+          }
+        } catch (err) {
+          console.error("Failed to reload user:", err.message);
+          // Safety check for expired tokens
+          if (err.code === 'auth/user-token-expired') {
+            await signOut(auth);
+            navigate("/auth/login");
+          }
+        }
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [navigate]); 
 
   const handleResend = async () => {
     if (!currentUser) return;
-
     try {
       await sendEmailVerification(currentUser);
-      console.log("Resent verification email to:", currentUser.email);
     } catch (err) {
       console.error("Failed to resend verification email:", err.message);
+    }
+  };
+
+  const handleChangeAccount = async () => {
+    try {
+      await signOut(auth);
+      navigate("/auth/register");
+    } catch (error) {
+      console.error("Error signing out: ", error);
     }
   };
 
@@ -76,7 +109,13 @@ function VerificationForm() {
 
           <div className="register__footer">
             <p className="verification__change">
-              Not the right email? <Link to="/auth/register">Change account</Link>
+              Not the right email?{" "}
+              <button
+                onClick={handleChangeAccount}
+                className="verification__change-link"
+              >
+                Change account
+              </button>
             </p>
           </div>
         </div>
