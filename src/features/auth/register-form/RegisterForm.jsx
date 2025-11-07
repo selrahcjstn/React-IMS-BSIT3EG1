@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import AuthContext from "../../../context/AuthContext";
 import { auth } from "../../../firebase/config";
 import RegisterFormFields from "../../../components/auth/register-form-fields/RegisterFormFields";
 import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
@@ -9,7 +8,6 @@ import "./register-form.css";
 
 function RegisterForm() {
   const navigate = useNavigate();
-  const { setUid } = useContext(AuthContext); 
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,9 +24,6 @@ function RegisterForm() {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(userCredential.user.uid);
-      
-      setUid(userCredential.user.uid);
 
       console.log("User registered:", userCredential.user);
       navigate("/auth/verify-account");
