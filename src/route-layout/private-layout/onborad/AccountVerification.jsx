@@ -1,14 +1,6 @@
 import AuthNav from '../../../features/auth/auth-nav/AuthNav'
-import { Outlet } from "react-router"
-import { useAuth } from '../../../context/AuthContext'
-
+import { Outlet} from "react-router"
 function AccountVerification() {
-  const { user } = useAuth();
-
-  if (!user) {
-    return <Navigate to="/auth/login" replace />;
-  }
-
   return (
     <>
       <AuthNav />

@@ -2,17 +2,22 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./verification-form.css";
 import { sendEmailVerification } from "firebase/auth";
-import { auth } from "../../../firebase/config";
+import { useAuth } from "../../../context/AuthContext";
 
 function VerificationForm() {
   const [userEmail, setUserEmail] = useState("");
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const sendVerification = async () => {
-      const currentUser = auth.currentUser;
       if (!currentUser) {
         navigate("/auth/login");
+        return;
+      }
+
+      if (currentUser.emailVerified) {
+        navigate("/dashboard");
         return;
       }
 
@@ -26,10 +31,9 @@ function VerificationForm() {
     };
 
     sendVerification();
-  }, [navigate]);
+  }, [currentUser, navigate]);
 
   const handleResend = async () => {
-    const currentUser = auth.currentUser;
     if (!currentUser) return;
 
     try {
@@ -53,7 +57,7 @@ function VerificationForm() {
             Please click the link we sent to the following email:
           </p>
 
-          <p className="verification__email">{userEmail}</p>
+          <p className="verification__email">{userEmail || "Loading..."}</p>
 
           <div className="verification__buttons">
             <button onClick={handleResend} className="verification__btn resend">

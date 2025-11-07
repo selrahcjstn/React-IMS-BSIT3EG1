@@ -3,10 +3,10 @@ import { useAuth } from "../../context/AuthContext";
 import AuthNav from "../../features/auth/auth-nav/AuthNav";
 
 function AuthenticationLayout() {
-  const { user } = useAuth(); 
+  const { currentUser } = useAuth();
 
-  if (user) {
-    return <Navigate to="/dashboard" replace/>;
+  if (currentUser) {
+    return <Navigate to="/dashboard" replace />;
   }
 
   return (
