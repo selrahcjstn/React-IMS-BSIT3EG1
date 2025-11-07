@@ -1,11 +1,11 @@
 import LoginFormFields from "../../../components/auth/login-form-fields/LoginFormFields";
-import { Link } from "react-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase/config";
 import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./login-form.css";
+import FormHelper from "../../../components/auth/form-helper/FormHelper";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -73,15 +73,12 @@ function LoginForm() {
         setEmail={setEmail}
         setPassword={setPassword}
       />
-
-      <div className="login__footer">
-        <p>
-          Don't have an account?{" "}
-          <Link className="login__helper-signup" to="/auth/register">
-            Register here
-          </Link>
-        </p>
-      </div>
+      
+      <FormHelper
+        label="Register here"
+        to="/auth/register"
+        question="Don't have an account?"
+      />
     </form>
   );
 }

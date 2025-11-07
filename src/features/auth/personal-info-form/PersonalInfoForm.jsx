@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react"; // 1. Import useEffect
+import { useState, useEffect } from "react";
 import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
 import { useAuth } from "../../../context/AuthContext";
 import PersonalInfoField from "../../../components/auth/personal-info-field/PersonalInfoField";
@@ -7,7 +7,7 @@ import { getDatabase, ref, set } from "firebase/database";
 import "./personal-info-form.css";
 
 function PersonalInfoForm() {
-  const { uid, email } = useAuth();
+  const { currentUser, loading } = useAuth();
   const navigate = useNavigate();
 
   const [firstName, setFirstName] = useState("");
@@ -17,10 +17,14 @@ function PersonalInfoForm() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!uid) {
+    if (!loading && !currentUser) {
       navigate("/auth/login");
     }
-  }, [uid, navigate]); 
+
+    if (!loading && currentUser && !currentUser.emailVerified) {
+      navigate("/auth/verify-account");
+    }
+  }, [currentUser, loading, navigate]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -30,32 +34,30 @@ function PersonalInfoForm() {
       setError("Please fill in all required fields.");
       return;
     }
-
+    
     const userData = {
       firstName,
       middleName,
       lastName,
       purpose,
-      email,
-      uid,
+      email: currentUser.email, 
+      uid: currentUser.uid,
     };
 
     try {
       const db = getDatabase();
-      await set(ref(db, "users/" + uid), userData);
-      
-      navigate("/dashboard"); 
-      
+      await set(ref(db, "users/" + currentUser.uid), userData);
+      navigate("/dashboard");
     } catch (error) {
       setError("Failed to save user data: " + error.message);
     }
   }
 
-
-  if (!uid) {
+  if (loading || !currentUser) {
     return null; 
   }
-  
+
+
   return (
     <form className="personal__form-container" onSubmit={handleSubmit}>
       <h1 className="personal__heading">Personal Information</h1>

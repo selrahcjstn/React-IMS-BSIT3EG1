@@ -43,11 +43,10 @@ function VerificationForm() {
           
           if (auth.currentUser.emailVerified) {
             clearInterval(interval);
-            navigate("/dashboard");
+            navigate("/auth/personal-info");
           }
         } catch (err) {
           console.error("Failed to reload user:", err.message);
-          // Safety check for expired tokens
           if (err.code === 'auth/user-token-expired') {
             await signOut(auth);
             navigate("/auth/login");
@@ -107,7 +106,7 @@ function VerificationForm() {
             </a>
           </div>
 
-          <div className="register__footer">
+          <div className="verification__footer">
             <p className="verification__change">
               Not the right email?{" "}
               <button

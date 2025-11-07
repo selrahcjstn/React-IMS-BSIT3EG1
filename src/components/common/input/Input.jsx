@@ -1,4 +1,4 @@
-function Input({id, type, placeholder, name, value, onChange}) {
+function Input({id, type, placeholder, name, value, onChange, required}) {
   return (
     <input
       id={id}
@@ -8,6 +8,7 @@ function Input({id, type, placeholder, name, value, onChange}) {
       value={value}
       placeholder={placeholder}
       onChange={onChange}
+      required={required}
     />
   );
 }

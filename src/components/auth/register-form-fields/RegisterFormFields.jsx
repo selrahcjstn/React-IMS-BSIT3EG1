@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import Input from "../../../components/common/input/Input";
 import Button from "../../../components/common/button/Button";
@@ -8,10 +7,8 @@ import { emailRegex } from "../../../validation/email-regex";
 import { passwordRegex } from "../../../validation/password-regex";
 import "./register-form-fields.css";
 
-function RegisterFormFields({ email, setEmail, password, setPassword, setError }) {
-  const [confirmPassword, setConfirmPassword] = useState("");
+function RegisterFormFields({ email, setEmail, password, setPassword, setError, confirmPassword, setConfirmPassword }) {
 
-  // ✅ Central validation logic
   const validateForm = (email, password, confirm) => {
     if (!email) return "Email is required.";
     if (!emailRegex.test(email)) return "Please enter a valid email address.";
@@ -27,7 +24,6 @@ function RegisterFormFields({ email, setEmail, password, setPassword, setError }
     return "";
   };
 
-  // ✅ Live validation for each change
   const handleChange = (field, value) => {
     let newEmail = email;
     let newPassword = password;
