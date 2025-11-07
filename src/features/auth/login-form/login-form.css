@@ -6,22 +6,11 @@
     max-width: 450px;
 }
 
-.login__form{
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
 .login__helper-signup,
 .login__forgot{
     font-size: 14px;
     color: #007bff;
     text-decoration: none;
-}
-
-.login__forgot{
-    align-self: flex-end;
-    margin-bottom: 6px;
 }
 
 .login__heading{

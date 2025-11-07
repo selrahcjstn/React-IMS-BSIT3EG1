@@ -1,13 +1,63 @@
-import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
-import Input from "../../../components/common/input/Input";
-import Button from "../../../components/common/button/Button";
-import CustomInput from "../../../components/auth/custom-input/CustomInput";
+import LoginFormFields from "../../../components/auth/login-form-fields/LoginFormFields";
 import { Link } from "react-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../firebase/config";
+import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "./login-form.css";
 
 function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError("");
+
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return;
+    }
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/dashboard");
+    } catch (error) {
+      let friendlyErrorMessage = "An unknown error occurred. Please try again.";
+
+      switch (error.code) {
+        case "auth/invalid-email":
+          friendlyErrorMessage =
+            "Invalid email format. Please check your spelling.";
+          break;
+
+        case "auth/user-not-found":
+          friendlyErrorMessage = "No account found with this email.";
+          break;
+
+        case "auth/invalid-credential":
+          friendlyErrorMessage = "Incorrect email or password. Please try again.";
+          break;
+
+        case "auth/too-many-requests":
+          friendlyErrorMessage =
+            "Too many failed attempts. Please reset your password or try again later.";
+          break;
+
+        default:
+          console.error("Firebase login error:", error);
+          friendlyErrorMessage = "Failed to log in. Please try again.";
+      }
+
+      setError(friendlyErrorMessage);
+    }
+  }
+
   return (
-    <form className="login__form-container">
+    <form className="login__form-container" onSubmit={handleSubmit} noValidate>
       <h1 id="login-heading" className="login__heading">
         Welcome
       </h1>
@@ -15,33 +65,14 @@ function LoginForm() {
         Login to access your account and stay in control of your inventory.
       </p>
 
-      <div className="login__form" noValidate>
-        <CustomInput label="Email" icon={AiOutlineMail}>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            required
-            autoComplete="email"
-          />
-        </CustomInput>
+      {error && <ErrorMessage error={error} />}
 
-        <CustomInput label="Password" icon={AiOutlineLock}>
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Enter your password"
-            required
-            autoComplete="current-password"
-          />
-        </CustomInput>
-        <Link className="login__forgot" to="/forgot-password">
-          Forgot password?
-        </Link>
-        <Button label="Log in" type="submit" />
-      </div>
+      <LoginFormFields
+        email={email}
+        password={password}
+        setEmail={setEmail}
+        setPassword={setPassword}
+      />
 
       <div className="login__footer">
         <p>

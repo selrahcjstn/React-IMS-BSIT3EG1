@@ -1,0 +1,10 @@
+.login__form-fields{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.login__forgot{
+    align-self: flex-end;
+    margin-bottom: 6px;
+}
