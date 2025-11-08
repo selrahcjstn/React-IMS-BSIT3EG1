@@ -18,7 +18,7 @@ function VerificationForm() {
       }
 
       if (currentUser.emailVerified === true) {
-        navigate("/dashboard");
+        navigate("/auth/personal-info");
         return;
       }
 

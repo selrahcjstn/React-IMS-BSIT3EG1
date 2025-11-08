@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, get } from "firebase/database";
 import { nameRegex } from "../../../validation/name-regex";
 import { useAuth } from "../../../context/AuthContext";
+import { updateProfile } from "firebase/auth";
 import PersonalInfoField from "../../../components/auth/personal-info-field/PersonalInfoField";
 import ErrorMessage from "../../../components/auth/error-message/ErrorMessage";
 import "./personal-info-form.css";
+import { auth } from "../../../firebase/config";
 
 function PersonalInfoForm() {
   const { currentUser, loading } = useAuth();
@@ -18,13 +20,33 @@ function PersonalInfoForm() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!loading && !currentUser) {
-      navigate("/auth/login");
+    if (loading) {
+      return;
     }
 
-    if (!loading && currentUser && !currentUser.emailVerified) {
-      navigate("/auth/verify-account");
+    if (!currentUser) {
+      navigate("/auth/login");
+      return;
     }
+
+    if (!currentUser.emailVerified) {
+      navigate("/auth/verify-account");
+      return;
+    }
+
+    const checkProfile = async () => {
+      const db = getDatabase();
+      const userRef = ref(db, "users/" + currentUser.uid);
+      const snapshot = await get(userRef);
+
+      if (snapshot.exists()) {
+        navigate("/dashboard");
+      }
+    };
+
+    checkProfile().catch((error) => {
+      setError("Error checking profile. Please try again.", error.message);
+    });
   }, [currentUser, loading, navigate]);
 
   async function handleSubmit(e) {
@@ -55,6 +77,10 @@ function PersonalInfoForm() {
     try {
       const db = getDatabase();
       await set(ref(db, "users/" + currentUser.uid), userData);
+
+      await updateProfile(auth.currentUser, {
+        displayName: `${firstName} ${lastName}`,
+      });
       navigate("/dashboard");
     } catch (error) {
       setError("Failed to save user data: " + error.message);

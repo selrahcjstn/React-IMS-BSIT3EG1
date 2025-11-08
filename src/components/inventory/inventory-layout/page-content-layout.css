@@ -1,0 +1,10 @@
+.layout__content {
+  flex-grow: 1;
+  padding: 20px;
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+.layout__content--collapsed {
+  margin-left: 80px;
+}

@@ -1,0 +1,145 @@
+.layout {
+  display: flex;
+}
+
+.sidebar {
+  background-color: #f4f4f4;
+  height: 100vh;
+  padding: 20px 15px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: width 0.3s ease;
+}
+
+/* Width states */
+.sidebar--open {
+  width: 250px;
+}
+
+.sidebar--closed {
+  width: 70px;
+}
+
+/* Header Title */
+.sidebar__title {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+/* Menu */
+.sidebar__menu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.sidebar__menu-item {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.sidebar__menu-item:hover {
+  background: #e2e2e2;
+}
+
+.sidebar__icon {
+  font-size: 1.3rem;
+}
+
+.sidebar--closed .sidebar__text {
+  display: none;
+}
+
+.sidebar__text {
+  margin-left: 12px;
+}
+
+.sidebar__divider {
+  border: none;
+  border-top: 1px solid #dcdcdc;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Toggle */
+.sidebar__toggle {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  width: fit-content;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.sidebar__toggle:hover {
+  background: #e2e2e2;
+}
+
+/* Profile */
+.sidebar__profile {
+  display: flex;
+  align-items: center;
+  padding: 10px 5px;
+}
+
+.sidebar__profile-icon {
+  font-size: 2rem;
+}
+
+.sidebar__profile-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.sidebar__profile-name {
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.sidebar__profile-email {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.sidebar--closed [data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 75px;
+  background: #333;
+  color: #fff;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%);
+  top: 50%;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar--closed [data-tooltip]:hover::after {
+  opacity: 1;
+}

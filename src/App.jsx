@@ -6,9 +6,10 @@ import AccountVerificationRoute from "./routes/private-routes/AccountVerificatio
 import AuthenticationRoute from "./routes/public-routes/AuthenticationRoute";
 import Verification from "./pages/auth/Verification";
 import PersonalInfo from "./pages/auth/PersonalInfo";
-import DashboardRoute from "./routes/private-routes/DashboardRoute";
-import Dashboard from "./features/inventory/dashboard/Dashboard";
+import UsersPanelRoutes from "./routes/private-routes/UsersPanelRoutes";
+import Dashboard from "./pages/inventory/Dashboard";
 import LandingPageRoute from "./routes/public-routes/LandingPageRoute";
+
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
           <Route path="/auth/verify-account" element={<Verification />} />
           <Route path="/auth/personal-info" element={<PersonalInfo />} />
         </Route>
-        <Route element={<DashboardRoute />}>
+        <Route element={<UsersPanelRoutes />}>
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
       </Routes>
