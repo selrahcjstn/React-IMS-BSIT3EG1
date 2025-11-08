@@ -1,5 +1,5 @@
 import PageContentLayout from "../../components/inventory/inventory-layout/PageContentLayout";
-import Sidebar from "../../features/inventory/sidebar/Sidebar";
+import Sidebar from "../../features/app/sidebar/Sidebar";
 import { useState, useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";

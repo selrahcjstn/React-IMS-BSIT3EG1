@@ -9,7 +9,7 @@ import PersonalInfo from "./pages/auth/PersonalInfo";
 import UsersPanelRoutes from "./routes/private-routes/UsersPanelRoutes";
 import Dashboard from "./pages/inventory/Dashboard";
 import LandingPageRoute from "./routes/public-routes/LandingPageRoute";
-
+import Inventory from "./pages/inventory/Inventory";
 
 function App() {
   return (
@@ -31,6 +31,7 @@ function App() {
         </Route>
         <Route element={<UsersPanelRoutes />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/inventory" element={<Inventory />} />
         </Route>
       </Routes>
     </BrowserRouter>

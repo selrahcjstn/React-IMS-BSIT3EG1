@@ -1,8 +1,8 @@
 import { useAuth } from "../../context/AuthContext";
 import { Navigate } from "react-router-dom";
-import DashboardHeader from "../../features/inventory/dashboard/dashboard-header/DashboardHeader";
-import DashboardBoxContainer from "../../features/inventory/dashboard/box-container/DashboardBoxContainer";
-import Chart from "../../features/inventory/dashboard/chart/Chart";
+import DashboardHeader from "../../features/app/dashboard/dashboard-header/DashboardHeader";
+import DashboardBoxContainer from "../../features/app/dashboard/box-container/DashboardBoxContainer";
+import Chart from "../../features/app/dashboard/chart/Chart";
 import "./dashboard.css";
 
 function Dashboard() {
