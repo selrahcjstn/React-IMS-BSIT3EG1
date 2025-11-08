@@ -1,9 +1,9 @@
 import { useAuth } from "../../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import DashboardHeader from "../../features/inventory/dashboard/dashboard-header/DashboardHeader";
-import "./dashboard.css";
 import DashboardBoxContainer from "../../features/inventory/dashboard/box-container/DashboardBoxContainer";
 import Chart from "../../features/inventory/dashboard/chart/Chart";
+import "./dashboard.css";
 
 function Dashboard() {
   const { currentUser } = useAuth();
