@@ -8,6 +8,9 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 import "./sidebar.css";
+import Logo from "../../../components/logo/Logo";
+import LogoIcon from "../../../assets/logo.png";
+
 
 function Sidebar({ isOpen, setIsOpen }) {
   const toggleSidebar = () => setIsOpen(!isOpen);
@@ -23,7 +26,9 @@ function Sidebar({ isOpen, setIsOpen }) {
         className={`sidebar ${isOpen ? "sidebar--open" : "sidebar--closed"}`}
       >
         <nav className="sidebar__menu">
-          {isOpen && <h2 className="sidebar__title">Title</h2>}
+          {isOpen ? <Logo /> : <img src={LogoIcon} alt="Logo" className="sidebar__logo-icon" />}
+
+          <hr className="sidebar__divider" />
           <a href="#" className="sidebar__menu-item" data-tooltip="Dashboard">
             <FaHome className="sidebar__icon" />
             {isOpen && <span className="sidebar__text">Dashboard</span>}

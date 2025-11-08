@@ -18,6 +18,11 @@ function UsersPanelRoutes() {
         setIsLoading(false);
         return;
       }
+      if(!currentUser.emailVerified){
+        setRedirectPath("/auth/login");
+        setIsLoading(false);
+        return;
+      }
 
       const db = getDatabase();
       const userRef = ref(db, `users/${currentUser.uid}`);

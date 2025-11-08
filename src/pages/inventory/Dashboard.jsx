@@ -1,28 +1,20 @@
-import Button from "../../components/common/button/Button";
 import { useAuth } from "../../context/AuthContext";
 import { Navigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase/config";
+import DashboardHeader from "../../features/inventory/dashboard/dashboard-header/DashboardHeader";
+import "./dashboard.css";
+import DashboardBoxContainer from "../../features/inventory/dashboard/box-container/DashboardBoxContainer";
+import Chart from "../../features/inventory/dashboard/chart/Chart";
 
 function Dashboard() {
   const { currentUser } = useAuth();
 
-  const handleClick = async () => {
-    await signOut(auth); // 
-  };
-
   if (!currentUser) return <Navigate to="/auth/login" replace />;
 
   return (
-    <div>
-      
-      <h1>Dashboard</h1>
-
-      <p>Welcome back, {currentUser.email}!</p>
-      <p>Verified: {currentUser.emailVerified ? "Yes" : "No"}</p>
-      <p>User ID: {currentUser.uid}</p>
-      <p>Name: {currentUser.displayName || "N/A"}</p>
-      <Button onClick={handleClick} label="Logout" />
+    <div className="dashboard container">
+      <DashboardHeader currentUser={currentUser} />
+      <DashboardBoxContainer />
+      <Chart />
     </div>
   );
 }
