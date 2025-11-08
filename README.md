@@ -2,8 +2,10 @@
 
 A web-based inventory management system built with **React** and **Firebase**. This application allows businesses to track product inventory, manage stock levels, and get dashboard insights into their operations.
 
-This was developed as a **final group project** for the BSIT program at **Bulacan State University**.
+# Web and Mobile Application Development Project
 
+This project was developed as a **final group project** for the **Bachelor of Science in Information Technology (BSIT)** program at **Bulacan State University**.  
+It demonstrates the application of both **web and mobile development skills**, including **UI/UX design, database management, and full-stack programming**, showcasing the team’s technical proficiency and collaborative efforts throughout the course.
 ---
 
 ## About This Project
