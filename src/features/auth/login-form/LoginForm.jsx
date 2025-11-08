@@ -72,6 +72,7 @@ function LoginForm() {
         password={password}
         setEmail={setEmail}
         setPassword={setPassword}
+        setError={setError}
       />
       
       <FormHelper

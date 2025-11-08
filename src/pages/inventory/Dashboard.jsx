@@ -20,7 +20,8 @@ function Dashboard() {
 
       <p>Welcome back, {currentUser.email}!</p>
       <p>Verified: {currentUser.emailVerified ? "Yes" : "No"}</p>
-
+      <p>User ID: {currentUser.uid}</p>
+      <p>Name: {currentUser.displayName || "N/A"}</p>
       <Button onClick={handleClick} label="Logout" />
     </div>
   );

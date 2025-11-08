@@ -30,7 +30,7 @@ function PersonalInfoForm() {
     }
 
     if (!currentUser.emailVerified) {
-      navigate("/auth/verify-account");
+      navigate("/auth/login");
       return;
     }
 

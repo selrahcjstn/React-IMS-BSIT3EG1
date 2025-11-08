@@ -79,7 +79,7 @@ function RegisterFormFields({ email, setEmail, password, setPassword, setError, 
         className="register__submit-btn"
       />
 
-      <Social />
+      <Social setError={setError}/>
     </div>
   );
 }

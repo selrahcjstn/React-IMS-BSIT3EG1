@@ -4,8 +4,9 @@ import Button from "../../common/button/Button";
 import CustomInput from "../custom-input/CustomInput";
 import Input from "../../common/input/Input";
 import "./login-form-fields.css";
+import Social from "../social/Social";
 
-function LoginFormFields({email, password, setEmail, setPassword}) {
+function LoginFormFields({email, password, setEmail, setPassword, setError}) {
   return (
     <div className="login__form-fields">
         <CustomInput label="Email" icon={AiOutlineMail}>
@@ -37,6 +38,7 @@ function LoginFormFields({email, password, setEmail, setPassword}) {
           Forgot password?
         </Link>
         <Button label="Log in" type="submit" />
+        <Social setError={setError}/>
       </div>
   )
 }
