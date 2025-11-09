@@ -11,7 +11,6 @@ import { passwordRegex } from "../../../validation/password-regex";
 
 function RegisterForm() {
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState(""); 
@@ -26,25 +25,7 @@ function RegisterForm() {
       return;
     }
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
 
-    if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-
-    for (let rule of passwordRegex) {
-      if (!rule.regex.test(password)) {
-        setError(rule.message);
-        return;
-      }
-    }
-
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
       navigate("/auth/verify-account");
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
