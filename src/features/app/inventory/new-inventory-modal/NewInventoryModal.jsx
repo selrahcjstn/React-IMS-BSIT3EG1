@@ -2,7 +2,7 @@ import InventoryFormFields from "../../../../components/inventory/inventory-form
 import { useState } from "react";
 import { FiX } from "react-icons/fi";
 import { useAuth } from "../../../../context/AuthContext";
-import { ref, push, set, serverTimestamp } from "firebase/database";
+import { ref, push, update, serverTimestamp } from "firebase/database";
 import { database } from "../../../../firebase/config";
 import "./new-inventory-modal.css";
 
@@ -14,8 +14,8 @@ function NewInventoryModal({ isOpen, onClose, onSubmit }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
   const validateForm = () => {
@@ -26,6 +26,15 @@ function NewInventoryModal({ isOpen, onClose, onSubmit }) {
     return Object.keys(newErrors).length === 0;
   };
 
+  const getErrorMessage = (error) => {
+    if (!error || !error.code) return "Failed to create inventory.";
+    switch (error.code) {
+      case "PERMISSION_DENIED": return "Permission denied by security rules.";
+      case "NETWORK_ERROR": return "Network error. Check your connection.";
+      default: return error.message || "Failed to create inventory.";
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -33,52 +42,43 @@ function NewInventoryModal({ isOpen, onClose, onSubmit }) {
       setErrors({ submit: "You must be logged in to create an inventory" });
       return;
     }
-
     setIsSubmitting(true);
     try {
-      const inventoryData = {
+      const invRef = push(ref(database, "inventories"));
+      const inventoryId = invRef.key;
+
+      const summary = {
         name: formData.name.trim(),
         category: formData.category,
         description: formData.description.trim(),
         ownerId: currentUser.uid,
+        itemCount: 0,
+        totalValue: 0,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       };
 
-      const inventoriesRef = ref(database, "inventories");
-      const newInventoryRef = push(inventoriesRef);
-      await set(newInventoryRef, inventoryData);
+      // No inventoryItems path here
+      const updates = {
+        [`inventories/${inventoryId}`]: summary,
+        [`userInventories/${currentUser.uid}/${inventoryId}`]: true
+      };
+      await update(ref(database), updates);
 
-      if (onSubmit) {
-        // serverTimestamp() resolves on the server; locally we can optimistically
-        // return null placeholders for createdAt/updatedAt if needed.
-        onSubmit({
-          id: newInventoryRef.key,
-            ...inventoryData
-        });
-      }
-
-      resetForm();
+      onSubmit?.({ id: inventoryId, ...summary });
+      setFormData({ name: "", description: "", category: "" });
+      setErrors({});
       onClose();
-    } catch (error) {
-      console.error("Error creating inventory:", error);
-      console.error("code:", error.code, "message:", error.message);
-      let errorMessage = "Failed to create inventory. Please try again.";
-      if (error.code === "PERMISSION_DENIED") errorMessage = "You don't have permission to create an inventory";
-      if (error.code === "NETWORK_ERROR") errorMessage = "Network error. Please check your connection";
-      setErrors({ submit: errorMessage });
+    } catch (err) {
+      setErrors({ submit: getErrorMessage(err) });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const resetForm = () => {
+  const handleCancel = () => {
     setFormData({ name: "", description: "", category: "" });
     setErrors({});
-  };
-
-  const handleCancel = () => {
-    resetForm();
     onClose();
   };
 

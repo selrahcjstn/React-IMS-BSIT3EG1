@@ -18,13 +18,10 @@ function InventoryHeader() {
 
   const handleCreateInventory = (formData) => {
     console.log("New inventory created:", formData);
-    // Add API call here to create inventory
-    // For now, just close the modal
   };
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
-    // Add search functionality here
   };
 
   return (

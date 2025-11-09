@@ -1,13 +1,19 @@
-import Button from '../../../../components/common/button/Button'
-import { useNavigate } from 'react-router'
-import { FiSearch } from 'react-icons/fi'
-import './items-header.css'
+import Button from "../../../../components/common/button/Button";
+import { useNavigate, useParams } from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
+import "./items-header.css";
 
-function ItemsHeader() {
+function ItemsHeader({ inventoryId: inventoryIdProp }) {
   const navigate = useNavigate();
+  const { id: idFromParams } = useParams();
+  const inventoryId = inventoryIdProp ?? idFromParams;
 
-  const handleAddNewInventory = () => {
-    navigate("/inventory/new");
+  const handleAddNewItem = () => {
+    if (!inventoryId) {
+      console.warn("No inventory ID found in route params or props.");
+      return;
+    }
+    navigate(`/inventory/${inventoryId}/items/new`);
   };
 
   return (
@@ -18,13 +24,14 @@ function ItemsHeader() {
           type="text"
           className="items__search-bar"
           placeholder="Search..."
-          aria-label="Search inventory"
+          aria-label="Search items"
         />
       </div>
       <Button
         className="items__button"
-        label="New Inventory"
-        onClick={handleAddNewInventory}
+        label="Add New Item"
+        onClick={handleAddNewItem}
+        disabled={!inventoryId}
       />
     </div>
   );

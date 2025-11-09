@@ -1,66 +1,111 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { ref, onValue } from "firebase/database";
+import { database } from "../../../../firebase/config";
 import ItemCard from "../../../../components/inventory/ItemCard/ItemCard";
 import "./item-list.css";
 
 function ItemList() {
-  const inventoryName = "Electronics Stock";
+  const { id: inventoryId } = useParams();
+  const [inventoryName, setInventoryName] = useState("Inventory");
+  const [items, setItems] = useState([]);
+  const [loadingInv, setLoadingInv] = useState(true);
+  const [loadingItems, setLoadingItems] = useState(true);
+  const [error, setError] = useState("");
 
-  const items = [
-    {
-      id: 1,
-      name: "Laptop",
-      quantity: 25,
-      unitPrice: 899.99,
-      totalValue: 22499.75,
-      status: "In Stock",
-      size: "35.5cm x 23.8cm x 1.99cm",
-      lastUpdated: "2025-11-09",
-      createdAt: "2025-01-15",
-    },
-    {
-      id: 2,
-      name: "Office Chair",
-      quantity: 15,
-      unitPrice: 249.99,
-      totalValue: 3749.85,
-      status: "In Stock",
-      size: "65cm x 65cm x 112cm",
-      lastUpdated: "2025-11-08",
-      createdAt: "2025-02-20",
-    },
-    {
-      id: 3,
-      name: "Desk Lamp",
-      quantity: 8,
-      unitPrice: 49.99,
-      totalValue: 399.92,
-      status: "Low Stock",
-      size: "20cm x 20cm x 45cm",
-      lastUpdated: "2025-11-07",
-      createdAt: "2025-03-10",
-    },
-    {
-      id: 4,
-      name: "Keyboard",
-      quantity: 0,
-      unitPrice: 79.99,
-      totalValue: 0,
-      status: "Out of Stock",
-      size: "45cm x 15cm x 2.5cm",
-      lastUpdated: "2025-11-06",
-      createdAt: "2025-04-22",
-    },
-    {
-      id: 5,
-      name: "Monitor",
-      quantity: 12,
-      unitPrice: 299.99,
-      totalValue: 3599.88,
-      status: "In Stock",
-      size: "60cm x 50cm x 10cm",
-      lastUpdated: "2025-11-09",
-      createdAt: "2025-05-11",
-    },
-  ];
+  const formatDate = (val) => {
+    if (val == null) return "-";
+    const num = typeof val === "number" ? val : Number(val);
+    if (Number.isNaN(num)) return "-";
+    const d = new Date(num);
+    if (Number.isNaN(d.getTime())) return "-";
+    return d.toLocaleDateString();
+  };
+
+  const formatDimensions = (dims) => {
+    if (!Array.isArray(dims) || !dims.length) return "-";
+    return dims.map((n) => `${n}cm`).join(" x ");
+  };
+
+  const computeStatus = (q) => {
+    const qty = Number(q) || 0;
+    if (qty <= 0) return "Out of Stock";
+    if (qty < 10) return "Low Stock";
+    return "In Stock";
+  };
+
+  useEffect(() => {
+    if (!inventoryId) return;
+
+    const invRef = ref(database, `inventories/${inventoryId}`);
+    const itemsRef = ref(database, `inventoryItems/${inventoryId}`);
+
+    const unsubInv = onValue(
+      invRef,
+      (snap) => {
+        const inv = snap.val();
+        setInventoryName(inv?.name || "Inventory");
+        setLoadingInv(false);
+      },
+      (err) => {
+        console.error("Error loading inventory details:", err);
+        setError(err?.message || "Failed to load inventory.");
+        setLoadingInv(false);
+      }
+    );
+
+    const unsubItems = onValue(
+      itemsRef,
+      (snap) => {
+        const data = snap.val() || {};
+        const list = Object.entries(data).map(([id, it]) => {
+          const quantity = Number(it.quantity) || 0;
+          const price = Number(it.price) || 0;
+          const total = Number((quantity * price).toFixed(2));
+
+          return {
+            id,
+            name: it.title || "Untitled",
+            quantity,
+            unitPrice: price,
+            totalValue: total,
+            status: computeStatus(quantity),
+            size: formatDimensions(it.dimensions),
+            lastUpdated: formatDate(it.updatedAt ?? it.createdAt),
+            createdAt: formatDate(it.createdAt)
+          };
+        });
+
+        list.sort((a, b) => {
+          const aTime = new Date(a.lastUpdated).getTime() || 0;
+          const bTime = new Date(b.lastUpdated).getTime() || 0;
+          return bTime - aTime;
+        });
+
+        setItems(list);
+        setLoadingItems(false);
+      },
+      (err) => {
+        console.error("Error loading inventory items:", err);
+        setError(err?.message || "Failed to load items.");
+        setLoadingItems(false);
+      }
+    );
+
+    return () => {
+      try {
+        unsubInv();
+      } catch (err) {
+        console.error("Error unsubscribing inventory listener:", err);
+      }
+
+      try {
+        unsubItems();
+      } catch (err) {
+        console.error("Error unsubscribing inventory items listener:", err);
+      }
+    };
+  }, [inventoryId]);
 
   const handleEditItem = (id) => {
     console.log("Edit item:", id);
@@ -70,10 +115,38 @@ function ItemList() {
     console.log("Delete item:", id);
   };
 
+  const loading = loadingInv || loadingItems;
+
+  if (loading) {
+    return (
+      <div className="itemlist">
+        <h2 className="itemlist__title">{inventoryName}</h2>
+        <div className="itemlist__empty">Loading...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="itemlist">
+        <h2 className="itemlist__title">{inventoryName}</h2>
+        <div className="itemlist__empty">{error}</div>
+      </div>
+    );
+  }
+
+  if (!items.length) {
+    return (
+      <div className="itemlist">
+        <h2 className="itemlist__title">{inventoryName}</h2>
+        <div className="itemlist__empty">No items yet.</div>
+      </div>
+    );
+  }
+
   return (
     <div className="itemlist">
       <h2 className="itemlist__title">{inventoryName}</h2>
-
       <div className="itemlist__grid">
         {items.map((item) => (
           <ItemCard

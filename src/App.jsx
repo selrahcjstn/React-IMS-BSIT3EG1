@@ -11,6 +11,8 @@ import Dashboard from "./pages/inventory/Dashboard";
 import LandingPageRoute from "./routes/public-routes/LandingPageRoute";
 import Inventory from "./pages/inventory/Inventory";
 import Items from "./pages/inventory/Items";
+import AddNewItem from "./pages/inventory/AddNewItem";
+
 function App() {
   return (
     <BrowserRouter>
@@ -33,6 +35,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/inventory/items/:id" element={<Items />} />
+          <Route path="/inventory/:id/items/new" element={<AddNewItem />} />
         </Route>
       </Routes>
     </BrowserRouter>
