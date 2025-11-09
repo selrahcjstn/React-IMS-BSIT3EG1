@@ -32,7 +32,7 @@ function App() {
         <Route element={<UsersPanelRoutes />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/inventory" element={<Inventory />} />
-          <Route path="/inventory/items" element={<Items />} />
+          <Route path="/inventory/items/:id" element={<Items />} />
         </Route>
       </Routes>
     </BrowserRouter>

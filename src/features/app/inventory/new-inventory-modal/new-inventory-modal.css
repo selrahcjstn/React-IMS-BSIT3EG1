@@ -268,7 +268,6 @@
   transform: scale(0.97);
 }
 
-/* Responsive: Mobile */
 @media (max-width: 480px) {
   .new-inventory-modal__container {
     width: 95%;
@@ -298,7 +297,7 @@
   .new-inventory-modal__input,
   .new-inventory-modal__textarea,
   .new-inventory-modal__select {
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px; 
     padding: 8px 10px;
   }
 

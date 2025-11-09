@@ -15,7 +15,6 @@ function InventoryFormFields({ formData, errors, isSubmitting, onChange }) {
 
   return (
     <>
-      {/* Inventory Name */}
       <div className="new-inventory-modal__form-group">
         <label htmlFor="name" className="new-inventory-modal__label">
           Inventory Name{" "}
@@ -38,7 +37,6 @@ function InventoryFormFields({ formData, errors, isSubmitting, onChange }) {
         )}
       </div>
 
-      {/* Category */}
       <div className="new-inventory-modal__form-group">
         <label htmlFor="category" className="new-inventory-modal__label">
           Category <span className="new-inventory-modal__required">*</span>
@@ -67,7 +65,6 @@ function InventoryFormFields({ formData, errors, isSubmitting, onChange }) {
         )}
       </div>
 
-      {/* Description */}
       <div className="new-inventory-modal__form-group">
         <label htmlFor="description" className="new-inventory-modal__label">
           Description
