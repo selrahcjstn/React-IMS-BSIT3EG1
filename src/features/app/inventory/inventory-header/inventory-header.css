@@ -53,11 +53,9 @@
   color: #9ca3af;
 }
 
-
 .inventory__header-container .button {
   margin-left: auto;
 }
-
 
 .button {
   display: inline-flex;
@@ -81,4 +79,26 @@
 .button:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px rgba(47, 119, 235, 0.28);
+}
+
+/* Responsive: Mobile */
+@media (max-width: 480px) {
+  .inventory__header-container {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .inventory__custom-search {
+    width: 100%;
+    padding: 5px 9px;
+  }
+
+  .button {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+
+  .inventory__header-container .button {
+    margin-left: auto;
+  }
 }
