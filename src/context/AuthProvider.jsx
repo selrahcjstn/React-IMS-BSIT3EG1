@@ -21,7 +21,6 @@ export function AuthProvider({ children }) {
     uid: currentUser ? currentUser.uid : null,
     email: currentUser ? currentUser.email : null,
     isLoggedIn: !!currentUser,
-    isVerified: currentUser ? currentUser.emailVerified : false,
   };
 
   return (
