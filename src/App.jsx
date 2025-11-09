@@ -12,6 +12,7 @@ import LandingPageRoute from "./routes/public-routes/LandingPageRoute";
 import Inventory from "./pages/inventory/Inventory";
 import Items from "./pages/inventory/Items";
 import AddNewItem from "./pages/inventory/AddNewItem";
+import EditItemPage from "./pages/inventory/EditItemPage";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/inventory/items/:id" element={<Items />} />
           <Route path="/inventory/:id/items/new" element={<AddNewItem />} />
+          <Route path="/inventory/items/:id/item/:itemId/edit" element={<EditItemPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { ref, update, runTransaction } from "firebase/database";
 import { database } from "../../../firebase/config";
 import "./item-card.css";
 
-function ItemCard({ item, onEdit, onDelete }) {
+function ItemCard({ item, onDelete }) {
   const { id: inventoryId } = useParams();
   const [deleting, setDeleting] = useState(false);
+  const navigate = useNavigate();
 
   const getStatusBadgeClass = (status) => {
     switch (status) {
@@ -30,16 +31,14 @@ function ItemCard({ item, onEdit, onDelete }) {
     try {
       setDeleting(true);
 
-      // Remove the item
       await update(ref(database), {
         [`inventoryItems/${inventoryId}/${item.id}`]: null
       });
 
-      // Decrement inventory itemCount (floor at 0)
-      await runTransaction(ref(database, `inventories/${inventoryId}/itemCount`), (current) => {
-        if (typeof current === "number" && current > 0) return current - 1;
-        return 0;
-      });
+      await runTransaction(
+        ref(database, `inventories/${inventoryId}/itemCount`),
+        (current) => (typeof current === "number" && current > 0 ? current - 1 : 0)
+      );
 
       if (typeof onDelete === "function") onDelete(item.id);
     } catch (err) {
@@ -49,8 +48,9 @@ function ItemCard({ item, onEdit, onDelete }) {
     }
   };
 
-  const handleEdit = () => {
-    if (typeof onEdit === "function") onEdit(item.id);
+  const goEdit = () => {
+    // Correct: include BOTH params in the order the route expects
+    navigate(`/inventory/items/${inventoryId}/item/${item.id}/edit`);
   };
 
   return (
@@ -58,12 +58,12 @@ function ItemCard({ item, onEdit, onDelete }) {
       <div className="item-card__header">
         <div className="item-card__header-left">
           <h3 className="item-card__item-name">{item.name}</h3>
-          <span className="item-card__item-size">{item.size}</span>
+            <span className="item-card__item-size">{item.size}</span>
         </div>
         <div className="item-card__card-actions">
           <button
             className="item-card__action-btn item-card__action-btn--edit"
-            onClick={handleEdit}
+            onClick={goEdit}
             aria-label="Edit item"
             title="Edit"
             disabled={deleting}
@@ -104,18 +104,18 @@ function ItemCard({ item, onEdit, onDelete }) {
 
         <div className="item-card__bottom-row">
           <div className="item-card__dates-inline">
-            <span className="item-card__date-small">
-              {item.lastUpdated}
-            </span>
+            <span className="item-card__date-small">{item.lastUpdated}</span>
           </div>
           <span
-            className={`item-card__status-badge ${getStatusBadgeClass(
-              item.status
-            )}`}
+            className={`item-card__status-badge ${getStatusBadgeClass(item.status)}`}
           >
             {item.status}
           </span>
-          <Link to={`/inventory/item/${item.id}`} className="item-card__view-link">
+          <Link
+            to={`/inventory/items/${inventoryId}/item/${item.id}`}
+            className="item-card__view-link"
+            aria-label={`View item ${item.name}`}
+          >
             View
           </Link>
         </div>
