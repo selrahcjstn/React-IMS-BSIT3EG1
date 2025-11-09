@@ -1,4 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import { ref, update } from "firebase/database";
+import { database } from "../../../firebase/config";
+import { useAuth } from "../../../context/AuthContext";
 import "./inventory-card.css";
 
 function InventoryCard({
@@ -10,13 +15,69 @@ function InventoryCard({
   createdAt,
   updatedAt,
   loading = false,
+  onEdit,
+  onDelete
 }) {
+  const { currentUser } = useAuth();
+  const [deleting, setDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    if (loading || deleting) return;
+    const ok = window.confirm(`Delete "${name}"? This cannot be undone.`);
+    if (!ok) return;
+
+    try {
+      setDeleting(true);
+      const uid = currentUser?.uid;
+      const updates = {
+        [`inventories/${id}`]: null,
+        ...(uid ? { [`userInventories/${uid}/${id}`]: null } : {}),
+        [`inventoryItems/${id}`]: null
+      };
+      await update(ref(database), updates);
+      if (typeof onDelete === "function") onDelete(id);
+    } catch (err) {
+      alert(err?.message || "Failed to delete inventory.");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const handleEdit = () => {
+    if (loading || deleting) return;
+    if (typeof onEdit === "function") onEdit(id);
+  };
+
   return (
     <div className="inventory__item">
       <div className="inventory__item-container">
         <div className="inventory__item-header">
           <h3 className="inventory__item-name">{name}</h3>
-          <span className="inventory__item-tag">{category}</span>
+          <div className="inventory__header-right">
+            <span className="inventory__item-tag">{category}</span>
+            <div className="inventory__item-actions">
+              <button
+                type="button"
+                className="inventory__icon-btn inventory__icon-btn--edit"
+                aria-label={`Edit inventory ${name}`}
+                onClick={handleEdit}
+                disabled={loading || deleting}
+                title="Edit"
+              >
+                <FiEdit2 />
+              </button>
+              <button
+                type="button"
+                className="inventory__icon-btn inventory__icon-btn--delete"
+                aria-label={`Delete inventory ${name}`}
+                onClick={handleDelete}
+                disabled={loading || deleting}
+                title={deleting ? "Deleting..." : "Delete"}
+              >
+                <FiTrash2 />
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className="inventory__item-stats">
