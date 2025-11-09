@@ -31,7 +31,7 @@ function InventoryList() {
             </span>
           </div>
 
-          <Link to="/inventory/1" className="inventory__item-link">
+          <Link to="/inventory/items" className="inventory__item-link">
             View Details →
           </Link>
         </div>

@@ -10,7 +10,7 @@ import UsersPanelRoutes from "./routes/private-routes/UsersPanelRoutes";
 import Dashboard from "./pages/inventory/Dashboard";
 import LandingPageRoute from "./routes/public-routes/LandingPageRoute";
 import Inventory from "./pages/inventory/Inventory";
-
+import Items from "./pages/inventory/Items";
 function App() {
   return (
     <BrowserRouter>
@@ -32,6 +32,7 @@ function App() {
         <Route element={<UsersPanelRoutes />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/inventory" element={<Inventory />} />
+          <Route path="/inventory/items" element={<Items />} />
         </Route>
       </Routes>
     </BrowserRouter>
