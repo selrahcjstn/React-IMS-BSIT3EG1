@@ -53,7 +53,6 @@ function NewInventoryModal({ isOpen, onClose, onSubmit }) {
         description: formData.description.trim(),
         ownerId: currentUser.uid,
         itemCount: 0,
-        totalValue: 0,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       };
