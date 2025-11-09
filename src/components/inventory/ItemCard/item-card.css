@@ -3,7 +3,7 @@
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   overflow: hidden;
-  transition: all 0.25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
   display: flex;
   flex-direction: column;
@@ -12,7 +12,7 @@
 .item-card:hover {
   border-color: #2F77EB;
   box-shadow: 0 4px 12px rgba(47, 119, 235, 0.12);
-  transform: translateY(-2px);
+  /* removed translate/scale effects */
 }
 
 .item-card__header {
@@ -64,7 +64,7 @@
   border: 1px solid #e5e7eb;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .item-card__action-btn svg {
@@ -92,8 +92,9 @@
   color: #991b1b;
 }
 
+/* removed active scale animation */
 .item-card__action-btn:active {
-  transform: scale(0.94);
+  /* no transform */
 }
 
 .item-card__content {
@@ -197,7 +198,7 @@
   border-radius: 5px;
   font-size: 11px;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
   border: none;
   letter-spacing: 0.2px;
   white-space: nowrap;
@@ -208,29 +209,26 @@
   box-shadow: 0 2px 6px rgba(47, 119, 235, 0.2);
 }
 
+/* removed active scale */
 .item-card__view-link:active {
-  transform: scale(0.96);
+  /* no transform */
 }
 
 @media (max-width: 768px) {
   .item-card__header {
     padding: 12px 14px;
   }
-
   .item-card__content {
     padding: 10px 14px;
     gap: 8px;
   }
-
   .item-card__item-name {
     font-size: 14px;
   }
-
   .item-card__stats-grid {
     padding: 6px;
     gap: 6px;
   }
-
   .item-card__stat-value {
     font-size: 12px;
   }
@@ -240,58 +238,46 @@
   .item-card__header {
     padding: 10px 12px;
   }
-
   .item-card__content {
     padding: 8px 12px;
     gap: 8px;
   }
-
   .item-card__item-name {
     font-size: 13px;
   }
-
   .item-card__item-size {
     font-size: 10px;
     margin-top: 2px;
   }
-
   .item-card__stats-grid {
     grid-template-columns: 1fr 1fr 1fr;
     padding: 6px;
     gap: 5px;
   }
-
   .item-card__stat-label {
     font-size: 9px;
   }
-
   .item-card__stat-value {
     font-size: 12px;
   }
-
   .item-card__date-small {
     font-size: 10px;
   }
-
   .item-card__bottom-row {
     gap: 6px;
   }
-
   .item-card__status-badge {
     padding: 3px 7px;
     font-size: 10px;
   }
-
   .item-card__view-link {
     padding: 5px 8px;
     font-size: 10px;
   }
-
   .item-card__action-btn {
     width: 26px;
     height: 26px;
   }
-
   .item-card__action-btn svg {
     width: 12px;
     height: 12px;
