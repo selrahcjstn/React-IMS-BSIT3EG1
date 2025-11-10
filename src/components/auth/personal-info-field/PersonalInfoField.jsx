@@ -19,7 +19,7 @@ function PersonalInfoField({
     const value = e.target.value;
     setter(value);
 
-    if (!nameRegex.test(value)) {
+    if (value && !nameRegex.test(value)) {
       setError("Names must be letters only and at least 2 characters.");
     } else {
       setError("");
@@ -33,6 +33,7 @@ function PersonalInfoField({
           type="text"
           value={firstName}
           onChange={(e) => handleChange(e, setFirstName)}
+          placeholder="John"
           required
         />
       </CustomInput>
@@ -42,6 +43,7 @@ function PersonalInfoField({
           type="text"
           value={middleName}
           onChange={(e) => setMiddleName(e.target.value)}
+          placeholder="Michael"
         />
       </CustomInput>
 
@@ -50,6 +52,7 @@ function PersonalInfoField({
           type="text"
           value={lastName}
           onChange={(e) => handleChange(e, setLastName)}
+          placeholder="Doe"
           required
         />
       </CustomInput>

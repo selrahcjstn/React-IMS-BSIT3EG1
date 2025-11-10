@@ -1,20 +1,76 @@
-.illustrator {
-  width: 550px;
+.image-holder {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+
+.image-holder__illustrator {
+  width: clamp(300px, 80vw, 550px);
   height: auto;
   border-radius: 16px;
   padding: 12px;
+  position: relative;
+  z-index: 1;
+  object-fit: contain;
 }
 
-.blob-background {
+.image-holder__blob {
   position: absolute;
   top: 50%;
-  left: 72%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  width: 500px;
-  height: 500px;
-  background: #5C9BFF;
+  width: clamp(300px, 70vw, 500px);
+  height: clamp(300px, 70vw, 500px);
+  background: #5c9bff;
   filter: blur(100px);
   opacity: 0.4;
   border-radius: 60% 40% 50% 70% / 60% 50% 70% 40%;
-  z-index: -1;
+  z-index: 0;
+}
+
+@media (max-width: 1024px) {
+  .image-holder {
+    min-height: 300px;
+  }
+
+  .image-holder__illustrator {
+    width: clamp(240px, 65vw, 380px);
+  }
+
+  .image-holder__blob {
+    width: clamp(240px, 60vw, 380px);
+    height: clamp(240px, 60vw, 380px);
+  }
+}
+
+@media (max-width: 768px) {
+  .image-holder {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .image-holder {
+    display: flex;
+    min-height: 200px;
+  }
+
+  .image-holder__illustrator {
+    width: clamp(150px, 40vw, 280px);
+  }
+
+  .image-holder__blob {
+    width: clamp(150px, 40vw, 280px);
+    height: clamp(150px, 40vw, 280px);
+  }
+}
+
+@media (max-width: 480px) {
+  .image-holder {
+    display: none;
+  }
 }

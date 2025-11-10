@@ -1,4 +1,6 @@
-function Input({id, type, placeholder, name, value, onChange, required}) {
+import "./input.css";
+
+function Input({ id, type, placeholder, name, value, onChange, required }) {
   return (
     <input
       id={id}

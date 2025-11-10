@@ -1,10 +1,14 @@
 import "./image-holder.css";
 
-function ImageHolder({illustrator}) {
+function ImageHolder({ illustrator }) {
   return (
-    <aside aria-label="Illustration">
-      <div className="blob-background"></div>
-      <img src={illustrator} alt="login-illustrator" className="illustrator" />
+    <aside className="image-holder" aria-label="Illustration">
+      <div className="image-holder__blob"></div>
+      <img 
+        src={illustrator} 
+        alt="Login illustration" 
+        className="image-holder__illustrator" 
+      />
     </aside>
   );
 }

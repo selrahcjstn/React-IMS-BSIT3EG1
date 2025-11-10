@@ -10,7 +10,7 @@ import "./personal-info-form.css";
 import { auth } from "../../../firebase/config";
 
 function PersonalInfoForm() {
-  const { currentUser, loading } = useAuth();
+  const { currentUser, authLoading } = useAuth();
   const navigate = useNavigate();
 
   const [firstName, setFirstName] = useState("");
@@ -20,7 +20,7 @@ function PersonalInfoForm() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (loading) {
+    if (authLoading) {
       return;
     }
 
@@ -45,9 +45,9 @@ function PersonalInfoForm() {
     };
 
     checkProfile().catch((error) => {
-      setError("Error checking profile. Please try again.", error.message);
+      setError("Error checking profile. Please try again. " + error.message);
     });
-  }, [currentUser, loading, navigate]);
+  }, [currentUser, authLoading, navigate]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -87,16 +87,18 @@ function PersonalInfoForm() {
     }
   }
 
-  if (loading || !currentUser) {
+  if (authLoading || !currentUser) {
     return null;
   }
 
   return (
     <form className="personal__form-container" onSubmit={handleSubmit}>
-      <h1 className="personal__heading">Personal Information</h1>
-      <p className="personal__message">
-        Provide your personal details to continue your registration.
-      </p>
+      <header className="personal__header">
+        <h1 className="personal__heading">Personal Information</h1>
+        <p className="personal__message">
+          Provide your personal details to continue your registration.
+        </p>
+      </header>
 
       {error && <ErrorMessage error={error} />}
 

@@ -1,18 +1,84 @@
 .personal__form-container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   flex: 1;
-  max-width: 400px;
+  max-width: 450px;
+  width: 100%;
+  justify-content: center;
+  min-height: calc(100vh - 112px);
+}
+
+.personal__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .personal__heading {
-  font-size: 3rem;
-  line-height: 1.25;
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
 }
 
 .personal__message {
-  color: rgba(37, 34, 30, 0.7);
-  font-size: 18px;
-  margin-bottom: 14px;
+  margin: 0;
+  color: #475569;
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .personal__form-container {
+    max-width: 100%;
+    gap: 18px;
+    min-height: calc(100vh - 112px);
+    justify-content: center;
+  }
+
+  .personal__heading {
+    font-size: 2.2rem;
+  }
+
+  .personal__message {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .personal__form-container {
+    gap: 16px;
+    min-height: calc(100vh - 112px);
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .personal__heading {
+    font-size: 1.8rem;
+  }
+
+  .personal__message {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .personal__form-container {
+    max-width: 100%;
+    gap: 14px;
+    min-height: calc(100vh - 112px);
+    justify-content: center;
+    padding: 30px 16px;
+  }
+
+  .personal__heading {
+    font-size: 1.5rem;
+  }
+
+  .personal__message {
+    font-size: 0.9rem;
+  }
 }

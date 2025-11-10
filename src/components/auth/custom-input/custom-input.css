@@ -1,41 +1,102 @@
-.input {
-  padding: 10px 4px;
-  border: none;
-  outline: none;
+.custom__input-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+  font-weight: 600;
+  color: #475569;
+  letter-spacing: 0.3px;
   width: 100%;
-  font-size: 1rem;
-  background: transparent;
 }
 
 .custom__input {
   display: flex;
   align-items: center;
-  border: 1px solid #ddd;
+  border: 1.5px solid #e2e8f0;
   border-radius: 8px;
   overflow: hidden;
-  padding: 0 10px;
-  transition: all 0.2s ease;
-  gap: 6px;
+  padding: 10px 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  gap: 10px;
+  background-color: #ffffff;
 }
+
+.custom__input:hover {
+  border-color: #cbd5e1;
+}
+
 .custom__input:focus-within {
-  border-color: #2F77EB;
-  box-shadow: 0 0 4px rgba(47, 119, 235, 0.4);
+  border-color: #2f77eb;
+  box-shadow: 0 0 0 3px rgba(47, 119, 235, 0.1);
 }
 
 .custom__input-icon {
-  font-size: 1.2rem;
-  color: #888;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: #94a3b8;
   transition: color 0.2s ease;
+  flex-shrink: 0;
 }
 
 .custom__input:focus-within .custom__input-icon {
-  color: #2F77EB;
+  color: #2f77eb;
 }
 
-.custom__input-label {
-  display: flex;
-  flex-direction: column;
+.custom__input input {
+  padding: 0;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  background: transparent;
+  color: #0f172a;
   font-weight: 500;
-  color: #333;
-  gap: 0.3rem;
+}
+
+.custom__input input::placeholder {
+  color: #cbd5e1;
+  font-weight: 400;
+}
+
+.custom__input input:disabled {
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .custom__input-label {
+    font-size: 0.9rem;
+    gap: 5px;
+  }
+
+  .custom__input {
+    padding: 10px 10px;
+    gap: 8px;
+  }
+
+  .custom__input input {
+    font-size: 1rem;
+  }
+
+  .custom__input-icon {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom__input-label {
+    font-size: 0.85rem;
+  }
+
+  .custom__input {
+    padding: 9px 10px;
+    gap: 8px;
+  }
+
+  .custom__input input {
+    font-size: 16px;
+  }
+
+  .custom__input-icon {
+    font-size: 1rem;
+  }
 }

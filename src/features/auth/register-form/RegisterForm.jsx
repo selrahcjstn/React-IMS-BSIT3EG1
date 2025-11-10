@@ -14,7 +14,7 @@ function RegisterForm() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); 
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
@@ -59,12 +59,12 @@ function RegisterForm() {
 
   return (
     <form className="register__form-container" onSubmit={handleSubmit} noValidate>
-      <h1 id="register-heading" className="register__heading">
-        Create Account
-      </h1>
-      <p className="register__message">
-        Register to manage your inventory and grow your business efficiently.
-      </p>
+      <header className="register__header">
+        <h1 className="register__heading">Create Account</h1>
+        <p className="register__message">
+          Register to manage your inventory and grow your business efficiently.
+        </p>
+      </header>
 
       {error && <ErrorMessage error={error} />}
 

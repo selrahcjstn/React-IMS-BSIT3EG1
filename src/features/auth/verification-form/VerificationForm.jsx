@@ -40,14 +40,14 @@ function VerificationForm() {
       if (auth.currentUser) {
         try {
           await auth.currentUser.reload();
-          
+
           if (auth.currentUser.emailVerified) {
             clearInterval(interval);
             navigate("/auth/personal-info");
           }
         } catch (err) {
           console.error("Failed to reload user:", err.message);
-          if (err.code === 'auth/user-token-expired') {
+          if (err.code === "auth/user-token-expired") {
             await signOut(auth);
             navigate("/auth/login");
           }
@@ -56,7 +56,7 @@ function VerificationForm() {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [navigate]); 
+  }, [navigate]);
 
   const handleResend = async () => {
     if (!currentUser) return;
@@ -78,7 +78,7 @@ function VerificationForm() {
 
   return (
     <div className="verification">
-      <div className="verification__left">
+      <div className="verification__container">
         <div className="verification__content">
           <h1 className="verification__title">Check your email</h1>
           <p className="verification__text">

@@ -1,8 +1,45 @@
-.illustrator__container{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
-    padding: 40px 0;
-    height: calc(100vh - 112px);
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.illustrator__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  padding: 40px 20px;
+  height: calc(100vh - 112px);
+}
+
+@media (max-width: 1024px) {
+  .illustrator__container {
+    gap: 32px;
+    height: auto;
+    padding: 32px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .illustrator__container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .illustrator__container > :last-child {
+    display: none;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .illustrator__container {
+    padding: 16px 0;
+    gap: 16px;
+  }
 }
