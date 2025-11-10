@@ -4,6 +4,7 @@ import DashboardHeader from "../../features/app/dashboard/dashboard-header/Dashb
 import DashboardBoxContainer from "../../features/app/dashboard/box-container/DashboardBoxContainer";
 import Chart from "../../features/app/dashboard/chart/Chart";
 import "./dashboard.css";
+import RecentActivity from "../../features/app/dashboard/recent-activity/RecentActivity";
 
 function Dashboard() {
   const { currentUser } = useAuth();
@@ -15,6 +16,7 @@ function Dashboard() {
       <DashboardHeader currentUser={currentUser} />
       <DashboardBoxContainer />
       <Chart />
+      <RecentActivity />
     </div>
   );
 }

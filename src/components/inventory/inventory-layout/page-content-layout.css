@@ -3,8 +3,24 @@
   padding: 20px;
   margin-left: 250px;
   transition: margin-left 0.3s ease;
+  background: #fafbfc;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .layout__content--collapsed {
   margin-left: 80px;
+}
+
+/* Mobile: no sidebar margin (sidebar is overlay) */
+@media (max-width: 768px) {
+  .layout__content {
+    margin-left: 0;
+    padding: 16px;
+  }
+
+  .layout__content--collapsed {
+    margin-left: 0;
+  }
 }

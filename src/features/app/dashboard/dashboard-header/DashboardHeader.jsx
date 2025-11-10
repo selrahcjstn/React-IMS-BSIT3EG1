@@ -5,13 +5,13 @@ import "./dashboard-header.css";
 function DashboardHeader({ currentUser }) {
   const navigate = useNavigate();
 
-    function handleCreateInventory() {
+  function handleCreateInventory() {
     navigate("/inventory");
   }
 
   return (
     <div className="dashboard__header">
-      <div className="dashboard__header-message">
+      <div className="dashboard__header-left">
         <img
           src="../../assets/logo.png"
           alt="Logo"
@@ -19,10 +19,9 @@ function DashboardHeader({ currentUser }) {
         />
         <h3>Welcome, {currentUser.displayName}!</h3>
       </div>
-      <div className="dashboard__header-buttons">
-        <Button label={"Create New Inventory"} 
-            onClick={handleCreateInventory}
-        />
+
+      <div className="dashboard__header-right">
+        <Button label="Create New Inventory" onClick={handleCreateInventory} />
       </div>
     </div>
   );
