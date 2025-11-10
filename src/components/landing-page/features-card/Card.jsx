@@ -1,5 +1,12 @@
 import "./card.css";
-import { AiOutlineShoppingCart, AiOutlineBarChart, AiOutlineSetting, AiOutlineUser, AiOutlineClockCircle, AiOutlineDatabase } from "react-icons/ai";
+import {
+  AiOutlineShoppingCart,
+  AiOutlineBarChart,
+  AiOutlineSetting,
+  AiOutlineUser,
+  AiOutlineClockCircle,
+  AiOutlineDatabase,
+} from "react-icons/ai";
 
 const features = [
   {
@@ -39,9 +46,12 @@ function Card() {
     <div className="cards">
       {features.map((feature, index) => (
         <div key={index} className="cards__item">
-          <feature.Icon className="cards__item-icon" size={40} />
+          <div className="cards__item-icon-wrapper">
+            <feature.Icon className="cards__item-icon" />
+          </div>
           <h3 className="cards__item-title">{feature.title}</h3>
           <p className="cards__item-description">{feature.description}</p>
+          <div className="cards__item-underline"></div>
         </div>
       ))}
     </div>

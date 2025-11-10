@@ -20,7 +20,7 @@ function Hero() {
           <img src={hero} alt="hero__image" />
         </div>
       </div>
-        <Highlight />
+      <Highlight />
     </div>
   );
 }

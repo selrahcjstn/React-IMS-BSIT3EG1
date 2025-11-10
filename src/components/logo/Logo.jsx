@@ -1,13 +1,13 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import "./logo.css";
 
 function Logo() {
   return (
-    <section className="logo">
-      <img className="logo__image" src={logo} alt="Logo" />
-      <Link to={"/"} className="logo__title">IMS Online</Link>
-    </section>
+    <Link to="/" className="logo">
+      <img className="logo__image" src={logo} alt="IMS Online Logo" />
+      <span className="logo__title">IMS Online</span>
+    </Link>
   );
 }
 

@@ -26,17 +26,21 @@ const highlightsData = [
 
 function Highlight() {
   return (
-    <div className="highlight">
-      {highlightsData.map((item, index) => {
-        const Icon = item.Icon;
-        return (
-          <div className="highlight__card" key={index}>
-            {Icon && <Icon className="highlight__icon" />}
-            <h4 className="highlight__title">{item.title}</h4>
-            <p className="highlight__description">{item.description}</p>
-          </div>
-        );
-      })}
+    <div className="container">
+      <div className="highlight">
+        {highlightsData.map((item, index) => {
+          const Icon = item.Icon;
+          return (
+            <div className="highlight__card" key={index}>
+              <div className="highlight__icon-wrapper">
+                <Icon className="highlight__icon" />
+              </div>
+              <h4 className="highlight__title">{item.title}</h4>
+              <p className="highlight__description">{item.description}</p>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
