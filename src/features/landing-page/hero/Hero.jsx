@@ -1,9 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import hero from "../../../assets/hero.svg";
 import Button from "../../../components/common/button/Button";
 import Highlight from "../../../components/landing-page/highlight/Highlight";
 import "./hero.css";
 
 function Hero() {
+  const navigate = useNavigate();
+
+  const handleStartClick = () => {
+    navigate("/auth/register");
+  };
+
   return (
     <div className="hero">
       <div className="hero__container">
@@ -14,10 +21,10 @@ function Hero() {
             online system. Stay on top of stock levels, track performance, and
             focus on growing your business.
           </p>
-          <Button label={"Start for free"} />
+          <Button label={"Start for free"} onClick={handleStartClick} />
         </section>
         <div className="hero__image-container">
-          <img src={hero} alt="hero__image" />
+          <img src={hero} alt="hero image" />
         </div>
       </div>
       <Highlight />

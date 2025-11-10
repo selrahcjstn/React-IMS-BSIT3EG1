@@ -50,7 +50,6 @@ function ContactUs() {
             Reach out directly for any inquiries or issues
           </p>
           <a href="mailto:charlesjustinemantes.main@gmail.com" className="contactdev__link">
-            charlesjustinemantes.main@gmail.com
           </a>
         </div>
 
