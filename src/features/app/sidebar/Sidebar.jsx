@@ -38,9 +38,14 @@ function Sidebar({ isOpen, setIsOpen }) {
     }
   };
 
+  const handleMenuItemClick = () => {
+    if (window.innerWidth <= 768) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
-      {/* Floating hamburger (mobile only via CSS) */}
       <button
         className="sidebar__hamburger"
         onClick={toggleSidebar}
@@ -69,9 +74,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                   to={item.to}
                   className={`sidebar__menu-item ${isActive ? "is-active" : ""}`}
                   data-tooltip={item.tooltip}
-                  onClick={() => {
-                    if (window.innerWidth <= 768) setIsOpen(false);
-                  }}
+                  onClick={handleMenuItemClick}
                 >
                   {item.icon}
                   {isOpen && <span className="sidebar__text">{item.label}</span>}
