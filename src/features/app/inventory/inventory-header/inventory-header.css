@@ -120,7 +120,6 @@
   height: 18px;
 }
 
-/* Desktop - All in one line */
 @media (min-width: 1025px) {
   .inventory__header-wrapper {
     display: flex;
@@ -150,7 +149,6 @@
   }
 }
 
-/* Tablet - Search and Button same line */
 @media (max-width: 1024px) {
   .inventory__header-top {
     display: flex;
@@ -172,7 +170,6 @@
   }
 }
 
-/* Mobile - Full width button below */
 @media (max-width: 768px) {
   .inventory__header-wrapper {
     gap: 10px;
