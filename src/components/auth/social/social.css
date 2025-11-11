@@ -68,15 +68,6 @@
   background-color: #e2e8f0;
 }
 
-.register__social-btn.facebook:hover {
-  background-color: #f0f4ff;
-  border-color: #2f77eb;
-  box-shadow: 0 2px 8px rgba(47, 119, 235, 0.15);
-}
-
-.register__social-btn.facebook:active {
-  background-color: #e8eeff;
-}
 
 @media (max-width: 480px) {
   .register__social {

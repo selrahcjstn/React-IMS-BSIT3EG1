@@ -3,13 +3,11 @@ import { useNavigate } from "react-router-dom";
 import {
   signInWithPopup,
   GoogleAuthProvider,
-  FacebookAuthProvider,
 } from "firebase/auth";
 import { auth } from "../../../firebase/config";
 import { getDatabase, ref, get } from "firebase/database";
 
 const googleProvider = new GoogleAuthProvider();
-const facebookProvider = new FacebookAuthProvider();
 
 function Social({ setError }) {
   const navigate = useNavigate();
@@ -59,19 +57,6 @@ function Social({ setError }) {
         <span>Continue with Google</span>
       </button>
 
-      <button
-        type="button"
-        className="register__social-btn facebook"
-        onClick={() => handleSocialLogin(facebookProvider)}
-        aria-label="Continue with Facebook"
-      >
-        <img
-          src="https://www.svgrepo.com/show/475647/facebook-color.svg"
-          alt="Facebook logo"
-          loading="lazy"
-        />
-        <span>Continue with Facebook</span>
-      </button>
     </div>
   );
 }

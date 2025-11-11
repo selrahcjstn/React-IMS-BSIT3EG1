@@ -50,9 +50,6 @@
   gap: 14px;
   margin-top: 4px;
   flex-grow: 1;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #c5ced6 transparent;
 }
 
 .sidebar__menu::-webkit-scrollbar {

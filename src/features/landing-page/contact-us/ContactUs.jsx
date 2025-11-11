@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./contact-us.css";
-import { FaChevronDown, FaEnvelope, FaClock, FaHeadset } from "react-icons/fa";
+import { FaChevronDown, FaEnvelope, FaLightbulb } from "react-icons/fa";
 
 function ContactUs() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -20,68 +20,22 @@ function ContactUs() {
     },
     {
       q: "Can I request a feature?",
-      a: "Absolutely. Send your request to the developer email below and include a short description of the use case.",
+      a: "Absolutely. Send your request and include a short description of the use case.",
     },
     {
       q: "Who do I contact for help?",
-      a: "Use the developer contact below. Please include screenshots or steps to reproduce if you're reporting an issue.",
+      a: "Use the contact button below. Please include screenshots or steps to reproduce if you're reporting an issue.",
     },
   ];
 
   const toggle = (i) => setOpenIndex((prev) => (prev === i ? null : i));
 
   return (
-    <section className="contactdev container">
-      <header className="contactdev__header">
-        <div className="contactdev__badge">Support & FAQ</div>
-        <h1 className="contactdev__title">Get Help & Support</h1>
-        <p className="contactdev__subtitle">
-          Have questions? Check our FAQ's below or reach out directly to our developer.
-        </p>
-      </header>
-
-      <div className="contactdev__cards">
-        <div className="contactdev__card">
-          <div className="contactdev__icon">
-            <FaEnvelope />
-          </div>
-          <h3 className="contactdev__card-title">Email Support</h3>
-          <p className="contactdev__card-text">
-            Reach out directly for any inquiries or issues
-          </p>
-          <a href="mailto:charlesjustinemantes.main@gmail.com" className="contactdev__link">
-          </a>
-        </div>
-
-        <div className="contactdev__card">
-          <div className="contactdev__icon">
-            <FaClock />
-          </div>
-          <h3 className="contactdev__card-title">Response Time</h3>
-          <p className="contactdev__card-text">
-            We typically respond within 24-48 hours
-          </p>
-          <span className="contactdev__badge-small">Mon-Fri, 9AM-5PM</span>
-        </div>
-
-        <div className="contactdev__card">
-          <div className="contactdev__icon">
-            <FaHeadset />
-          </div>
-          <h3 className="contactdev__card-title">Support Priority</h3>
-          <p className="contactdev__card-text">
-            Include details for faster resolution
-          </p>
-          <span className="contactdev__badge-small">Fast Track Support</span>
-        </div>
-      </div>
-
-      <section className="faq">
+    <section className="faq-section">
+      <div className="container">
         <div className="faq__header">
           <h2 className="faq__title">Frequently Asked Questions</h2>
-          <p className="faq__subtitle">
-            Find answers to common questions about IMS Online
-          </p>
+          <p className="faq__subtitle">Find answers to common questions about IMS Online</p>
         </div>
 
         <ul className="faq__list">
@@ -110,14 +64,21 @@ function ContactUs() {
             );
           })}
         </ul>
-      </section>
 
-      <div className="contactdev__cta">
-        <h2>Still have questions?</h2>
-        <p>Don't hesitate to reach out. We're here to help!</p>
-        <a href="mailto:charlesjustinemantes.main@gmail.com" className="contactdev__cta-btn">
-          Send Email Now
-        </a>
+        {/* CTA Section */}
+        <div className="faq__cta">
+          <div className="faq__cta-icon">
+            <FaLightbulb />
+          </div>
+          <h3 className="faq__cta-title">Still have a question?</h3>
+          <p className="faq__cta-subtitle">
+            Can't find what you're looking for? We're here to help! Get in touch with us and we'll be happy to assist.
+          </p>
+          <button className="faq__contact-btn">
+            <FaEnvelope className="faq__contact-icon" />
+            <span>Send Email</span>
+          </button>
+        </div>
       </div>
     </section>
   );

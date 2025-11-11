@@ -6,13 +6,13 @@
   overflow-y: auto;
   box-sizing: border-box;
   margin-top: 80px;
+  margin-bottom: 16px;
 }
 
 .layout__content--collapsed {
   margin-left: 80px;
 }
 
-/* Mobile: no sidebar margin (sidebar is overlay) */
 @media (max-width: 768px) {
   .layout__content {
     margin-left: 0;
