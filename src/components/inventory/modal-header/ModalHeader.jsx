@@ -1,5 +1,5 @@
 import { FiX } from "react-icons/fi";
-
+import "./modal-header.css";
 function ModalHeader({ title, onClose }) {
   return (
     <div className="modal-header">
