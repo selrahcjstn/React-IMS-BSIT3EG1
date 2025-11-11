@@ -1,8 +1,9 @@
 import InventoryFormFields from "../../../../components/inventory/inventory-form-fields/InventoryFormFields";
-import { useState } from "react";
-import { FiX } from "react-icons/fi";
+import ModalHeader from "../../../../components/inventory/modal-header/ModalHeader";
+import InventoryQuotaInfo from "../../../../components/inventory/inventory-quoata-info/InventoryQuotaInfo";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../../../context/AuthContext";
-import { ref, push, update, serverTimestamp } from "firebase/database";
+import { ref, push, update, serverTimestamp, get } from "firebase/database";
 import { database } from "../../../../firebase/config";
 import "./new-inventory-modal.css";
 
@@ -11,17 +12,65 @@ function NewInventoryModal({ isOpen, onClose, onSubmit }) {
   const [formData, setFormData] = useState({ name: "", description: "", category: "" });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [inventoryCount, setInventoryCount] = useState(0);
+  const [loadingCount, setLoadingCount] = useState(false);
+  const MAX_INVENTORIES = 12;
+  const MAX_NAME_LENGTH = 50;
+  const MAX_DESCRIPTION_LENGTH = 500;
+
+  useEffect(() => {
+    if (!isOpen || !currentUser?.uid) return;
+
+    const fetchInventoryCount = async () => {
+      setLoadingCount(true);
+      try {
+        const userInvRef = ref(database, `userInventories/${currentUser.uid}`);
+        const snapshot = await get(userInvRef);
+        const count = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+        setInventoryCount(count);
+      } catch (err) {
+        console.error("Error fetching inventory count:", err);
+        setInventoryCount(0);
+      } finally {
+        setLoadingCount(false);
+      }
+    };
+
+    fetchInventoryCount();
+  }, [isOpen, currentUser?.uid]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    let limitedValue = value;
+    if (name === "name" && value.length > MAX_NAME_LENGTH) {
+      limitedValue = value.substring(0, MAX_NAME_LENGTH);
+    }
+    if (name === "description" && value.length > MAX_DESCRIPTION_LENGTH) {
+      limitedValue = value.substring(0, MAX_DESCRIPTION_LENGTH);
+    }
+
+    setFormData(prev => ({ ...prev, [name]: limitedValue }));
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Inventory name is required";
-    if (!formData.category) newErrors.category = "Category is required";
+    
+    if (!formData.name.trim()) {
+      newErrors.name = "Inventory name is required";
+    } else if (formData.name.trim().length < 3) {
+      newErrors.name = "Inventory name must be at least 3 characters";
+    }
+    
+    if (!formData.category) {
+      newErrors.category = "Category is required";
+    }
+
+    if (inventoryCount >= MAX_INVENTORIES) {
+      newErrors.submit = `You have reached the maximum limit of ${MAX_INVENTORIES} inventories. Please delete some inventories to create new ones.`;
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -57,7 +106,6 @@ function NewInventoryModal({ isOpen, onClose, onSubmit }) {
         updatedAt: serverTimestamp()
       };
 
-      // No inventoryItems path here
       const updates = {
         [`inventories/${inventoryId}`]: summary,
         [`userInventories/${currentUser.uid}/${inventoryId}`]: true
@@ -83,23 +131,38 @@ function NewInventoryModal({ isOpen, onClose, onSubmit }) {
 
   if (!isOpen) return null;
 
+  const isLimitReached = inventoryCount >= MAX_INVENTORIES;
+
   return (
     <>
       <div className="new-inventory-modal__overlay" onClick={handleCancel} />
       <div className="new-inventory-modal__container">
-        <div className="new-inventory-modal__header">
-          <h2 className="new-inventory-modal__title">Create New Inventory</h2>
-          <button className="new-inventory-modal__close-btn" onClick={handleCancel} aria-label="Close modal">
-            <FiX />
-          </button>
-        </div>
+        <ModalHeader 
+          title="Create New Inventory" 
+          onBack={handleCancel}
+          onClose={handleCancel}
+        />
+
+        <InventoryQuotaInfo 
+          inventoryCount={inventoryCount}
+          maxInventories={MAX_INVENTORIES}
+        />
+
         <div className="new-inventory-modal__content">
+          {isLimitReached && (
+            <div className="new-inventory-modal__alert new-inventory-modal__alert--warning">
+              ⚠️ You've reached your inventory limit. Delete some inventories to create new ones.
+            </div>
+          )}
+
           <form className="new-inventory-modal__form" onSubmit={handleSubmit}>
             <InventoryFormFields
               formData={formData}
               errors={errors}
               isSubmitting={isSubmitting}
               onChange={handleChange}
+              maxNameLength={MAX_NAME_LENGTH}
+              maxDescriptionLength={MAX_DESCRIPTION_LENGTH}
             />
             {errors.submit && (
               <div className="new-inventory-modal__alert new-inventory-modal__alert--error">
@@ -118,7 +181,7 @@ function NewInventoryModal({ isOpen, onClose, onSubmit }) {
               <button
                 type="submit"
                 className="new-inventory-modal__btn new-inventory-modal__btn--submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isLimitReached || loadingCount}
               >
                 {isSubmitting ? "Creating..." : "Create"}
               </button>

@@ -1,4 +1,6 @@
-function InventoryFormFields({ formData, errors, isSubmitting, onChange }) {
+  import "./inventory-form-fields.css";
+
+function InventoryFormFields({ formData, errors, isSubmitting, onChange, maxNameLength = 50, maxDescriptionLength = 500 }) {
   const categories = [
     "Electronics",
     "Furniture",
@@ -13,13 +15,23 @@ function InventoryFormFields({ formData, errors, isSubmitting, onChange }) {
     "Other",
   ];
 
+  const nameLength = formData.name.length;
+  const descriptionLength = formData.description.length;
+  const nameWarning = nameLength > maxNameLength * 0.9;
+  const descriptionWarning = descriptionLength > maxDescriptionLength * 0.9;
+
   return (
     <>
       <div className="new-inventory-modal__form-group">
-        <label htmlFor="name" className="new-inventory-modal__label">
-          Inventory Name{" "}
-          <span className="new-inventory-modal__required">*</span>
-        </label>
+        <div className="new-inventory-modal__label-row">
+          <label htmlFor="name" className="new-inventory-modal__label">
+            Inventory Name{" "}
+            <span className="new-inventory-modal__required">*</span>
+          </label>
+          <span className={`new-inventory-modal__char-count ${nameWarning ? 'warning' : ''}`}>
+            {nameLength}/{maxNameLength}
+          </span>
+        </div>
         <input
           type="text"
           id="name"
@@ -31,6 +43,7 @@ function InventoryFormFields({ formData, errors, isSubmitting, onChange }) {
           value={formData.name}
           onChange={onChange}
           disabled={isSubmitting}
+          maxLength={maxNameLength}
         />
         {errors.name && (
           <span className="new-inventory-modal__error">{errors.name}</span>
@@ -66,9 +79,14 @@ function InventoryFormFields({ formData, errors, isSubmitting, onChange }) {
       </div>
 
       <div className="new-inventory-modal__form-group">
-        <label htmlFor="description" className="new-inventory-modal__label">
-          Description
-        </label>
+        <div className="new-inventory-modal__label-row">
+          <label htmlFor="description" className="new-inventory-modal__label">
+            Description
+          </label>
+          <span className={`new-inventory-modal__char-count ${descriptionWarning ? 'warning' : ''}`}>
+            {descriptionLength}/{maxDescriptionLength}
+          </span>
+        </div>
         <textarea
           id="description"
           name="description"
@@ -78,6 +96,7 @@ function InventoryFormFields({ formData, errors, isSubmitting, onChange }) {
           onChange={onChange}
           rows={3}
           disabled={isSubmitting}
+          maxLength={maxDescriptionLength}
         />
       </div>
     </>

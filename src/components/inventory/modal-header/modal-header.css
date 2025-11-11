@@ -1,0 +1,118 @@
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  background-color: #ffffff;
+  z-index: 1;
+  gap: 12px;
+}
+
+.modal-header__back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: transparent;
+  border: 1px solid #d0d5dd;
+  border-radius: 6px;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.modal-header__back-btn:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  border-color: #b6bcc6;
+  color: #111827;
+}
+
+.modal-header__back-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.modal-header__back-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modal-header__back-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.modal-header__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.4px;
+  flex: 1;
+  text-align: center;
+}
+
+.modal-header__close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.modal-header__close-btn:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.modal-header__close-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modal-header__close-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 480px) {
+  .modal-header {
+    padding: 16px;
+    flex-wrap: wrap;
+  }
+
+  .modal-header__title {
+    font-size: 18px;
+    order: -1;
+    width: 100%;
+  }
+
+  .modal-header__back-btn {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  .modal-header__close-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .modal-header__close-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}

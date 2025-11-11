@@ -97,7 +97,7 @@ function InventoryCard({
                 {loading
                   ? "—"
                   : typeof totalValue === "number"
-                  ? `₱ ${totalValue.toLocaleString()}`
+                  ? `₱${totalValue.toLocaleString()}`
                   : "-"}
               </span>
             </div>

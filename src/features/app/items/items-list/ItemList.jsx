@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { ref, onValue } from "firebase/database";
 import { database } from "../../../../firebase/config";
 import ItemCard from "../../../../components/inventory/ItemCard/ItemCard";
+import EmptyState from "../../../../components/inventory/empty-state/EmptyState";
+import illustration from "../../../../assets/app/welcome.svg";
 import "./item-list.css";
 
 function ItemList() {
   const { id: inventoryId } = useParams();
+  const navigate = useNavigate();
   const [inventoryName, setInventoryName] = useState("Inventory");
   const [items, setItems] = useState([]);
   const [loadingInv, setLoadingInv] = useState(true);
@@ -32,6 +35,10 @@ function ItemList() {
     if (qty <= 0) return "Out of Stock";
     if (qty < 10) return "Low Stock";
     return "In Stock";
+  };
+
+  const handleAddItem = () => {
+    navigate(`/inventory/${inventoryId}/items/new`);
   };
 
   useEffect(() => {
@@ -139,7 +146,14 @@ function ItemList() {
     return (
       <div className="itemlist">
         <h2 className="itemlist__title">{inventoryName}</h2>
-        <div className="itemlist__empty">No items yet.</div>
+        <EmptyState
+          icon={illustration}
+          title="No items yet"
+          description="Start adding items to your inventory to track their quantities, prices, and values."
+          buttonText="Add Your First Item"
+          buttonAriaLabel="Add your first item"
+          onButtonClick={handleAddItem}
+        />
       </div>
     );
   }

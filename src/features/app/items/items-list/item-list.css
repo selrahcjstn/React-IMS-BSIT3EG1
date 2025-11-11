@@ -37,7 +37,6 @@
   }
 }
 
-/* Responsive: Mobile */
 @media (max-width: 480px) {
   .itemlist__title {
     font-size: 18px;

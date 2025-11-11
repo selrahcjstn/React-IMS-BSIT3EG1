@@ -1,0 +1,49 @@
+.inventory-quota-info {
+  background-color: #f0f9ff;
+  border-bottom: 1px solid #e0f2fe;
+  padding: 16px 24px;
+}
+
+.inventory-quota-info__content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inventory-quota-info__text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0c4a6e;
+  margin: 0;
+}
+
+.inventory-quota-info__bar {
+  height: 6px;
+  background-color: #bae6fd;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.inventory-quota-info__progress {
+  height: 100%;
+  background: linear-gradient(90deg, #0284c7 0%, #0ea5e9 100%);
+  transition: width 0.3s ease;
+  border-radius: 3px;
+}
+
+.inventory-quota-info__progress.quota-full {
+  background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+}
+
+.inventory-quota-info__remaining {
+  font-size: 12px;
+  color: #0c4a6e;
+  margin: 0;
+}
+
+.inventory-quota-info__full-message {
+  font-size: 12px;
+  color: #991b1b;
+  margin: 0;
+  font-weight: 600;
+}

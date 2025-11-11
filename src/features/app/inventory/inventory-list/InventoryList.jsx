@@ -3,12 +3,16 @@ import { useAuth } from "../../../../context/AuthContext";
 import { ref, onValue } from "firebase/database";
 import { database } from "../../../../firebase/config";
 import InventoryCard from "../../../../components/inventory/inventory-list-card/InventoryListCard";
+import EmptyState from "../../../../components/inventory/empty-state/EmptyState";
+import NewInventoryModal from "../new-inventory-modal/NewInventoryModal";
+import illustration from "../../../../assets/app/welcome.svg";
 import "./inventory-list.css";
 
 function InventoryList() {
   const { currentUser } = useAuth();
   const [inventories, setInventories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const formatDate = (val) => {
     if (val == null) return "-";
@@ -17,6 +21,19 @@ function InventoryList() {
     const d = new Date(num);
     if (Number.isNaN(d.getTime())) return "-";
     return d.toLocaleDateString();
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCreateInventory = (formData) => {
+    console.log("New inventory created:", formData);
+    handleCloseModal();
   };
 
   useEffect(() => {
@@ -200,9 +217,21 @@ function InventoryList() {
 
   if (!inventories.length) {
     return (
-      <div className="inventory__list">
-        <div className="inventory__empty">No inventories yet.</div>
-      </div>
+      <>
+        <EmptyState
+          icon={illustration}
+          title="No inventories yet"
+          description="Create your first inventory to start managing your items and track their values."
+          buttonText="Create Your First Inventory"
+          buttonAriaLabel="Create your first inventory"
+          onButtonClick={handleOpenModal}
+        />
+        <NewInventoryModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          onSubmit={handleCreateInventory}
+        />
+      </>
     );
   }
 
