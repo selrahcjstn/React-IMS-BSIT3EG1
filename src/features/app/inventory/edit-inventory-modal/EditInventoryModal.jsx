@@ -1,6 +1,7 @@
 import InventoryFormFields from "../../../../components/inventory/inventory-form-fields/InventoryFormFields";
+import ModalHeader from "../../../../components/inventory/modal-header/ModalHeader";
+import InventoryQuotaInfo from "../../../../components/inventory/inventory-quoata-info/InventoryQuotaInfo";
 import { useState, useEffect } from "react";
-import { FiX } from "react-icons/fi";
 import { useAuth } from "../../../../context/AuthContext";
 import { ref, push, update, serverTimestamp, get } from "firebase/database";
 import { database } from "../../../../firebase/config";
@@ -10,8 +11,8 @@ function EditInventoryModal({
   isOpen,
   onClose,
   onSubmit,
-  inventoryId,        // if provided -> edit mode
-  inventoryData        // optional initial data { name, description, category }
+  inventoryId,
+  inventoryData
 }) {
   const { currentUser } = useAuth();
   const isEdit = Boolean(inventoryId);
@@ -19,8 +20,34 @@ function EditInventoryModal({
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loadingPrefill, setLoadingPrefill] = useState(false);
+  const [inventoryCount, setInventoryCount] = useState(0);
+  const [, setLoadingCount] = useState(false);
+  
+  const MAX_INVENTORIES = 12;
+  const MAX_NAME_LENGTH = 50;
+  const MAX_DESCRIPTION_LENGTH = 500;
 
-  // Prefill when entering edit mode
+  useEffect(() => {
+    if (!isOpen || !currentUser?.uid || isEdit) return;
+
+    const fetchInventoryCount = async () => {
+      setLoadingCount(true);
+      try {
+        const userInvRef = ref(database, `userInventories/${currentUser.uid}`);
+        const snapshot = await get(userInvRef);
+        const count = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+        setInventoryCount(count);
+      } catch (err) {
+        console.error("Error fetching inventory count:", err);
+        setInventoryCount(0);
+      } finally {
+        setLoadingCount(false);
+      }
+    };
+
+    fetchInventoryCount();
+  }, [isOpen, currentUser?.uid, isEdit]);
+
   useEffect(() => {
     if (!isOpen) return;
     if (!isEdit) {
@@ -29,7 +56,6 @@ function EditInventoryModal({
       return;
     }
 
-    // If inventoryData passed in, use it; otherwise fetch from DB
     async function preload() {
       setLoadingPrefill(true);
       try {
@@ -63,14 +89,36 @@ function EditInventoryModal({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    let limitedValue = value;
+    if (name === "name" && value.length > MAX_NAME_LENGTH) {
+      limitedValue = value.substring(0, MAX_NAME_LENGTH);
+    }
+    if (name === "description" && value.length > MAX_DESCRIPTION_LENGTH) {
+      limitedValue = value.substring(0, MAX_DESCRIPTION_LENGTH);
+    }
+
+    setFormData(prev => ({ ...prev, [name]: limitedValue }));
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Inventory name is required";
-    if (!formData.category) newErrors.category = "Category is required";
+    
+    if (!formData.name.trim()) {
+      newErrors.name = "Inventory name is required";
+    } else if (formData.name.trim().length < 3) {
+      newErrors.name = "Inventory name must be at least 3 characters";
+    }
+    
+    if (!formData.category) {
+      newErrors.category = "Category is required";
+    }
+
+    if (!isEdit && inventoryCount >= MAX_INVENTORIES) {
+      newErrors.submit = `You have reached the maximum limit of ${MAX_INVENTORIES} inventories. Please delete some inventories to create new ones.`;
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -101,7 +149,7 @@ function EditInventoryModal({
 
         const summary = {
           name: formData.name.trim(),
-            category: formData.category,
+          category: formData.category,
           description: formData.description.trim(),
           ownerId: currentUser.uid,
           itemCount: 0,
@@ -119,7 +167,6 @@ function EditInventoryModal({
         onSubmit?.({ id: newId, ...summary });
       } else {
         // EDIT MODE
-        // Ensure ownership before updating (optional additional check)
         const snap = await get(ref(database, `inventories/${inventoryId}`));
         if (!snap.exists()) {
           setErrors({ submit: "Inventory no longer exists." });
@@ -147,7 +194,6 @@ function EditInventoryModal({
         onSubmit?.({ id: inventoryId, ...existing, ...updatedFields });
       }
 
-      // Reset only on create (optional on edit)
       if (!isEdit) {
         setFormData({ name: "", description: "", category: "" });
       }
@@ -167,39 +213,56 @@ function EditInventoryModal({
 
   if (!isOpen) return null;
 
+  const isLimitReached = !isEdit && inventoryCount >= MAX_INVENTORIES;
+
   return (
     <>
-      <div className="new-inventory-modal__overlay" onClick={handleCancel} />
-      <div className="new-inventory-modal__container">
-        <div className="new-inventory-modal__header">
-          <h2 className="new-inventory-modal__title">
-            {isEdit ? "Edit Inventory" : "Create New Inventory"}
-          </h2>
-          <button
-            className="new-inventory-modal__close-btn"
-            onClick={handleCancel}
-            aria-label="Close modal"
-          >
-            <FiX />
-          </button>
-        </div>
-        <div className="new-inventory-modal__content">
-          <form className="new-inventory-modal__form" onSubmit={handleSubmit}>
+      <div className="edit-inventory-modal__overlay" onClick={handleCancel} />
+      <div className="edit-inventory-modal__container">
+        <ModalHeader
+          title={isEdit ? "Edit Inventory" : "Create New Inventory"}
+          onBack={handleCancel}
+          onClose={handleCancel}
+        />
+
+        {!isEdit && (
+          <InventoryQuotaInfo
+            inventoryCount={inventoryCount}
+            maxInventories={MAX_INVENTORIES}
+          />
+        )}
+
+        <div className="edit-inventory-modal__content">
+          {isLimitReached && (
+            <div className="edit-inventory-modal__alert edit-inventory-modal__alert--warning">
+              ⚠️ You've reached your inventory limit. Delete some inventories to create new ones.
+            </div>
+          )}
+
+          {loadingPrefill && (
+            <div className="edit-inventory-modal__alert edit-inventory-modal__alert--info">
+              Loading inventory details...
+            </div>
+          )}
+
+          <form className="edit-inventory-modal__form" onSubmit={handleSubmit}>
             <InventoryFormFields
               formData={formData}
               errors={errors}
               isSubmitting={isSubmitting || loadingPrefill}
               onChange={handleChange}
+              maxNameLength={MAX_NAME_LENGTH}
+              maxDescriptionLength={MAX_DESCRIPTION_LENGTH}
             />
             {errors.submit && (
-              <div className="new-inventory-modal__alert new-inventory-modal__alert--error">
+              <div className="edit-inventory-modal__alert edit-inventory-modal__alert--error">
                 {errors.submit}
               </div>
             )}
-            <div className="new-inventory-modal__form-actions">
+            <div className="edit-inventory-modal__form-actions">
               <button
                 type="button"
-                className="new-inventory-modal__btn new-inventory-modal__btn--cancel"
+                className="edit-inventory-modal__btn edit-inventory-modal__btn--cancel"
                 onClick={handleCancel}
                 disabled={isSubmitting || loadingPrefill}
               >
@@ -207,8 +270,8 @@ function EditInventoryModal({
               </button>
               <button
                 type="submit"
-                className="new-inventory-modal__btn new-inventory-modal__btn--submit"
-                disabled={isSubmitting || loadingPrefill}
+                className="edit-inventory-modal__btn edit-inventory-modal__btn--submit"
+                disabled={isSubmitting || loadingPrefill || isLimitReached}
               >
                 {isSubmitting || loadingPrefill
                   ? (isEdit ? "Saving..." : "Creating...")
