@@ -82,7 +82,7 @@ function ItemCard({ item, onDelete }) {
             className="item-card__action-btn item-card__action-btn--edit"
             onClick={goEdit}
             aria-label={`Edit ${item.name}`}
-            title="Edit item"
+            title="Edit"
             disabled={deleting}
           >
             <FiEdit2 />
@@ -91,7 +91,7 @@ function ItemCard({ item, onDelete }) {
             className="item-card__action-btn item-card__action-btn--delete"
             onClick={handleDelete}
             aria-label={`Delete ${item.name}`}
-            title={deleting ? "Deleting..." : "Delete item"}
+            title={deleting ? "Deleting..." : "Delete"}
             disabled={deleting}
           >
             <FiTrash2 />
@@ -100,40 +100,41 @@ function ItemCard({ item, onDelete }) {
       </div>
 
       <div className="item-card__body">
-        <div className="item-card__metrics">
-          <div className="item-card__metric">
-            <span className="item-card__metric-label">Quantity</span>
-            <span className="item-card__metric-value">{item.quantity}</span>
+        <div className="item-card__top-row">
+          <div className="item-card__stat">
+            <span className="item-card__stat-label">Qty</span>
+            <span className="item-card__stat-value">{item.quantity}</span>
           </div>
-          <div className="item-card__metric">
-            <span className="item-card__metric-label">Unit Price</span>
-            <span className="item-card__metric-value">₱{Number(item.unitPrice || 0).toFixed(2)}</span>
+          <div className="item-card__stat">
+            <span className="item-card__stat-label">Unit Price</span>
+            <span className="item-card__stat-value">₱{Number(item.unitPrice || 0).toFixed(2)}</span>
           </div>
-          <div className="item-card__metric item-card__metric--total">
-            <span className="item-card__metric-label">Total Value</span>
-            <span className="item-card__metric-value">₱{Number(item.totalValue || 0).toFixed(2)}</span>
+          <div className="item-card__stat item-card__stat--highlight">
+            <span className="item-card__stat-label">Total</span>
+            <span className="item-card__stat-value">₱{Number(item.totalValue || 0).toFixed(2)}</span>
           </div>
         </div>
 
-        <div className="item-card__footer">
-          <div className="item-card__status-wrapper">
-            <span className={`item-card__status-badge ${getStatusBadgeClass(item.status)}`}>
-              <span className="item-card__status-icon">{getStatusIcon(item.status)}</span>
-              <span>{item.status}</span>
-            </span>
-            <span className="item-card__last-updated">{item.lastUpdated}</span>
+        <div className="item-card__bottom-row">
+          <div className="item-card__info">
+            <span className="item-card__date-label">Updated:</span>
+            <span className="item-card__date-value">{item.lastUpdated}</span>
           </div>
-          
-          <button
-            className="item-card__view-btn"
-            onClick={goView}
-            aria-label={`View details for ${item.name}`}
-            title="View item details"
-          >
-            <span>Details</span>
-            <FiChevronRight />
-          </button>
+          <span className={`item-card__status-badge ${getStatusBadgeClass(item.status)}`}>
+            <span>{getStatusIcon(item.status)}</span>
+            <span>{item.status}</span>
+          </span>
         </div>
+
+        <button
+          className="item-card__view-btn"
+          onClick={goView}
+          aria-label={`View ${item.name}`}
+          title="View details"
+        >
+          <span>View Details</span>
+          <FiChevronRight />
+        </button>
       </div>
     </div>
   )
