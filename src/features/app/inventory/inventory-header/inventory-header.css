@@ -1,31 +1,49 @@
+.inventory__header-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+/* Main Header Container */
 .inventory__header-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
-  margin-bottom: 20px;
   flex-wrap: wrap;
+}
+
+/* Search Section */
+.inventory__search-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 250px;
 }
 
 .inventory__custom-search {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  width: 280px;
-  max-width: 100%;
-  padding: 6px 10px;
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 12px;
   background-color: #FBFDFF;
-  border: 1px solid #d0d5dd;
+  border: 1.5px solid #d0d5dd;
   border-radius: 8px;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.25s;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .inventory__custom-search:hover {
   border-color: #b6bcc6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .inventory__custom-search:focus-within {
   border-color: #2F77EB;
-  box-shadow: 0 0 0 3px rgba(47, 119, 235, 0.18);
+  box-shadow: 0 0 0 3px rgba(47, 119, 235, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .inventory__search-icon {
@@ -38,29 +56,42 @@
 
 .inventory__search-bar {
   flex: 1 1 auto;
-  min-width: 0;                
-  height: 28px;                 
-  padding: 2px 4px;
+  min-width: 0;
+  height: 32px;
+  padding: 0 4px;
   border: none;
   outline: none;
   background: transparent;
   color: #111827;
   font-size: 14px;
   line-height: 1.4;
+  font-family: inherit;
 }
 
 .inventory__search-bar::placeholder {
   color: #9ca3af;
 }
 
-.inventory__header-container .button {
-  margin-left: auto;
+.inventory__search-hint {
+  font-size: 12px;
+  color: #6b7280;
+  padding: 0 2px;
+  min-height: 16px;
+  transition: color 0.2s ease;
+}
+
+/* Actions Section */
+.inventory__actions-section {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   padding: 10px 16px;
   font-size: 14px;
   font-weight: 600;
@@ -69,28 +100,123 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(47, 119, 235, 0.2);
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
   background-color: #2468d5;
+  box-shadow: 0 4px 8px rgba(47, 119, 235, 0.3);
+  transform: translateY(-1px);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(47, 119, 235, 0.28);
+  box-shadow: 0 0 0 3px rgba(47, 119, 235, 0.28), 0 2px 4px rgba(47, 119, 235, 0.2);
 }
 
-/* Responsive: Mobile */
-@media (max-width: 480px) {
-  .inventory__header-container {
-    gap: 12px;
+.button:disabled {
+  background-color: #d1dce6;
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button__icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Info Bar */
+.inventory__info-bar {
+  background: linear-gradient(135deg, #f0f9ff 0%, #f8fafc 100%);
+  border: 1px solid #e0f2fe;
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.inventory__info-content {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.inventory__quota-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.inventory__quota-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0c4a6e;
+}
+
+.inventory__quota-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0284c7;
+  padding: 4px 8px;
+  background-color: #cffafe;
+  border-radius: 6px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.inventory__quota-value.quota-full {
+  color: #991b1b;
+  background-color: #fee2e2;
+}
+
+.inventory__quota-status {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #dbeafe;
+  color: #0c4a6e;
+}
+
+.inventory__quota-status.status-full {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.inventory__quota-status.status-available {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+/* Responsive: Tablet */
+@media (max-width: 768px) {
+  .inventory__header-wrapper {
+    gap: 10px;
     margin-bottom: 16px;
   }
 
+  .inventory__header-container {
+    gap: 12px;
+  }
+
   .inventory__custom-search {
-    width: 100%;
-    padding: 5px 9px;
+    max-width: 100%;
+    padding: 9px 11px;
+  }
+
+  .inventory__search-bar {
+    height: 30px;
+    font-size: 13px;
   }
 
   .button {
@@ -98,7 +224,103 @@
     font-size: 13px;
   }
 
-  .inventory__header-container .button {
-    margin-left: auto;
+  .inventory__info-bar {
+    padding: 10px 12px;
+  }
+
+  .inventory__quota-display {
+    gap: 8px;
+  }
+
+  .inventory__quota-label {
+    font-size: 12px;
+  }
+
+  .inventory__quota-value {
+    font-size: 14px;
+  }
+
+  .inventory__quota-status {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+}
+
+/* Responsive: Mobile */
+@media (max-width: 480px) {
+  .inventory__header-wrapper {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .inventory__header-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .inventory__search-section {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .inventory__custom-search {
+    max-width: 100%;
+    padding: 8px 10px;
+  }
+
+  .inventory__search-bar {
+    height: 28px;
+    font-size: 13px;
+  }
+
+  .inventory__search-hint {
+    font-size: 11px;
+  }
+
+  .inventory__actions-section {
+    width: 100%;
+  }
+
+  .button {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .button__icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .inventory__info-bar {
+    padding: 8px 12px;
+  }
+
+  .inventory__info-content {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .inventory__quota-display {
+    width: 100%;
+    gap: 8px;
+    justify-content: space-between;
+  }
+
+  .inventory__quota-label {
+    font-size: 11px;
+  }
+
+  .inventory__quota-value {
+    font-size: 13px;
+    padding: 3px 6px;
+    min-width: 40px;
+  }
+
+  .inventory__quota-status {
+    font-size: 11px;
+    padding: 2px 6px;
   }
 }

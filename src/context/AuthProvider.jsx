@@ -15,10 +15,8 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  // Add logout while keeping your structure intact
   const logout = async () => {
     await signOut(auth);
-    // onAuthStateChanged will set currentUser to null automatically
   };
 
   const value = {
@@ -26,7 +24,7 @@ export function AuthProvider({ children }) {
     uid: currentUser ? currentUser.uid : null,
     email: currentUser ? currentUser.email : null,
     isLoggedIn: !!currentUser,
-    logout, // expose logout to consumers
+    logout, 
   };
 
   return (
