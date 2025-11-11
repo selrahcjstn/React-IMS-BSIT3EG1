@@ -5,9 +5,7 @@
   width: 100%;
   z-index: 1000;
   padding: 12px 0;
-  background-color: #f9fdff;
-  border-bottom: 1px solid #e2e8f0;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  background-color: #FBFDFF;
 }
 
 .header__container {

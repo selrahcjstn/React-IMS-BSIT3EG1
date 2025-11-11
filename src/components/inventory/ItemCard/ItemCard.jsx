@@ -91,13 +91,13 @@ function ItemCard({ item, onDelete }) {
           <div className="item-card__stat">
             <span className="item-card__stat-label">Price</span>
             <span className="item-card__stat-value">
-              ${Number(item.unitPrice || 0).toFixed(2)}
+              ₱{Number(item.unitPrice || 0).toFixed(2)}
             </span>
           </div>
           <div className="item-card__stat">
             <span className="item-card__stat-label">Total</span>
             <span className="item-card__stat-value item-card__stat-value--primary">
-              ${Number(item.totalValue || 0).toFixed(2)}
+              ₱{Number(item.totalValue || 0).toFixed(2)}
             </span>
           </div>
         </div>
