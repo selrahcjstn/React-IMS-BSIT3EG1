@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { getDatabase, ref, get } from "firebase/database";
+import Header from "../../components/inventory/header/Header";
 
 function UsersPanelRoutes() {
   const [isOpen, setIsOpen] = useState(true);
@@ -52,6 +53,7 @@ function UsersPanelRoutes() {
   return (
     <>
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Header isCollapsed={!isOpen}/>
       <PageContentLayout isCollapsed={!isOpen}>
         <Outlet />
       </PageContentLayout>

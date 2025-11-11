@@ -109,7 +109,7 @@ function Chart() {
           <div className="chart__loading">Loading chart...</div>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+            <AreaChart data={data} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="valueColor" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#2F77EB" stopOpacity={0.15} />
@@ -119,7 +119,7 @@ function Chart() {
 
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
               <XAxis dataKey="month" stroke="#94a3b8" style={{ fontSize: 12 }} />
-              <YAxis stroke="#94a3b8" style={{ fontSize: 12 }} />
+              <YAxis stroke="#94a3b8" style={{ fontSize: 12 }} width={45} />
               <Tooltip
                 contentStyle={{
                   background: "#ffffff",

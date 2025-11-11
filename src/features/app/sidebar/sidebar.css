@@ -4,7 +4,7 @@
 }
 
 .sidebar {
-  background-color: #f9fdff;
+  background-color: #ffffff;
   height: 100vh;
   padding: 12px 12px 12px;
   position: fixed;
@@ -300,28 +300,26 @@
 .sidebar__hamburger {
   display: none;
   position: fixed;
-  top: 16px;
+  top: 10px;
   left: 16px;
   background: #ffffff;
-  border: 1px solid #e2e8f0;
   color: #0f172a;
   font-size: 1.25rem;
   padding: 8px 10px;
-  border-radius: 8px;
+  border: none;
   cursor: pointer;
   z-index: 101;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: background 0.15s ease, border-color 0.15s ease;
   line-height: 1;
+  color: #6b727d;
 }
 
 .sidebar__hamburger:hover {
-  background: #f1f5f9;
-  border-color: #cbd5e1;
+  color: #4787ef;
 }
 
 .sidebar__hamburger:active {
-  background: #e2e8f0;
+  color: #3A7FF0;
 }
 
 @media (max-width: 768px) {

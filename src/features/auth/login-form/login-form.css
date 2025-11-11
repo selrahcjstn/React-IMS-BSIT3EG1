@@ -1,24 +1,135 @@
-.login__form-container{
-    display: flex;
-    flex-direction: column;
+.login__form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  max-width: 450px;
+  width: 100%;
+  justify-content: center;
+  min-height: calc(100vh - 112px);
+}
+
+.login__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.login__heading {
+  margin: 0;
+  padding: 0;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.login__message {
+  margin: 0;
+  padding: 0;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: #475569;
+  line-height: 1.6;
+}
+
+.login__forgot {
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+  color: #2f77eb;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-weight: 600;
+}
+
+.login__forgot:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .login__form-container {
+    max-width: 100%;
+    gap: 18px;
+    min-height: calc(100vh - 112px);
+    justify-content: center;
+  }
+
+  .login__heading {
+    font-size: 2rem;
+  }
+
+  .login__message {
+    font-size: 0.95rem;
+  }
+}
+
+/* Tablet Portrait */
+@media (max-width: 768px) {
+  .login__form-container {
     gap: 16px;
-    flex: 1;
-    max-width: 450px;
+    max-width: 100%;
+    min-height: calc(100vh - 112px);
+    justify-content: center;
+    padding: 40px 20px;
+    width: 100%;
+  }
+
+  .login__header {
+    gap: 8px;
+  }
+
+  .login__heading {
+    font-size: 1.8rem;
+  }
+
+  .login__message {
+    font-size: 0.95rem;
+  }
 }
 
-.login__forgot{
-    font-size: 14px;
-    color: #007bff;
-    text-decoration: none;
+/* Mobile */
+@media (max-width: 480px) {
+  .login__form-container {
+    gap: 14px;
+    max-width: 100%;
+    min-height: calc(100vh - 112px);
+    justify-content: center;
+    padding: 30px 16px;
+    width: 100%;
+  }
+
+  .login__header {
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .login__heading {
+    font-size: 1.5rem;
+  }
+
+  .login__message {
+    font-size: 0.9rem;
+  }
+
+  .login__forgot {
+    font-size: 0.8rem;
+  }
 }
 
-.login__heading{
-    font-size: 3rem;
-    line-height: 0.8;
-}
+/* Extra small screens */
+@media (max-width: 360px) {
+  .login__form-container {
+    gap: 12px;
+    padding: 24px 12px;
+  }
 
-.login__message{
-    color: rgba(37, 34, 30, 0.70);
-    font-size: 18px;
-    margin-bottom: 14px;
+  .login__heading {
+    font-size: 1.4rem;
+  }
+
+  .login__message {
+    font-size: 0.85rem;
+  }
 }

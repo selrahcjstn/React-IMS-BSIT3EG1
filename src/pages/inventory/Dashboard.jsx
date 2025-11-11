@@ -1,11 +1,9 @@
 import { useAuth } from "../../context/AuthContext";
 import { Navigate } from "react-router-dom";
-import DashboardHeader from "../../features/app/dashboard/dashboard-header/DashboardHeader";
 import DashboardBoxContainer from "../../features/app/dashboard/box-container/DashboardBoxContainer";
 import Chart from "../../features/app/dashboard/chart/Chart";
 import "./dashboard.css";
 import RecentActivity from "../../features/app/dashboard/recent-activity/RecentActivity";
-
 function Dashboard() {
   const { currentUser } = useAuth();
 
@@ -13,7 +11,6 @@ function Dashboard() {
 
   return (
     <div className="dashboard container">
-      <DashboardHeader currentUser={currentUser} />
       <DashboardBoxContainer />
       <Chart />
       <RecentActivity />

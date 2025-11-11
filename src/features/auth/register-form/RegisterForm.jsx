@@ -59,12 +59,12 @@ function RegisterForm() {
 
   return (
     <form className="register__form-container" onSubmit={handleSubmit} noValidate>
-      <header className="register__header">
+      <div className="register__header">
         <h1 className="register__heading">Create Account</h1>
         <p className="register__message">
           Register to manage your inventory and grow your business efficiently.
         </p>
-      </header>
+      </div>
 
       {error && <ErrorMessage error={error} />}
 

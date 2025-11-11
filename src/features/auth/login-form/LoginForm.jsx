@@ -58,12 +58,14 @@ function LoginForm() {
 
   return (
     <form className="login__form-container" onSubmit={handleSubmit} noValidate>
-      <h1 id="login-heading" className="login__heading">
-        Welcome
-      </h1>
-      <p className="login__message">
-        Login to access your account and stay in control of your inventory.
-      </p>
+      <div className="login__header">
+        <h1 id="login-heading" className="login__heading">
+          Welcome
+        </h1>
+        <p className="login__message">
+          Login to access your account and stay in control of your inventory.
+        </p>
+      </div>
 
       {error && <ErrorMessage error={error} />}
 

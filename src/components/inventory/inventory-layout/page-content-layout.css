@@ -1,12 +1,12 @@
 .layout__content {
   flex-grow: 1;
-  padding: 20px;
   margin-left: 250px;
   transition: margin-left 0.3s ease;
   background: #fafbfc;
   overflow-x: hidden;
   overflow-y: auto;
   box-sizing: border-box;
+  margin-top: 80px;
 }
 
 .layout__content--collapsed {

@@ -27,7 +27,7 @@ function Social({ setError }) {
 
       if (!snapshot.exists()) {
         navigate("/auth/personal-info");
-      } 
+      }
     } catch (error) {
       if (error.code === "auth/account-exists-with-different-credential") {
         setError(
@@ -42,31 +42,35 @@ function Social({ setError }) {
   return (
     <div className="register__social">
       <div className="register__divider">
-        <span>or</span>
+        <span className="register__divider-text">or</span>
       </div>
 
       <button
         type="button"
         className="register__social-btn google"
         onClick={() => handleSocialLogin(googleProvider)}
+        aria-label="Continue with Google"
       >
         <img
           src="https://www.svgrepo.com/show/475656/google-color.svg"
-          alt="Google"
+          alt="Google logo"
+          loading="lazy"
         />
-        Continue with Google
+        <span>Continue with Google</span>
       </button>
 
       <button
         type="button"
         className="register__social-btn facebook"
         onClick={() => handleSocialLogin(facebookProvider)}
+        aria-label="Continue with Facebook"
       >
         <img
           src="https://www.svgrepo.com/show/475647/facebook-color.svg"
-          alt="Facebook"
+          alt="Facebook logo"
+          loading="lazy"
         />
-        Continue with Facebook
+        <span>Continue with Facebook</span>
       </button>
     </div>
   );
