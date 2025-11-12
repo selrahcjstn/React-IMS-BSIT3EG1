@@ -16,7 +16,7 @@ import LogoIcon from "../../../assets/logo.png";
 import { useAuth } from "../../../context/AuthContext";
 
 function Sidebar({ isOpen, setIsOpen }) {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, displayName, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ function Sidebar({ isOpen, setIsOpen }) {
     { to: "/dashboard", label: "Dashboard", icon: <FaHome />, tooltip: "Dashboard" },
     { to: "/inventory", label: "Inventory", icon: <FaBox />, tooltip: "Inventory" },
     { to: "/help", label: "Help / FAQ", icon: <FaQuestionCircle />, tooltip: "Help / FAQ" },
-    { to: "/settings", label: "Settings", icon: <FaCog />, tooltip: "Settings" },
+    { to: "/account-settings", label: "Account Settings", icon: <FaCog />, tooltip: "Account Settings" },
   ];
 
   const handleLogout = async () => {
@@ -43,6 +43,9 @@ function Sidebar({ isOpen, setIsOpen }) {
       setIsOpen(false);
     }
   };
+
+  const resolvedName = displayName || currentUser?.displayName || currentUser?.email || "User";
+  const resolvedEmail = currentUser?.email || "";
 
   return (
     <>
@@ -107,16 +110,16 @@ function Sidebar({ isOpen, setIsOpen }) {
 
             <div
               className="sidebar__profile"
-              data-tooltip={!isOpen ? (currentUser?.displayName || currentUser?.email || "User") : ""}
+              data-tooltip={!isOpen ? resolvedName : ""}
             >
               <FaUserCircle className="sidebar__profile-icon" />
               {isOpen && (
                 <div className="sidebar__profile-info">
                   <span className="sidebar__profile-name">
-                    {currentUser?.displayName || currentUser?.email || "—"}
+                    {resolvedName}
                   </span>
                   <span className="sidebar__profile-email">
-                    {currentUser?.email || ""}
+                    {resolvedEmail}
                   </span>
                 </div>
               )}

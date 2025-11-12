@@ -13,6 +13,7 @@ import Inventory from "./pages/inventory/Inventory";
 import Items from "./pages/inventory/Items";
 import AddNewItem from "./pages/inventory/AddNewItem";
 import EditItemPage from "./pages/inventory/EditItemPage";
+import AccountSettings from "./pages/inventory/AccountSettings";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/inventory/items/:id" element={<Items />} />
           <Route path="/inventory/:id/items/new" element={<AddNewItem />} />
           <Route path="/inventory/items/:id/item/:itemId/edit" element={<EditItemPage />} />
+          <Route path="/account-settings" element={<AccountSettings />} />
         </Route>
       </Routes>
     </BrowserRouter>

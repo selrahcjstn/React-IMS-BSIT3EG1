@@ -1,0 +1,687 @@
+.account-settings {
+  background-color: #f8fafc;
+  min-height: 100vh;
+  padding: 40px 24px;
+}
+
+.account-settings__wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.account-settings__header {
+  margin-bottom: 40px;
+}
+
+.account-settings__title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.account-settings__subtitle {
+  margin: 8px 0 0 0;
+  font-size: 15px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.account-settings__content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Card Styles */
+.account-settings__card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s ease;
+}
+
+.account-settings__card:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile Section */
+.account-settings__profile-section {
+  background: linear-gradient(135deg, #2F77EB 0%, #1e5fb8 100%);
+  padding: 36px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  color: #ffffff;
+}
+
+.account-settings__avatar-wrapper {
+  flex-shrink: 0;
+}
+
+.account-settings__avatar-initials {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.account-settings__profile-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.account-settings__profile-name {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.account-settings__profile-email {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.account-settings__profile-purpose {
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.2);
+  width: fit-content;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.account-settings__btn-edit-main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.account-settings__btn-edit-main:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.account-settings__btn-edit-main:active {
+  opacity: 0.9;
+}
+
+.account-settings__btn-edit-main svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Details Section */
+.account-settings__details-section {
+  padding: 36px;
+}
+
+.account-settings__details-header {
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.account-settings__details-title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.account-settings__details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.account-settings__detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.account-settings__detail-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.account-settings__detail-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.account-settings__status-active {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background-color: #dcfce7;
+  color: #16a34a;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  width: fit-content;
+}
+
+/* Reset Password Section */
+.account-settings__reset-password-section {
+    margin-top: -30px;
+  padding: 0 36px 36px 36px;
+}
+
+.account-settings__reset-password-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.account-settings__reset-password-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.account-settings__reset-password-label {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.account-settings__reset-password-description {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.account-settings__reset-password-right {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.account-settings__btn-reset-password {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  background-color: #2F77EB;
+  color: #ffffff;
+  border: 1px solid #2F77EB;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.account-settings__btn-reset-password:hover:not(:disabled) {
+  background-color: #2468d5;
+  border-color: #2468d5;
+}
+
+.account-settings__btn-reset-password:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.account-settings__btn-reset-password svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Info Box */
+.account-settings__security-info-box {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background-color: #f0f4ff;
+  border-left: 4px solid #2F77EB;
+  border-radius: 8px;
+  margin-top: 16px;
+}
+
+.account-settings__info-icon {
+  width: 20px;
+  height: 20px;
+  color: #2F77EB;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.account-settings__info-text {
+  margin: 0;
+  font-size: 12px;
+  color: #1e3a8a;
+  line-height: 1.6;
+}
+
+/* Edit Form */
+.account-settings__edit-form {
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.account-settings__form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.account-settings__form-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.account-settings__form-section-title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.account-settings__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.account-settings__form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: -0.2px;
+}
+
+.account-settings__optional {
+  color: #94a3b8;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.account-settings__input,
+.account-settings__select {
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #0f172a;
+  background-color: #f8fafc;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.account-settings__input::placeholder {
+  color: #cbd5e1;
+  font-size: 13px;
+}
+
+.account-settings__input:focus,
+.account-settings__select:focus {
+  border-color: #2F77EB;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(47, 119, 235, 0.1);
+}
+
+.account-settings__input:hover:not(:disabled),
+.account-settings__select:hover:not(:disabled) {
+  border-color: #cbd5e1;
+  background-color: #ffffff;
+}
+
+.account-settings__input:disabled,
+.account-settings__select:disabled {
+  background-color: #f1f5f9;
+  color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.account-settings__form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.account-settings__form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 12px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.account-settings__btn-cancel,
+.account-settings__btn-save {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid;
+}
+
+.account-settings__btn-cancel {
+  background-color: #f1f5f9;
+  color: #334155;
+  border-color: #cbd5e1;
+}
+
+.account-settings__btn-cancel:hover:not(:disabled) {
+  background-color: #e2e8f0;
+  border-color: #cbd5e1;
+}
+
+.account-settings__btn-cancel:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.account-settings__btn-save {
+  background-color: #2F77EB;
+  color: #ffffff;
+  border-color: #2F77EB;
+}
+
+.account-settings__btn-save:hover:not(:disabled) {
+  background-color: #2468d5;
+  border-color: #2468d5;
+}
+
+.account-settings__btn-save:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.account-settings__btn-cancel svg,
+.account-settings__btn-save svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Alerts */
+.account-settings__alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.account-settings__alert--success {
+  background-color: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.account-settings__alert--error {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.account-settings__alert svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .account-settings {
+    padding: 28px 16px;
+  }
+
+  .account-settings__title {
+    font-size: 26px;
+  }
+
+  .account-settings__profile-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 28px 24px;
+    gap: 16px;
+  }
+
+  .account-settings__profile-info {
+    align-items: center;
+  }
+
+  .account-settings__btn-edit-main {
+    align-self: center;
+  }
+
+  .account-settings__details-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .account-settings__reset-password-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .account-settings__reset-password-right {
+    width: 100%;
+  }
+
+  .account-settings__btn-reset-password {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .account-settings__edit-form {
+    padding: 28px;
+    gap: 24px;
+  }
+
+  .account-settings__form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .account-settings__form-section {
+    gap: 14px;
+    padding-bottom: 20px;
+  }
+
+  .account-settings__form-actions {
+    flex-direction: column;
+  }
+
+  .account-settings__btn-cancel,
+  .account-settings__btn-save {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .account-settings__security-info-box {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-settings {
+    padding: 20px 12px;
+  }
+
+  .account-settings__header {
+    margin-bottom: 24px;
+  }
+
+  .account-settings__title {
+    font-size: 22px;
+  }
+
+  .account-settings__subtitle {
+    font-size: 13px;
+  }
+
+  .account-settings__profile-section {
+    padding: 20px 16px;
+    gap: 12px;
+  }
+
+  .account-settings__avatar-initials {
+    width: 72px;
+    height: 72px;
+    font-size: 28px;
+  }
+
+  .account-settings__profile-name {
+    font-size: 18px;
+  }
+
+  .account-settings__profile-email {
+    font-size: 12px;
+  }
+
+  .account-settings__btn-edit-main {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .account-settings__details-section {
+    padding: 20px 16px;
+  }
+
+  .account-settings__details-grid {
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+
+  .account-settings__detail-label {
+    font-size: 10px;
+  }
+
+  .account-settings__detail-value {
+    font-size: 13px;
+  }
+
+  .account-settings__reset-password-section {
+    padding: 0 20px 20px 20px;
+  }
+
+  .account-settings__reset-password-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 16px;
+  }
+
+  .account-settings__reset-password-label {
+    font-size: 11px;
+  }
+
+  .account-settings__reset-password-right {
+    width: 100%;
+  }
+
+  .account-settings__btn-reset-password {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .account-settings__reset-password-description {
+    font-size: 12px;
+  }
+
+  .account-settings__edit-form {
+    padding: 20px 16px;
+    gap: 20px;
+  }
+
+  .account-settings__form-section {
+    gap: 12px;
+    padding-bottom: 16px;
+  }
+
+  .account-settings__form-label {
+    font-size: 12px;
+  }
+
+  .account-settings__input,
+  .account-settings__select {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .account-settings__btn-cancel,
+  .account-settings__btn-save {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .account-settings__security-info-box {
+    padding: 12px;
+    font-size: 11px;
+  }
+}
