@@ -298,9 +298,9 @@
   display: none;
   position: fixed;
   top: 10px;
-  left: 16px;
-  background: #ffffff;
+  right: 16px;
   color: #0f172a;
+  background-color: transparent;
   font-size: 1.25rem;
   padding: 8px 10px;
   border: none;

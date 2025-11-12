@@ -1,7 +1,7 @@
 import { FiArrowLeft } from "react-icons/fi";
 import "./add-new-item-header.css";
 
-function AddNewItemHeader({ onBack, inventoryName }) {
+function AddNewItemHeader({ onBack, inventoryName, title, action}) {
   return (
     <div className="add-new-item__header">
       <button
@@ -12,9 +12,9 @@ function AddNewItemHeader({ onBack, inventoryName }) {
         <FiArrowLeft />
       </button>
       <div className="add-new-item__header-content">
-        <h1 className="add-new-item__title">Add New Item</h1>
+        <h1 className="add-new-item__title">{title}</h1>
         <p className="add-new-item__subtitle">
-          Add an item to inventory <strong>{inventoryName || "-"}</strong>
+          {action} an item to inventory <strong>{inventoryName || "-"}</strong>
         </p>
       </div>
     </div>

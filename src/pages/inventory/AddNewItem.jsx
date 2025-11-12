@@ -188,7 +188,7 @@ function AddNewItem() {
 
   return (
     <div className="add-new-item">
-      <AddNewItemHeader onBack={handleCancel} inventoryName={inventoryName || inventoryId} />
+      <AddNewItemHeader title={"Add New Item"} action={"Add"} onBack={handleCancel} inventoryName={inventoryName || inventoryId} />
       <AddNewItemForm
         formData={formData}
         errors={errors}

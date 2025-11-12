@@ -3,14 +3,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ref, get, update, serverTimestamp } from "firebase/database";
 import { database } from "../../firebase/config";
 import EditItemForm from "../../features/app/items/edit-item-form/EditItemForm";
+import AddNewItemHeader from "../../features/app/items/add-new-item-header/AddNewItemHeader";
 import { useAuth } from "../../context/AuthContext";
 
 function EditItemPage() {
-  // Read BOTH params from the route: /inventory/items/:id/item/:itemId/edit
   const { id: inventoryId, itemId } = useParams();
   const navigate = useNavigate();
   const { currentUser } = useAuth();
 
+  const [inventoryName, setInventoryName] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     dimensionType: "single",
@@ -18,7 +19,7 @@ function EditItemPage() {
     dimension2: "",
     dimension3: "",
     quantity: "",
-    price: ""
+    price: "",
   });
   const [errors, setErrors] = useState({});
   const [loadingItem, setLoadingItem] = useState(true);
@@ -40,17 +41,24 @@ function EditItemPage() {
       }
 
       try {
+        const invRef = ref(database, `inventories/${inventoryId}`);
         const itemRef = ref(database, `inventoryItems/${inventoryId}/${itemId}`);
-        const snap = await get(itemRef);
+
+        const [invSnap, itemSnap] = await Promise.all([get(invRef), get(itemRef)]);
         if (!active) return;
 
-        if (!snap.exists()) {
+        if (invSnap.exists()) {
+          const inv = invSnap.val();
+          setInventoryName(inv?.name || "");
+        }
+
+        if (!itemSnap.exists()) {
           setErrors({ submit: "Item not found." });
           setLoadingItem(false);
           return;
         }
 
-        const item = snap.val();
+        const item = itemSnap.val();
         const dims = Array.isArray(item.dimensions) ? item.dimensions : [];
         let dimensionType = "single";
         if (dims.length === 2) dimensionType = "2x";
@@ -63,7 +71,7 @@ function EditItemPage() {
           dimension2: dims[1] != null ? String(dims[1]) : "",
           dimension3: dims[2] != null ? String(dims[2]) : "",
           quantity: item.quantity != null ? String(item.quantity) : "",
-          price: item.price != null ? String(item.price) : ""
+          price: item.price != null ? String(item.price) : "",
         });
         setErrors({});
       } catch (e) {
@@ -74,22 +82,24 @@ function EditItemPage() {
     }
 
     load();
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, [inventoryId, itemId]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const onDimensionTypeChange = (type) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       dimensionType: type,
       dimension1: "",
       dimension2: "",
-      dimension3: ""
+      dimension3: "",
     }));
   };
 
@@ -105,8 +115,10 @@ function EditItemPage() {
     if (!itemId) newErrors.submit = "Missing item id.";
     if (!currentUser?.uid) newErrors.submit = "You must be logged in.";
     if (!formData.title.trim()) newErrors.title = "Item title is required.";
-    if (!formData.quantity || parseFloat(formData.quantity) <= 0) newErrors.quantity = "Quantity must be > 0.";
-    if (!formData.price || parseFloat(formData.price) <= 0) newErrors.price = "Unit price must be > 0.";
+    if (!formData.quantity || parseFloat(formData.quantity) <= 0)
+      newErrors.quantity = "Quantity must be > 0.";
+    if (!formData.price || parseFloat(formData.price) <= 0)
+      newErrors.price = "Unit price must be > 0.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -114,14 +126,20 @@ function EditItemPage() {
   const buildDimensions = () => {
     const dims = [];
     if (formData.dimensionType === "single") {
-      if (formData.dimension1 !== "") dims.push(parseFloat(formData.dimension1));
+      if (formData.dimension1 !== "")
+        dims.push(parseFloat(formData.dimension1));
     } else if (formData.dimensionType === "2x") {
-      if (formData.dimension1 !== "") dims.push(parseFloat(formData.dimension1));
-      if (formData.dimension2 !== "") dims.push(parseFloat(formData.dimension2));
+      if (formData.dimension1 !== "")
+        dims.push(parseFloat(formData.dimension1));
+      if (formData.dimension2 !== "")
+        dims.push(parseFloat(formData.dimension2));
     } else if (formData.dimensionType === "3x") {
-      if (formData.dimension1 !== "") dims.push(parseFloat(formData.dimension1));
-      if (formData.dimension2 !== "") dims.push(parseFloat(formData.dimension2));
-      if (formData.dimension3 !== "") dims.push(parseFloat(formData.dimension3));
+      if (formData.dimension1 !== "")
+        dims.push(parseFloat(formData.dimension1));
+      if (formData.dimension2 !== "")
+        dims.push(parseFloat(formData.dimension2));
+      if (formData.dimension3 !== "")
+        dims.push(parseFloat(formData.dimension3));
     }
     return dims;
   };
@@ -145,10 +163,9 @@ function EditItemPage() {
         [`${itemPath}/quantity`]: qty,
         [`${itemPath}/price`]: price,
         [`${itemPath}/total`]: total,
-        [`${itemPath}/updatedAt`]: serverTimestamp()
+        [`${itemPath}/updatedAt`]: serverTimestamp(),
       });
 
-      // Navigate back to the items list for this inventory (adjust if you prefer item details)
       navigate(`/inventory/items/${inventoryId}`);
     } catch (err) {
       setErrors({ submit: err.message || "Failed to update item." });
@@ -166,16 +183,24 @@ function EditItemPage() {
   }
 
   return (
-    <EditItemForm
-      formData={formData}
-      errors={errors}
-      isSubmitting={isSubmitting}
-      onChange={onChange}
-      onDimensionTypeChange={onDimensionTypeChange}
-      onSubmit={handleSubmit}
-      onCancel={handleCancel}
-      calculateTotal={calculateTotal}
-    />
+    <>
+      <AddNewItemHeader
+        title="Edit Item"
+        action="Edit"
+        onBack={handleCancel}
+        inventoryName={inventoryName || inventoryId}
+      />
+      <EditItemForm
+        formData={formData}
+        errors={errors}
+        isSubmitting={isSubmitting}
+        onChange={onChange}
+        onDimensionTypeChange={onDimensionTypeChange}
+        onSubmit={handleSubmit}
+        onCancel={handleCancel}
+        calculateTotal={calculateTotal}
+      />
+    </>
   );
 }
 

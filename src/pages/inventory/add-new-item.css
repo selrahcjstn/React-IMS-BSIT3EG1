@@ -310,7 +310,7 @@
 
 @media (max-width: 768px) {
   .add-new-item {
-    padding: 16px 0 32px;
+    padding: 0 32px;
   }
 
   .add-new-item__content {
