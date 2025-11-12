@@ -14,6 +14,7 @@ import Items from "./pages/inventory/Items";
 import AddNewItem from "./pages/inventory/AddNewItem";
 import EditItemPage from "./pages/inventory/EditItemPage";
 import AccountSettings from "./pages/inventory/AccountSettings";
+import Help from "./pages/inventory/Help";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/inventory/items/:id" element={<Items />} />
           <Route path="/inventory/:id/items/new" element={<AddNewItem />} />
           <Route path="/inventory/items/:id/item/:itemId/edit" element={<EditItemPage />} />
+          <Route path="/help" element={<Help />} />
           <Route path="/account-settings" element={<AccountSettings />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
