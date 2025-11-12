@@ -1,0 +1,133 @@
+.account-settings__profile-section {
+  background: linear-gradient(135deg, #2f77eb 0%, #1e5fb8 100%);
+  padding: 36px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  color: #ffffff;
+}
+
+.account-settings__avatar-wrapper {
+  flex-shrink: 0;
+}
+
+.account-settings__avatar-initials {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.account-settings__profile-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.account-settings__profile-name {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.account-settings__profile-email {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.account-settings__profile-purpose {
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.2);
+  width: fit-content;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.account-settings__btn-edit-main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.account-settings__btn-edit-main:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.account-settings__btn-edit-main:active {
+  opacity: 0.9;
+}
+
+.account-settings__btn-edit-main svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 768px) {
+  .account-settings__profile-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 28px 24px;
+    gap: 16px;
+  }
+
+  .account-settings__profile-info {
+    align-items: center;
+  }
+
+  .account-settings__btn-edit-main {
+    align-self: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-settings__profile-section {
+    padding: 20px 16px;
+    gap: 12px;
+  }
+
+  .account-settings__avatar-initials {
+    width: 72px;
+    height: 72px;
+    font-size: 28px;
+  }
+
+  .account-settings__profile-name {
+    font-size: 18px;
+  }
+
+  .account-settings__profile-email {
+    font-size: 12px;
+  }
+
+  .account-settings__btn-edit-main {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+}

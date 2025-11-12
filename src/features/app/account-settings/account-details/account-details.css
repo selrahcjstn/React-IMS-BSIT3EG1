@@ -1,0 +1,86 @@
+.account-settings__details-section {
+  padding: 36px;
+}
+
+.account-settings__details-header {
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.account-settings__details-title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.account-settings__details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.account-settings__detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.account-settings__detail-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.account-settings__detail-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.account-settings__status-active {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background-color: #dcfce7;
+  color: #16a34a;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  width: fit-content;
+}
+
+@media (max-width: 768px) {
+  .account-settings__details-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-settings__details-section {
+    padding: 20px 16px;
+  }
+
+  .account-settings__details-grid {
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+
+  .account-settings__detail-label {
+    font-size: 10px;
+  }
+
+  .account-settings__detail-value {
+    font-size: 13px;
+  }
+}
