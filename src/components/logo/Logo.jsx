@@ -6,7 +6,7 @@ function Logo() {
   return (
     <Link to="/" className="logo">
       <img className="logo__image" src={logo} alt="IMS Online Logo" />
-      <span className="logo__title">IMS Online</span>
+      <span className="logo__title">Istokkit</span>
     </Link>
   );
 }
