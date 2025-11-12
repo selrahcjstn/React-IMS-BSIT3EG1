@@ -5,7 +5,7 @@ function Footer() {
 
   return (
     <footer className="footer">
-      <div className="footer__container">
+      <div className="footer__container container">
         <div className="footer__content">
           <div className="footer__section">
             <h3 className="footer__brand">Istokkit</h3>
