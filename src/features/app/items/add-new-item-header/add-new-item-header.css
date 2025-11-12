@@ -3,7 +3,6 @@
   align-items: flex-start;
   gap: 16px;
   margin-bottom: 28px;
-  padding: 0 24px;
 }
 
 .add-new-item__back-btn {
@@ -59,7 +58,6 @@
 
 @media (max-width: 768px) {
   .add-new-item__header {
-    padding: 0 16px;
     margin-bottom: 24px;
   }
 
@@ -76,7 +74,6 @@
   .add-new-item__header {
     gap: 10px;
     margin-bottom: 16px;
-    padding: 0 16px;
   }
 
   .add-new-item__title {

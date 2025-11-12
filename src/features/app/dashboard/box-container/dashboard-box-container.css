@@ -6,7 +6,6 @@
   width: 100%;
 }
 
-/* Box styling (keep your existing look, only remove flex-basis logic) */
 .dashboard__box {
   display: flex;
   align-items: center;

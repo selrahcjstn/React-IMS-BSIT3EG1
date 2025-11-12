@@ -169,7 +169,7 @@ function ItemList() {
             onToggle={() => setStatsExpanded(!statsExpanded)}
           />
 
-          <div className="itemlist__grid">
+          <div className="itemlist__list">
             {items.map((item) => (
               <ItemCard
                 key={item.id}

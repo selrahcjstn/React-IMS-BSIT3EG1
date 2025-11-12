@@ -71,12 +71,34 @@ function ItemCard({ item, onDelete }) {
 
   return (
     <div className={`item-card ${deleting ? 'item-card--deleting' : ''}`}>
-      <div className="item-card__header">
-        <div className="item-card__title-section">
+      {/* Left Section: Item Name & Size */}
+      <div className="item-card__left">
+        <div className="item-card__name-wrapper">
           <h3 className="item-card__item-name" title={item.name}>{item.name}</h3>
           {item.size && <span className="item-card__item-size">{item.size}</span>}
         </div>
-        
+      </div>
+
+      {/* Center Section: Quantity & Total Value */}
+      <div className="item-card__center">
+        <div className="item-card__stat-item">
+          <span className="item-card__stat-label">Qty:</span>
+          <span className="item-card__stat-value">{item.quantity}</span>
+        </div>
+        <div className="item-card__divider"></div>
+        <div className="item-card__stat-item">
+          <span className="item-card__stat-label">Total:</span>
+          <span className="item-card__stat-value-highlight">₱{Number(item.totalValue || 0).toFixed(2)}</span>
+        </div>
+      </div>
+
+      {/* Right Section: Status & Actions */}
+      <div className="item-card__right">
+        <span className={`item-card__status-badge ${getStatusBadgeClass(item.status)}`}>
+          <span className="item-card__status-icon">{getStatusIcon(item.status)}</span>
+          <span className="item-card__status-text">{item.status}</span>
+        </span>
+
         <div className="item-card__actions">
           <button
             className="item-card__action-btn item-card__action-btn--edit"
@@ -96,45 +118,15 @@ function ItemCard({ item, onDelete }) {
           >
             <FiTrash2 />
           </button>
+          <button
+            className="item-card__view-btn"
+            onClick={goView}
+            aria-label={`View ${item.name}`}
+            title="View details"
+          >
+            <FiChevronRight />
+          </button>
         </div>
-      </div>
-
-      <div className="item-card__body">
-        <div className="item-card__top-row">
-          <div className="item-card__stat">
-            <span className="item-card__stat-label">Qty</span>
-            <span className="item-card__stat-value">{item.quantity}</span>
-          </div>
-          <div className="item-card__stat">
-            <span className="item-card__stat-label">Unit Price</span>
-            <span className="item-card__stat-value">₱{Number(item.unitPrice || 0).toFixed(2)}</span>
-          </div>
-          <div className="item-card__stat item-card__stat--highlight">
-            <span className="item-card__stat-label">Total</span>
-            <span className="item-card__stat-value">₱{Number(item.totalValue || 0).toFixed(2)}</span>
-          </div>
-        </div>
-
-        <div className="item-card__bottom-row">
-          <div className="item-card__info">
-            <span className="item-card__date-label">Updated:</span>
-            <span className="item-card__date-value">{item.lastUpdated}</span>
-          </div>
-          <span className={`item-card__status-badge ${getStatusBadgeClass(item.status)}`}>
-            <span>{getStatusIcon(item.status)}</span>
-            <span>{item.status}</span>
-          </span>
-        </div>
-
-        <button
-          className="item-card__view-btn"
-          onClick={goView}
-          aria-label={`View ${item.name}`}
-          title="View details"
-        >
-          <span>View Details</span>
-          <FiChevronRight />
-        </button>
       </div>
     </div>
   )
