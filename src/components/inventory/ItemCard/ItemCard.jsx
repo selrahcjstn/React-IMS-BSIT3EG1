@@ -10,6 +10,13 @@ function ItemCard({ item, onDelete }) {
   const [deleting, setDeleting] = useState(false)
   const navigate = useNavigate()
 
+  const formatCurrency = (value) => {
+    return Number(value || 0).toLocaleString('en-PH', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  }
+
   const getStatusBadgeClass = (status) => {
     switch (status) {
       case "In Stock":
@@ -71,7 +78,6 @@ function ItemCard({ item, onDelete }) {
 
   return (
     <div className={`item-card ${deleting ? 'item-card--deleting' : ''}`}>
-      {/* Left Section: Item Name & Size */}
       <div className="item-card__left">
         <div className="item-card__name-wrapper">
           <h3 className="item-card__item-name" title={item.name}>{item.name}</h3>
@@ -79,7 +85,6 @@ function ItemCard({ item, onDelete }) {
         </div>
       </div>
 
-      {/* Center Section: Quantity & Total Value */}
       <div className="item-card__center">
         <div className="item-card__stat-item">
           <span className="item-card__stat-label">Qty:</span>
@@ -88,11 +93,10 @@ function ItemCard({ item, onDelete }) {
         <div className="item-card__divider"></div>
         <div className="item-card__stat-item">
           <span className="item-card__stat-label">Total:</span>
-          <span className="item-card__stat-value-highlight">₱{Number(item.totalValue || 0).toFixed(2)}</span>
+          <span className="item-card__stat-value-highlight">₱{formatCurrency(item.totalValue)}</span>
         </div>
       </div>
 
-      {/* Right Section: Status & Actions */}
       <div className="item-card__right">
         <span className={`item-card__status-badge ${getStatusBadgeClass(item.status)}`}>
           <span className="item-card__status-icon">{getStatusIcon(item.status)}</span>

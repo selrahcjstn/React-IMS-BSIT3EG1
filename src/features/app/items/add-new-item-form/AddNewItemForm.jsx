@@ -20,6 +20,13 @@ function AddNewItemForm({
   const MIN_QUANTITY = 0.01
   const MIN_PRICE = 0.01
 
+  const formatCurrency = (value) => {
+    return Number(value || 0).toLocaleString('en-PH', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  }
+
   const handleNumericInput = (e) => {
     const { name, value } = e.target
     
@@ -326,7 +333,7 @@ function AddNewItemForm({
             <div className="add-new-item__total-content">
               <div className="add-new-item__total-label">Total Value</div>
               <div className={`add-new-item__total-value ${isQuantityValid && isPriceValid ? 'calculated' : 'pending'}`}>
-                ₱{calculateTotal()}
+                ₱{formatCurrency(calculateTotal())}
               </div>
             </div>
             {isQuantityValid && isPriceValid && (

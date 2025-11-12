@@ -22,7 +22,6 @@
   pointer-events: none;
 }
 
-/* Left Section: Item Info */
 .item-card__left {
   flex: 1;
   min-width: 120px;
@@ -59,7 +58,6 @@
   letter-spacing: 0.2px;
 }
 
-/* Center Section: Stats */
 .item-card__center {
   display: flex;
   align-items: center;
@@ -102,7 +100,6 @@
   background-color: #e5e7eb;
 }
 
-/* Right Section: Status & Actions */
 .item-card__right {
   display: flex;
   align-items: center;
@@ -152,7 +149,6 @@
   border-color: #fecaca;
 }
 
-/* Actions */
 .item-card__actions {
   display: flex;
   gap: 6px;
@@ -233,7 +229,6 @@
   height: 14px;
 }
 
-/* Tablet Responsiveness - 1024px */
 @media (max-width: 1024px) {
   .item-card {
     padding: 11px 12px;
@@ -256,7 +251,6 @@
   }
 }
 
-/* Tablet Responsiveness - 768px */
 @media (max-width: 768px) {
   .item-card {
     flex-wrap: wrap;
@@ -305,7 +299,6 @@
   }
 }
 
-/* Mobile Responsiveness - 480px */
 @media (max-width: 480px) {
   .item-card {
     flex-direction: column;
@@ -342,7 +335,6 @@
     flex-shrink: 0;
   }
 
-  /* Stats on second row - FIXED */
   .item-card__center {
     width: 100%;
     display: flex;
@@ -378,7 +370,6 @@
     display: none;
   }
 
-  /* Status and Actions on third row */
   .item-card__right {
     width: 100%;
     flex-basis: 100%;
