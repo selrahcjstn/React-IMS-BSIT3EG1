@@ -53,7 +53,6 @@ function UsersPanelRoutes() {
   return (
     <>
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <Header isCollapsed={!isOpen}/>
       <PageContentLayout isCollapsed={!isOpen}>
         <Outlet />
       </PageContentLayout>

@@ -5,8 +5,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   box-sizing: border-box;
-  margin-top: 80px;
-  margin-bottom: 16px;
+  padding: 20px 16px;
 }
 
 .layout__content--collapsed {

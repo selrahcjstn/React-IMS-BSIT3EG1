@@ -41,6 +41,7 @@ function App() {
           <Route path="/inventory/items/:id/item/:itemId/edit" element={<EditItemPage />} />
           <Route path="/account-settings" element={<AccountSettings />} />
         </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

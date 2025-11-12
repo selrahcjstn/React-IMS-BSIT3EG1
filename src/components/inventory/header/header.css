@@ -1,105 +1,46 @@
-.app-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 100;
-  padding: 12px 20px;
-  margin-left: 250px;
-  transition: margin-left 0.3s ease;
-  background: #ffffff;
-  box-sizing: border-box;
-  border-bottom: 1px solid #f1f5f9;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  padding-right: calc(20px + var(--scrollbar-width, 0px));
-}
 
-.app-header--collapsed {
-  margin-left: 70px;
-}
-
-.app-header__container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.app-header__content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 20px;
-}
-
-.app-header__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
-  min-width: 0;
-}
-
-.app-header__title {
+.inventory__header-title {
   margin: 0;
-  font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+  font-size: 32px;
   font-weight: 700;
   color: #0f172a;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 1px 0;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
 }
 
-.app-header__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.inventory__header-subtitle {
+  margin: 8px 0 0 0;
+  font-size: 15px;
   color: #64748b;
-  background: transparent;
-  border: 1px solid transparent;
-  padding: 8px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
+  font-weight: 500;
+  line-height: 1.1;
 }
 
-.app-header__icon:hover {
-  background: #f1f5f9;
-  color: #0f172a;
-  border-color: #e2e8f0;
-}
-
-.app-header__icon:active {
-  background: #e2e8f0;
-}
-
-.app-header__icon:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(47,119,235,0.2);
-  border-color: #2f77eb;
-}
-
-/* Mobile */
 @media (max-width: 768px) {
-  .app-header {
-    margin-left: 0;
-    padding: 10px 16px 10px 50px;
-    height: auto;
-    padding-right: calc(16px + var(--scrollbar-width, 0px));
+  .inventory__header-title {
+    font-size: 26px;
+    line-height: 1.2;
   }
-  .app-header--collapsed {
-    margin-left: 0;
-  }
-  .app-header__title {
-    font-size: 1.2rem;
+
+  .inventory__header-subtitle {
+    font-size: 14px;
+    line-height: 1.5;
   }
 }
 
-h2, h3 {
-  margin: 0;
-  padding: 0;
+@media (max-width: 480px) {
+  .inventory__header {
+    margin-bottom: 28px;
+    padding: 24px 0 0 0;
+  }
+
+  .inventory__header-title {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  .inventory__header-subtitle {
+    font-size: 12px;
+    line-height: 1.5;
+  }
 }

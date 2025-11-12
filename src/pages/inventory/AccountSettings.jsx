@@ -8,7 +8,7 @@ import AccountDetailsSection from "../../features/app/account-settings/account-d
 import ResetPasswordSection from "../../features/app/account-settings/reset-password/ResetPassword"
 import EditProfileForm from "../../features/app/account-settings/edit-profile/EditProfileForm"
 import "./account-settings.css"
-
+import Header from "../../components/inventory/header/Header"
 function AccountSettings() {
   const { currentUser, uid, email, setUserDisplayName, refreshUser } = useAuth()
   const [loadingProfile, setLoadingProfile] = useState(true)
@@ -196,8 +196,10 @@ function AccountSettings() {
     <div className="account-settings">
       <div className="account-settings__wrapper">
         <div className="account-settings__header">
-          <h1 className="account-settings__title">Account Settings</h1>
-          <p className="account-settings__subtitle">Manage your profile and account security</p>
+          <Header
+          title="Account Settings"
+          subtitle="Manage your profile and account security"
+        />
         </div>
 
         <div className="account-settings__content">
