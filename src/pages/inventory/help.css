@@ -3,16 +3,11 @@
 }
 
 .help {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 32px 20px;
-  min-height: 100vh;
-  background: #fafbfc;
+  padding: 0;
 }
 
 .help__header {
   margin-bottom: 40px;
-  text-align: center;
 }
 
 .help__title {
@@ -349,10 +344,6 @@
 }
 
 @media (max-width: 768px) {
-  .help {
-    padding: 24px 16px;
-  }
-
   .help__title {
     font-size: 26px;
   }

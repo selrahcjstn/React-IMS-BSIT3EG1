@@ -193,7 +193,7 @@ function AccountSettings() {
   }
 
   return (
-    <div className="account-settings">
+    <div className="account-settings container">
       <div className="account-settings__wrapper">
         <div className="account-settings__header">
           <Header

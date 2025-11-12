@@ -5,6 +5,7 @@ import { ContactForm } from "../../features/app/help/contact-form/ContactForm"
 import { QuickTips } from "../../features/app/help/quick-tips/QuickTips"
 import { DirectContact } from "../../features/app/help/direct-contact/DirectContact"
 import "./help.css"
+import Header from "../../components/inventory/header/Header"
 
 function Help() {
   const [expanded, setExpanded] = useState(null)
@@ -74,10 +75,9 @@ Support Request
   }
 
   return (
-    <div className="help">
+    <div className="help container">
       <div className="help__header">
-        <h1 className="help__title">Help & Support</h1>
-        <p className="help__subtitle">Find answers and submit support requests</p>
+        <Header title="Help & Support" subtitle="Find answers to common questions or contact our support team." />
       </div>
 
       <div className="help__container">
