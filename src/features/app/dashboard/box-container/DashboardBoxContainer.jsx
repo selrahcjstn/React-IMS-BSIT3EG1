@@ -28,8 +28,7 @@ function DashboardBoxContainer() {
           const idsObj = snap.val() || {};
           const ids = Object.keys(idsObj);
           const inventoryCount = ids.length;
-
-            // Early exit if no inventories
+          
           if (inventoryCount === 0) {
             if (!cancelled) {
               setMetrics({
@@ -43,7 +42,6 @@ function DashboardBoxContainer() {
             return;
           }
 
-          // Fetch items for each inventory and compute totals
           const itemSnaps = await Promise.all(
             ids.map((id) => get(ref(database, `inventoryItems/${id}`)))
           );
@@ -63,7 +61,6 @@ function DashboardBoxContainer() {
                   ? Number(item.unitPrice)
                   : 0;
 
-              // Prefer stored total fields; fallback to qty * price
               const rawTotal =
                 item?.total != null
                   ? Number(item.total)
