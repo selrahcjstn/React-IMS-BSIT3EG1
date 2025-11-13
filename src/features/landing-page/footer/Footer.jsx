@@ -17,8 +17,8 @@ function Footer() {
           <div className="footer__section">
             <h4 className="footer__section-title">Quick Links</h4>
             <ul className="footer__links">
+              <li><a href="#features">Home</a></li>
               <li><a href="#features">Features</a></li>
-              <li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
           </div>
