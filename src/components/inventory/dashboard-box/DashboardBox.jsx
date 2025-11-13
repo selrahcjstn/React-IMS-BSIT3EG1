@@ -1,5 +1,3 @@
-import "./dashboard-box.css";
-
 function DashboardBox({ title, value, icon, iconClass }) {
   return (
     <div className="dashboard__box">

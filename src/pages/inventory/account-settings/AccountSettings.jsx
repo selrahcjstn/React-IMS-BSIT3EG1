@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from "react"
-import { useAuth } from "../../context/AuthContext"
+import { useAuth } from "../../../context/AuthContext"
 import { ref, onValue, update } from "firebase/database"
-import { database, auth } from "../../firebase/config"
+import { database, auth } from "../../../firebase/config"
 import { updateProfile, sendPasswordResetEmail } from "firebase/auth"
-import ProfileCard from "../../features/app/account-settings/profile-card/ProfileCard"
-import AccountDetailsSection from "../../features/app/account-settings/account-details/AccountDetailsSection"
-import ResetPasswordSection from "../../features/app/account-settings/reset-password/ResetPassword"
-import EditProfileForm from "../../features/app/account-settings/edit-profile/EditProfileForm"
+import ProfileCard from "../../../features/app/account-settings/profile-card/ProfileCard"
+import AccountDetailsSection from "../../../features/app/account-settings/account-details/AccountDetailsSection"
+import ResetPasswordSection from "../../../features/app/account-settings/reset-password/ResetPassword"
+import EditProfileForm from "../../../features/app/account-settings/edit-profile/EditProfileForm"
 import "./account-settings.css"
-import Header from "../../components/inventory/header/Header"
+import Header from "../../../components/inventory/header/Header"
 function AccountSettings() {
   const { currentUser, uid, email, setUserDisplayName, refreshUser } = useAuth()
   const [loadingProfile, setLoadingProfile] = useState(true)

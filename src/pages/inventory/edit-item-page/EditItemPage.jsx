@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ref, get, update, serverTimestamp } from "firebase/database";
-import { database } from "../../firebase/config";
-import EditItemForm from "../../features/app/items/edit-item-form/EditItemForm";
-import AddNewItemHeader from "../../features/app/items/add-new-item-header/AddNewItemHeader";
-import { useAuth } from "../../context/AuthContext";
+import { database } from "../../../firebase/config";
+import EditItemForm from "../../../features/app/items/edit-item-form/EditItemForm";
+import AddNewItemHeader from "../../../features/app/items/add-new-item-header/AddNewItemHeader";
+import { useAuth } from "../../../context/AuthContext";
 
 function EditItemPage() {
   const { id: inventoryId, itemId } = useParams();

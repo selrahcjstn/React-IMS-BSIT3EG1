@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { FiMail, FiLock, FiSettings, FiHelpCircle } from "react-icons/fi"
-import { FaqItem } from "../../features/app/help/faq-item/FaqItem"
-import { ContactForm } from "../../features/app/help/contact-form/ContactForm"
-import { QuickTips } from "../../features/app/help/quick-tips/QuickTips"
-import { DirectContact } from "../../features/app/help/direct-contact/DirectContact"
+import { FaqItem } from "../../../features/app/help/faq-item/FaqItem"
+import { ContactForm } from "../../../features/app/help/contact-form/ContactForm"
+import { QuickTips } from "../../../features/app/help/quick-tips/QuickTips"
+import { DirectContact } from "../../../features/app/help/direct-contact/DirectContact"
 import "./help.css"
-import Header from "../../components/inventory/header/Header"
+import Header from "../../../components/inventory/header/Header"
 
 function Help() {
   const [expanded, setExpanded] = useState(null)

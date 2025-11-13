@@ -7,14 +7,14 @@ import AuthenticationRoute from "./routes/public-routes/AuthenticationRoute";
 import Verification from "./pages/auth/Verification";
 import PersonalInfo from "./pages/auth/PersonalInfo";
 import UsersPanelRoutes from "./routes/private-routes/UsersPanelRoutes";
-import Dashboard from "./pages/inventory/Dashboard";
+import Dashboard from "./pages/inventory/dashboard/Dashboard";
 import LandingPageRoute from "./routes/public-routes/LandingPageRoute";
-import Inventory from "./pages/inventory/Inventory";
-import Items from "./pages/inventory/Items";
-import AddNewItem from "./pages/inventory/AddNewItem";
-import EditItemPage from "./pages/inventory/EditItemPage";
-import AccountSettings from "./pages/inventory/AccountSettings";
-import Help from "./pages/inventory/Help";
+import Inventory from "./pages/inventory/inventory/Inventory";
+import Items from "./pages/inventory/items/Items";
+import AddNewItem from "./pages/inventory/add-new-item/AddNewItem";
+import EditItemPage from "./pages/inventory/edit-item-page/EditItemPage";
+import AccountSettings from "./pages/inventory/account-settings/AccountSettings";
+import Help from "./pages/inventory/help/Help";
 
 function App() {
   return (

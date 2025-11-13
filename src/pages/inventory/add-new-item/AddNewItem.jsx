@@ -8,10 +8,10 @@ import {
   update,
   get
 } from "firebase/database";
-import { database } from "../../firebase/config";
-import { useAuth } from "../../context/AuthContext";
-import AddNewItemHeader from "../../features/app/items/add-new-item-header/AddNewItemHeader";
-import AddNewItemForm from "../../features/app/items/add-new-item-form/AddNewItemForm";
+import { database } from "../../../firebase/config";
+import { useAuth } from "../../../context/AuthContext";
+import AddNewItemHeader from "../../../features/app/items/add-new-item-header/AddNewItemHeader";
+import AddNewItemForm from "../../../features/app/items/add-new-item-form/AddNewItemForm";
 import "./add-new-item.css";
 
 function AddNewItem() {

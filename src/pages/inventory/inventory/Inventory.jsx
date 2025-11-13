@@ -1,6 +1,6 @@
-import Header from "../../components/inventory/header/Header"
-import InventoryHeader from "../../features/app/inventory/inventory-header/InventoryHeader"
-import InventoryList from "../../features/app/inventory/inventory-list/InventoryList"
+import Header from "../../../components/inventory/header/Header"
+import InventoryHeader from "../../../features/app/inventory/inventory-header/InventoryHeader"
+import InventoryList from "../../../features/app/inventory/inventory-list/InventoryList"
 import "./inventory.css"
 
 function Inventory() {
