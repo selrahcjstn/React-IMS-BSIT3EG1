@@ -12,7 +12,7 @@ function Hero() {
   };
 
   return (
-    <div className="hero">
+    <div id="home" className="hero">
       <div className="hero__container">
         <section className="hero__heading-container">
           <h1 className="hero__heading">Control, simplified.</h1>

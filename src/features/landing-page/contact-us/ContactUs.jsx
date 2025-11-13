@@ -31,7 +31,7 @@ function ContactUs() {
   const toggle = (i) => setOpenIndex((prev) => (prev === i ? null : i));
 
   return (
-    <section className="faq-section">
+    <section id="contact" className="faq-section">
       <div className="container">
         <div className="faq__header">
           <h2 className="faq__title">Frequently Asked Questions</h2>

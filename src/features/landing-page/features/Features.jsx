@@ -3,7 +3,7 @@ import "./features.css";
 
 function Features() {
   return (
-    <section className="features">
+    <section id="features" className="features">
       <div className="container">
         <header className="features__header">
           <div className="features__badge">Key Features</div>
