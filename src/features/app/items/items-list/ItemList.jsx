@@ -8,11 +8,12 @@ import EmptyState from "../../../../components/inventory/empty-state/EmptyState"
 import illustration from "../../../../assets/app/welcome.svg"
 import "./item-list.css"
 
-function ItemList() {
+function ItemList({ onSearch }) {
   const { id: inventoryId } = useParams()
   const navigate = useNavigate()
   const [inventoryName, setInventoryName] = useState("Inventory")
   const [items, setItems] = useState([])
+  const [filteredItems, setFilteredItems] = useState([]) // NEW
   const [loadingInv, setLoadingInv] = useState(true)
   const [loadingItems, setLoadingItems] = useState(true)
   const [error, setError] = useState("")
@@ -88,6 +89,7 @@ function ItemList() {
         })
 
         setItems(list)
+        setFilteredItems(list) 
         setLoadingItems(false)
       },
       (err) => {
@@ -111,6 +113,39 @@ function ItemList() {
       }
     }
   }, [inventoryId])
+
+  const handleSearch = (query) => {
+    const q = (query || "").trim().toLowerCase()
+
+    if (!q) {
+      setFilteredItems(items)
+      return
+    }
+
+    const next = items.filter((item) => {
+      const name = item.name?.toLowerCase() || ""
+      const size = item.size?.toLowerCase() || ""
+      const status = item.status?.toLowerCase() || ""
+      const qty = String(item.quantity ?? "").toLowerCase()
+      const price = String(item.unitPrice ?? "").toLowerCase()
+
+      return (
+        name.includes(q) ||
+        size.includes(q) ||
+        status.includes(q) ||
+        qty.includes(q) ||
+        price.includes(q)
+      )
+    })
+
+    setFilteredItems(next)
+  }
+
+  useEffect(() => {
+    if (typeof onSearch === "function") {
+      onSearch(handleSearch)
+    }
+  }, [onSearch, items])
 
   const handleEditItem = (id) => {
     console.log("Edit item:", id)
@@ -144,12 +179,14 @@ function ItemList() {
     )
   }
 
+  const hasItems = filteredItems.length > 0
+
   return (
     <div className="itemlist">
       {items.length === 0 ? (
         <>
           <div className="itemlist__header">
-            <h2 className="itemlist__title">Overview of {inventoryName}</h2>
+            <h2 className="itemlist__title">{inventoryName} Inventory</h2>
           </div>
           <EmptyState
             icon={illustration}
@@ -162,22 +199,32 @@ function ItemList() {
         </>
       ) : (
         <>
+          <div className="itemlist__header">
+            <h2 className="itemlist__title">{inventoryName} Inventory</h2>
+          </div>
+
           <InventoryStats 
-            items={items} 
+            items={filteredItems}
             inventoryName={inventoryName}
             isExpanded={statsExpanded}
             onToggle={() => setStatsExpanded(!statsExpanded)}
           />
 
           <div className="itemlist__list">
-            {items.map((item) => (
-              <ItemCard
-                key={item.id}
-                item={item}
-                onEdit={handleEditItem}
-                onDelete={handleDeleteItem}
-              />
-            ))}
+            {hasItems ? (
+              filteredItems.map((item) => (
+                <ItemCard
+                  key={item.id}
+                  item={item}
+                  onEdit={handleEditItem}
+                  onDelete={handleDeleteItem}
+                />
+              ))
+            ) : (
+              <div className="itemlist__empty">
+                No items match your search.
+              </div>
+            )}
           </div>
         </>
       )}

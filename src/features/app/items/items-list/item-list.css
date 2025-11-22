@@ -12,7 +12,7 @@
 
 .itemlist__title {
   margin: 0;
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 700;
   color: #111827;
   letter-spacing: -0.5px;
@@ -21,12 +21,13 @@
   line-height: 1.2;
 }
 
-/* Strip/List Layout */
 .itemlist__list {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
+}  
+
+
 
 .itemlist__empty {
   padding: 32px 24px;
