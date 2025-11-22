@@ -18,8 +18,7 @@ function InventoryHeader({ onSearch }) {
     setIsModalOpen(false)
   }
 
-  const handleCreateInventory = (formData) => {
-    console.log("New inventory created:", formData)
+  const handleCreateInventory = () => {
     setInventoryCount(prev => prev + 1)
   }
 
