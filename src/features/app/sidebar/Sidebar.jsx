@@ -16,7 +16,7 @@ import LogoIcon from "../../../assets/logo.png";
 import { useAuth } from "../../../context/AuthContext";
 
 function Sidebar({ isOpen, setIsOpen }) {
-  const { currentUser, displayName, logout } = useAuth();
+  const { currentUser, displayName, avatarId, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -76,6 +76,16 @@ function Sidebar({ isOpen, setIsOpen }) {
     displayName || currentUser?.displayName || currentUser?.email || "User";
   const resolvedEmail = currentUser?.email || "";
 
+  // If no avatarId, or avatarId is 10, show user icon. Otherwise, show PNG.
+  const showUserIcon = !avatarId || avatarId === 10;
+  const avatarSrc =
+    avatarId && avatarId !== 10
+      ? new URL(
+          `../../../assets/avatar/${avatarId}.png`,
+          import.meta.url
+        ).href
+      : null;
+
   return (
     <>
       <button
@@ -88,7 +98,11 @@ function Sidebar({ isOpen, setIsOpen }) {
       </button>
 
       <div className="layout">
-        <aside className={`sidebar ${isOpen ? "sidebar--open" : "sidebar--closed"}`}>
+        <aside
+          className={`sidebar ${
+            isOpen ? "sidebar--open" : "sidebar--closed"
+          }`}
+        >
           <nav className="sidebar__menu">
             {isOpen ? (
               <Logo />
@@ -102,12 +116,16 @@ function Sidebar({ isOpen, setIsOpen }) {
               <Link
                 key={item.to}
                 to={item.to}
-                className={`sidebar__menu-item ${item.isActive ? "is-active" : ""}`}
+                className={`sidebar__menu-item ${
+                  item.isActive ? "is-active" : ""
+                }`}
                 data-tooltip={item.tooltip}
                 onClick={handleMenuItemClick}
               >
                 {item.icon}
-                {isOpen && <span className="sidebar__text">{item.label}</span>}
+                {isOpen && (
+                  <span className="sidebar__text">{item.label}</span>
+                )}
               </Link>
             ))}
 
@@ -138,11 +156,21 @@ function Sidebar({ isOpen, setIsOpen }) {
               className="sidebar__profile"
               data-tooltip={!isOpen ? resolvedName : ""}
             >
-              <FaUserCircle className="sidebar__profile-icon" />
+              {showUserIcon ? (
+                <FaUserCircle className="sidebar__profile-icon" />
+              ) : (
+                <img
+                  src={avatarSrc}
+                  alt={resolvedName}
+                  className="sidebar__profile-avatar"
+                />
+              )}
               {isOpen && (
                 <div className="sidebar__profile-info">
                   <span className="sidebar__profile-name">{resolvedName}</span>
-                  <span className="sidebar__profile-email">{resolvedEmail}</span>
+                  <span className="sidebar__profile-email">
+                    {resolvedEmail}
+                  </span>
                 </div>
               )}
             </div>

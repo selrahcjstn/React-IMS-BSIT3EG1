@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuth } from "../../../context/AuthContext"
-import { ref, onValue, update } from "firebase/database"
+import { ref, update } from "firebase/database"
 import { database, auth } from "../../../firebase/config"
 import { updateProfile, sendPasswordResetEmail } from "firebase/auth"
 import ProfileCard from "../../../features/app/account-settings/profile-card/ProfileCard"
@@ -9,8 +9,19 @@ import ResetPasswordSection from "../../../features/app/account-settings/reset-p
 import EditProfileForm from "../../../features/app/account-settings/edit-profile/EditProfileForm"
 import "./account-settings.css"
 import Header from "../../../components/inventory/header/Header"
+
 function AccountSettings() {
-  const { currentUser, uid, email, setUserDisplayName, refreshUser } = useAuth()
+  const {
+    currentUser,
+    uid,
+    email,
+    profile,
+    avatarId: contextAvatarId,
+    setAvatarId: setContextAvatarId,
+    setUserDisplayName,
+    refreshUser,
+  } = useAuth()
+
   const [loadingProfile, setLoadingProfile] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
@@ -19,6 +30,13 @@ function AccountSettings() {
   const [isResettingPassword, setIsResettingPassword] = useState(false)
   const [resetPasswordError, setResetPasswordError] = useState("")
 
+  // Accept avatarId 10 as meaning "first letter of first name"
+  const initialAvatarId = profile?.avatarId !== undefined
+    ? profile.avatarId
+    : contextAvatarId !== undefined
+      ? contextAvatarId
+      : 10
+
   const [formData, setFormData] = useState({
     email: email || "",
     firstName: "",
@@ -26,35 +44,42 @@ function AccountSettings() {
     middleName: "",
     purpose: "organize-business",
     uid: uid || "",
-    updatedAt: null
+    updatedAt: null,
+    avatarId: initialAvatarId,
   })
   const [originalData, setOriginalData] = useState(formData)
 
-  const userRef = useMemo(() => (uid ? ref(database, `users/${uid}`) : null), [uid])
-
   useEffect(() => {
-    if (!uid || !userRef) return
-    const unsub = onValue(userRef, (snap) => {
-      const data = snap.val() || {}
-      const next = {
-        email: data.email || email || currentUser?.email || "",
-        firstName: data.firstName || "",
-        lastName: data.lastName || "",
-        middleName: data.middleName || "",
-        purpose: data.purpose || "organize-business",
-        uid: uid,
-        updatedAt: data.updatedAt || null
-      }
-      setFormData(next)
-      setOriginalData(next)
-      setLoadingProfile(false)
-    })
-    return () => unsub()
-  }, [uid, userRef, email, currentUser])
+    if (!profile && !currentUser) return
+
+    const next = {
+      email: profile?.email || email || currentUser?.email || "",
+      firstName: profile?.firstName || "",
+      lastName: profile?.lastName || "",
+      middleName: profile?.middleName || "",
+      purpose: profile?.purpose || "organize-business",
+      uid: uid || "",
+      updatedAt: profile?.updatedAt || null,
+      avatarId:
+        profile?.avatarId !== undefined
+          ? profile.avatarId
+          : contextAvatarId !== undefined
+            ? contextAvatarId
+            : 10,
+    }
+
+    setFormData(next)
+    setOriginalData(next)
+    setLoadingProfile(false)
+  }, [profile, email, currentUser, uid, contextAvatarId])
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleAvatarChange = (id) => {
+    setFormData(prev => ({ ...prev, avatarId: id }))
   }
 
   const handleEdit = () => {
@@ -70,12 +95,21 @@ function AccountSettings() {
   }
 
   const handleSave = async () => {
-    if (!uid || !userRef) return
+    if (!uid) return
+    const userRef = ref(database, `users/${uid}`)
+
     setIsSaving(true)
     setSaveError("")
+
     try {
       const displayNameSource = `${(formData.firstName || "").trim()} ${(formData.lastName || "").trim()}`.trim()
       const newDisplayName = displayNameSource || formData.email || "User"
+
+      // If avatarId not set, default to 10 for initial avatar (show first letter)
+      let avatarId = formData.avatarId
+      if (avatarId === null || avatarId === undefined) {
+        avatarId = 10
+      }
 
       const payload = {
         email: formData.email,
@@ -84,7 +118,8 @@ function AccountSettings() {
         middleName: formData.middleName || "",
         purpose: formData.purpose || "organize-business",
         uid,
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
+        avatarId,
       }
 
       await update(userRef, payload)
@@ -102,6 +137,11 @@ function AccountSettings() {
         }
       }
 
+      // Optimistically update context so Sidebar updates immediately
+      if (typeof setContextAvatarId === "function") {
+        setContextAvatarId(avatarId)
+      }
+
       setFormData(payload)
       setOriginalData(payload)
       setIsEditing(false)
@@ -117,11 +157,11 @@ function AccountSettings() {
       setResetPasswordError("Email not found")
       return
     }
-    
+
     setIsResettingPassword(true)
     setResetPasswordError("")
     setResetPasswordSent(false)
-    
+
     try {
       await sendPasswordResetEmail(auth, email)
       setResetPasswordSent(true)
@@ -160,7 +200,7 @@ function AccountSettings() {
     { value: "organize-business", label: "Organize Business" },
     { value: "manage-inventory", label: "Manage Inventory" },
     { value: "track-products", label: "Track Products" },
-    { value: "other", label: "Other" }
+    { value: "other", label: "Other" },
   ]
 
   if (!currentUser) {
@@ -197,14 +237,14 @@ function AccountSettings() {
       <div className="account-settings__wrapper">
         <div className="account-settings__header">
           <Header
-          title="Account Settings"
-          subtitle="Manage your profile and account security"
-        />
+            title="Account Settings"
+            subtitle="Manage your profile and account security"
+          />
         </div>
 
         <div className="account-settings__content">
           <div className="account-settings__card">
-            <ProfileCard 
+            <ProfileCard
               getInitials={getInitials}
               computedDisplayName={computedDisplayName}
               email={formData.email}
@@ -212,18 +252,21 @@ function AccountSettings() {
               purposeOptions={purposeOptions}
               isEditing={isEditing}
               onEdit={handleEdit}
+              avatarId={formData.avatarId}
+              onAvatarChange={handleAvatarChange}
+              firstName={formData.firstName}
             />
 
             {!isEditing ? (
               <>
-                <AccountDetailsSection 
+                <AccountDetailsSection
                   formData={formData}
                   purposeOptions={purposeOptions}
                   formatUpdatedAt={formatUpdatedAt}
                   saveError={saveError}
                 />
 
-                <ResetPasswordSection 
+                <ResetPasswordSection
                   currentUser={currentUser}
                   email={email}
                   isResettingPassword={isResettingPassword}
@@ -233,7 +276,7 @@ function AccountSettings() {
                 />
               </>
             ) : (
-              <EditProfileForm 
+              <EditProfileForm
                 formData={formData}
                 isSaving={isSaving}
                 hasChanges={hasChanges}
