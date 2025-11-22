@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../../../context/AuthContext";
 import { ref, onValue } from "firebase/database";
 import { database } from "../../../../firebase/config";
@@ -8,7 +8,7 @@ import NewInventoryModal from "../new-inventory-modal/NewInventoryModal";
 import illustration from "../../../../assets/app/welcome.svg";
 import "./inventory-list.css";
 
-function InventoryList() {
+function InventoryList({ searchQuery = "" }) {
   const { currentUser } = useAuth();
   const [inventories, setInventories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -94,9 +94,12 @@ function InventoryList() {
                       id,
                       name: inv.name,
                       category: inv.category,
-                      itemCount: typeof inv.itemCount === "number" ? inv.itemCount : existing.itemCount ?? 0,
+                      itemCount:
+                        typeof inv.itemCount === "number"
+                          ? inv.itemCount
+                          : existing.itemCount ?? 0,
                       createdAt: inv.createdAt,
-                      updatedAt: inv.updatedAt
+                      updatedAt: inv.updatedAt,
                     };
                     map.set(id, next);
                   } else {
@@ -133,7 +136,7 @@ function InventoryList() {
                 for (const it of Object.values(items)) {
                   const q = Number(it.quantity) || 0;
                   const p = Number(it.price) || 0;
-                  const t = Number(it.total) || (q * p);
+                  const t = Number(it.total) || q * p;
                   if (Number.isFinite(t)) sum += t;
                 }
 
@@ -199,6 +202,29 @@ function InventoryList() {
     };
   }, [currentUser?.uid]);
 
+  const filteredInventories = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return inventories;
+
+    return inventories.filter((inv) => {
+      const name = inv.name?.toLowerCase() || "";
+      const category = inv.category?.toLowerCase() || "";
+      const itemCount = String(
+        typeof inv.itemCount === "number" ? inv.itemCount : 0
+      ).toLowerCase();
+      const totalValue = String(
+        typeof inv.totalValue === "number" ? inv.totalValue : 0
+      ).toLowerCase();
+
+      return (
+        name.includes(q) ||
+        category.includes(q) ||
+        itemCount.includes(q) ||
+        totalValue.includes(q)
+      );
+    });
+  }, [inventories, searchQuery]);
+
   if (loading) {
     return (
       <div className="inventory__list">
@@ -235,9 +261,20 @@ function InventoryList() {
     );
   }
 
+  if (!filteredInventories.length) {
+    return (
+      <div className="inventory__emptystate">
+        <h2 className="empty-state__title">No inventories match your search</h2>
+        <p className="empty-state__description">
+          Try adjusting your search terms and filters to find what you're looking for.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="inventory__list">
-      {inventories.map((inv) => (
+      {filteredInventories.map((inv) => (
         <InventoryCard
           key={inv.id}
           id={inv.id}

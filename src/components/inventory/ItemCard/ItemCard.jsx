@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { FiEdit2, FiTrash2, FiChevronRight } from "react-icons/fi"
+import { FiEdit2, FiTrash2 } from "react-icons/fi"
 import { ref, update, runTransaction } from "firebase/database"
 import { database } from "../../../firebase/config"
 import "./item-card.css"
@@ -10,30 +10,31 @@ function ItemCard({ item, onDelete }) {
   const [deleting, setDeleting] = useState(false)
   const navigate = useNavigate()
 
-  const formatCurrency = v =>
-    Number(v || 0).toLocaleString("en-PH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  const formatCurrency = (v) =>
+    Number(v || 0).toLocaleString("en-PH", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
 
-  const statusClass = {
-    "In Stock": "item-card__status-badge--in-stock",
-    "Low Stock": "item-card__status-badge--low-stock",
-    "Out of Stock": "item-card__status-badge--out-of-stock"
-  }[item.status] || ""
-
-  const statusIcon = {
-    "In Stock": "🟢",
-    "Low Stock": "🟡",
-    "Out of Stock": "🔴"
-  }[item.status] || ""
+  const statusClass =
+    {
+      "In Stock": "item-card__status-badge--in-stock",
+      "Low Stock": "item-card__status-badge--low-stock",
+      "Out of Stock": "item-card__status-badge--out-of-stock",
+    }[item.status] || ""
 
   const handleDelete = async () => {
     if (deleting) return
     if (!window.confirm(`Delete "${item.name}"? This cannot be undone.`)) return
     try {
       setDeleting(true)
-      await update(ref(database), { [`inventoryItems/${inventoryId}/${item.id}`]: null })
+      await update(ref(database), {
+        [`inventoryItems/${inventoryId}/${item.id}`]: null,
+      })
       await runTransaction(
         ref(database, `inventories/${inventoryId}/itemCount`),
-        current => (typeof current === "number" && current > 0 ? current - 1 : 0)
+        (current) =>
+          typeof current === "number" && current > 0 ? current - 1 : 0
       )
       onDelete?.(item.id)
     } catch (e) {
@@ -48,9 +49,14 @@ function ItemCard({ item, onDelete }) {
       <div className="item-card__body">
         <div className="item-card__left">
           <div className="item-card__name-wrapper">
-            <h3 className="item-card__item-name" title={item.name}>{item.name}</h3>
+            <h3 className="item-card__item-name" title={item.name}>
+              {item.name}
+            </h3>
             {item.size && (
-              <span className="item-card__item-size" title={`Size: ${item.size}`}>
+              <span
+                className="item-card__item-size"
+                title={`Size: ${item.size}`}
+              >
                 {item.size}
               </span>
             )}
@@ -63,7 +69,9 @@ function ItemCard({ item, onDelete }) {
             <div className="item-card__divider" />
             <div className="item-card__stat-item">
               <span className="item-card__stat-label">Total:</span>
-              <span className="item-card__stat-value-highlight">₱{formatCurrency(item.totalValue)}</span>
+              <span className="item-card__stat-value-highlight">
+                ₱{formatCurrency(item.totalValue)}
+              </span>
             </div>
           </div>
         </div>
@@ -74,13 +82,14 @@ function ItemCard({ item, onDelete }) {
             title={item.status}
             aria-label={`Item status: ${item.status}`}
           >
-            <span className="item-card__status-icon">{statusIcon}</span>
             <span className="item-card__status-text">{item.status}</span>
           </span>
           <div className="item-card__actions">
             <button
               className="item-card__action-btn item-card__action-btn--edit"
-              onClick={() => navigate(`/inventory/items/${inventoryId}/item/${item.id}/edit`)}
+              onClick={() =>
+                navigate(`/inventory/items/${inventoryId}/item/${item.id}/edit`)
+              }
               aria-label={`Edit ${item.name}`}
               title="Edit"
               disabled={deleting}
@@ -95,14 +104,6 @@ function ItemCard({ item, onDelete }) {
               disabled={deleting}
             >
               <FiTrash2 />
-            </button>
-            <button
-              className="item-card__view-btn"
-              onClick={() => navigate(`/inventory/items/${inventoryId}/item/${item.id}`)}
-              aria-label={`View ${item.name}`}
-              title="View details"
-            >
-              <FiChevronRight />
             </button>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { FiChevronDown, FiChevronUp } from "react-icons/fi"
+import { FiChevronDown, FiChevronUp, FiCheckCircle, FiAlertTriangle, FiXCircle } from "react-icons/fi"
 import "./inventory-stats.css"
 
 function InventoryStats({ items, inventoryName, isExpanded = true, onToggle }) {
@@ -15,7 +15,7 @@ function InventoryStats({ items, inventoryName, isExpanded = true, onToggle }) {
   }
 
   return (
-    <div className={`inventory-stats ${!isExpanded ? 'inventory-stats--collapsed' : ''}`}>
+    <div className={`inventory-stats ${!isExpanded ? "inventory-stats--collapsed" : ""}`}>
       <button
         className="inventory-stats__header"
         onClick={handleToggle}
@@ -45,19 +45,19 @@ function InventoryStats({ items, inventoryName, isExpanded = true, onToggle }) {
           <div className="inventory-stats__stat-card">
             <span className="inventory-stats__stat-label">In Stock</span>
             <span className="inventory-stats__stat-value inventory-stats__stat-value--success">
-              🟢 {inStockCount}
+              <FiCheckCircle className="inventory-stats__icon" /> {inStockCount}
             </span>
           </div>
           <div className="inventory-stats__stat-card">
             <span className="inventory-stats__stat-label">Low Stock</span>
             <span className="inventory-stats__stat-value inventory-stats__stat-value--warning">
-              🟡 {lowStockCount}
+              <FiAlertTriangle className="inventory-stats__icon" /> {lowStockCount}
             </span>
           </div>
           <div className="inventory-stats__stat-card">
             <span className="inventory-stats__stat-label">Out of Stock</span>
             <span className="inventory-stats__stat-value inventory-stats__stat-value--danger">
-              🔴 {outOfStockCount}
+              <FiXCircle className="inventory-stats__icon" /> {outOfStockCount}
             </span>
           </div>
         </div>

@@ -4,7 +4,7 @@ import InventoryQuota from '../../../../components/inventory/iventory-quota-all/
 import NewInventoryModal from '../new-inventory-modal/NewInventoryModal'
 import './inventory-header.css'
 
-function InventoryHeader() {
+function InventoryHeader({ onSearch }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [inventoryCount, setInventoryCount] = useState(0)
@@ -24,7 +24,11 @@ function InventoryHeader() {
   }
 
   const handleSearch = (e) => {
-    setSearchQuery(e.target.value)
+    const value = e.target.value
+    setSearchQuery(value)
+    if (typeof onSearch === 'function') {
+      onSearch(value)
+    }
   }
 
   const isLimitReached = inventoryCount >= MAX_INVENTORIES
@@ -56,7 +60,11 @@ function InventoryHeader() {
             className="inventory__add-btn"
             onClick={handleAddNewInventory}
             disabled={isLimitReached}
-            title={isLimitReached ? `You've reached the maximum of ${MAX_INVENTORIES} inventories` : 'Create a new inventory'}
+            title={
+              isLimitReached
+                ? `You've reached the maximum of ${MAX_INVENTORIES} inventories`
+                : 'Create a new inventory'
+            }
           >
             <FiPlus />
             <span>Create New</span>

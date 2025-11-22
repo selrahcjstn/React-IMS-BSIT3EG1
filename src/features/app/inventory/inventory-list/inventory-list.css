@@ -204,3 +204,11 @@
     grid-template-columns: 1fr;
   }
 }
+
+.inventory__emptystate{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+}

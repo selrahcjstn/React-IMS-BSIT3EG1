@@ -105,6 +105,14 @@
   color: #111827;
   line-height: 1.2;
   word-break: break-word;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inventory-stats__icon {
+  width: 16px;
+  height: 16px;
 }
 
 .inventory-stats__stat-value--price {
