@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useAuth } from "../../../context/AuthContext"
-import { ref, update } from "firebase/database"
+import { ref, onValue, update } from "firebase/database"
 import { database, auth } from "../../../firebase/config"
 import { updateProfile, sendPasswordResetEmail } from "firebase/auth"
 import ProfileCard from "../../../features/app/account-settings/profile-card/ProfileCard"
@@ -15,11 +15,10 @@ function AccountSettings() {
     currentUser,
     uid,
     email,
-    profile,
-    avatarId: contextAvatarId,
-    setAvatarId: setContextAvatarId,
     setUserDisplayName,
     refreshUser,
+    avatarId: contextAvatarId,
+    setAvatarId: setContextAvatarId,
   } = useAuth()
 
   const [loadingProfile, setLoadingProfile] = useState(true)
@@ -30,13 +29,6 @@ function AccountSettings() {
   const [isResettingPassword, setIsResettingPassword] = useState(false)
   const [resetPasswordError, setResetPasswordError] = useState("")
 
-  // Accept avatarId 10 as meaning "first letter of first name"
-  const initialAvatarId = profile?.avatarId !== undefined
-    ? profile.avatarId
-    : contextAvatarId !== undefined
-      ? contextAvatarId
-      : 10
-
   const [formData, setFormData] = useState({
     email: email || "",
     firstName: "",
@@ -45,33 +37,55 @@ function AccountSettings() {
     purpose: "organize-business",
     uid: uid || "",
     updatedAt: null,
-    avatarId: initialAvatarId,
+    avatarId: null,
   })
   const [originalData, setOriginalData] = useState(formData)
 
+  const userRef = useMemo(() => (uid ? ref(database, `users/${uid}`) : null), [uid])
+
   useEffect(() => {
-    if (!profile && !currentUser) return
+    if (!uid || !userRef) return
+    const unsub = onValue(userRef, (snap) => {
+      const data = snap.val() || {}
 
-    const next = {
-      email: profile?.email || email || currentUser?.email || "",
-      firstName: profile?.firstName || "",
-      lastName: profile?.lastName || "",
-      middleName: profile?.middleName || "",
-      purpose: profile?.purpose || "organize-business",
-      uid: uid || "",
-      updatedAt: profile?.updatedAt || null,
-      avatarId:
-        profile?.avatarId !== undefined
-          ? profile.avatarId
-          : contextAvatarId !== undefined
-            ? contextAvatarId
-            : 10,
-    }
+      const base = {
+        email: data.email || email || currentUser?.email || "",
+        firstName: data.firstName || "",
+        lastName: data.lastName || "",
+        middleName: data.middleName || "",
+        purpose: data.purpose || "organize-business",
+        uid,
+        updatedAt: data.updatedAt || null,
+      }
 
-    setFormData(next)
-    setOriginalData(next)
-    setLoadingProfile(false)
-  }, [profile, email, currentUser, uid, contextAvatarId])
+      let avatarId =
+        data.avatarId != null ? data.avatarId : contextAvatarId ?? null
+
+      if (avatarId == null) {
+        const first = (base.firstName || "").trim()
+        const last = (base.lastName || "").trim()
+        if (first || last) {
+          avatarId = 1
+        }
+      }
+
+      const next = { ...base, avatarId }
+
+      setFormData(next)
+      if (loadingProfile) {
+        setOriginalData(next)
+      }
+      setLoadingProfile(false)
+
+      if (avatarId != null && data.avatarId == null) {
+        update(userRef, { avatarId })
+      }
+      if (avatarId != null && typeof setContextAvatarId === "function") {
+        setContextAvatarId(avatarId)
+      }
+    })
+    return () => unsub()
+  }, [uid, userRef, email, currentUser, contextAvatarId, setContextAvatarId, loadingProfile])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -83,7 +97,6 @@ function AccountSettings() {
   }
 
   const handleEdit = () => {
-    setOriginalData(formData)
     setIsEditing(true)
     setSaveError("")
   }
@@ -95,20 +108,20 @@ function AccountSettings() {
   }
 
   const handleSave = async () => {
-    if (!uid) return
-    const userRef = ref(database, `users/${uid}`)
-
+    if (!uid || !userRef) return
     setIsSaving(true)
     setSaveError("")
-
     try {
       const displayNameSource = `${(formData.firstName || "").trim()} ${(formData.lastName || "").trim()}`.trim()
       const newDisplayName = displayNameSource || formData.email || "User"
 
-      // If avatarId not set, default to 10 for initial avatar (show first letter)
-      let avatarId = formData.avatarId
-      if (avatarId === null || avatarId === undefined) {
-        avatarId = 10
+      let avatarId = formData.avatarId ?? null
+      if (avatarId == null) {
+        const f = (formData.firstName || "").trim()
+        const l = (formData.lastName || "").trim()
+        if (f || l) {
+          avatarId = 1
+        }
       }
 
       const payload = {
@@ -137,9 +150,8 @@ function AccountSettings() {
         }
       }
 
-      // Optimistically update context so Sidebar updates immediately
       if (typeof setContextAvatarId === "function") {
-        setContextAvatarId(avatarId)
+        setContextAvatarId(payload.avatarId)
       }
 
       setFormData(payload)
@@ -157,11 +169,9 @@ function AccountSettings() {
       setResetPasswordError("Email not found")
       return
     }
-
     setIsResettingPassword(true)
     setResetPasswordError("")
     setResetPasswordSent(false)
-
     try {
       await sendPasswordResetEmail(auth, email)
       setResetPasswordSent(true)
@@ -200,7 +210,7 @@ function AccountSettings() {
     { value: "organize-business", label: "Organize Business" },
     { value: "manage-inventory", label: "Manage Inventory" },
     { value: "track-products", label: "Track Products" },
-    { value: "other", label: "Other" },
+    { value: "other", label: "Other" }
   ]
 
   if (!currentUser) {
@@ -244,7 +254,7 @@ function AccountSettings() {
 
         <div className="account-settings__content">
           <div className="account-settings__card">
-            <ProfileCard
+            <ProfileCard 
               getInitials={getInitials}
               computedDisplayName={computedDisplayName}
               email={formData.email}
@@ -254,19 +264,18 @@ function AccountSettings() {
               onEdit={handleEdit}
               avatarId={formData.avatarId}
               onAvatarChange={handleAvatarChange}
-              firstName={formData.firstName}
             />
 
             {!isEditing ? (
               <>
-                <AccountDetailsSection
+                <AccountDetailsSection 
                   formData={formData}
                   purposeOptions={purposeOptions}
                   formatUpdatedAt={formatUpdatedAt}
                   saveError={saveError}
                 />
 
-                <ResetPasswordSection
+                <ResetPasswordSection 
                   currentUser={currentUser}
                   email={email}
                   isResettingPassword={isResettingPassword}
@@ -276,7 +285,7 @@ function AccountSettings() {
                 />
               </>
             ) : (
-              <EditProfileForm
+              <EditProfileForm 
                 formData={formData}
                 isSaving={isSaving}
                 hasChanges={hasChanges}
