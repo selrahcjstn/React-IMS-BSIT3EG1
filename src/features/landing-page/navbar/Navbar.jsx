@@ -2,6 +2,7 @@ import { useState } from "react";
 import Logo from "../../../components/logo/Logo";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./navbar.css";
+import { Link } from "react-router";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,12 +37,12 @@ function Navbar() {
           </div>
           <div className="header__divider"></div>
           <div className="header__buttons">
-            <a href="/auth/login" className="header__button--login" onClick={closeMenu}>
+            <Link to="/auth/login" className="header__button--login" onClick={closeMenu}>
               Log in
-            </a>
-            <a href="/auth/register" className="header__button--register" onClick={closeMenu}>
+            </Link>
+            <Link to="/auth/register" className="header__button--register" onClick={closeMenu}>
               Start for free
-            </a>
+            </Link>
           </div>
         </nav>
 
@@ -68,12 +69,12 @@ function Navbar() {
           </button>
         </div>
         <div className="header__mobile-buttons">
-          <a href="/auth/login" className="header__mobile-button--login" onClick={closeMenu}>
+          <Link to="/auth/login" className="header__mobile-button--login" onClick={closeMenu}>
             Log in
-          </a>
-          <a href="/auth/register" className="header__mobile-button--register" onClick={closeMenu}>
+          </Link>
+          <Link to="/auth/register" className="header__mobile-button--register" onClick={closeMenu}>
             Start for free
-          </a>
+          </Link>
         </div>
       </div>
     </header>
