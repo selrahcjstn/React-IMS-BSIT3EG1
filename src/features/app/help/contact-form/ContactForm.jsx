@@ -8,7 +8,7 @@ export function ContactForm({ loading, onSubmit, currentDate, currentTime, userL
 
       <div className="contact-form__details">
         <div className="contact-form__row">
-          <span className="contact-form__label">User</span>
+          <span className="contact-form__label">Sender Name</span>
           <span className="contact-form__value">{userLogin}</span>
         </div>
         <div className="contact-form__row">
@@ -21,7 +21,7 @@ export function ContactForm({ loading, onSubmit, currentDate, currentTime, userL
         </div>
         <div className="contact-form__row">
           <span className="contact-form__label">Email</span>
-          <span className="contact-form__value">support@inventory.local</span>
+          <span className="contact-form__value">istokkit.support@gmail.com</span>
         </div>
       </div>
 

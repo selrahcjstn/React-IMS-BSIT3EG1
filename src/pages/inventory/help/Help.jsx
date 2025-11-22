@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useAuth } from "../../../context/AuthContext"
 import { FiMail, FiLock, FiSettings, FiHelpCircle } from "react-icons/fi"
 import { FaqItem } from "../../../features/app/help/faq-item/FaqItem"
 import { ContactForm } from "../../../features/app/help/contact-form/ContactForm"
@@ -8,12 +9,19 @@ import "./help.css"
 import Header from "../../../components/inventory/header/Header"
 
 function Help() {
+  const { displayName } = useAuth()
+  const userLogin = displayName || "User"
+
   const [expanded, setExpanded] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [currentDate, setCurrentDate] = useState("")
+  const [currentTime, setCurrentTime] = useState("")
 
-  const currentDate = "2025-11-12"
-  const currentTime = "07:17:47"
-  const userLogin = "selrahcjstn"
+  useEffect(() => {
+    const now = new Date()
+    setCurrentDate(now.toISOString().split("T")[0]) // YYYY-MM-DD
+    setCurrentTime(now.toISOString().split("T")[1].split(".")[0]) // HH:MM:SS
+  }, [])
 
   const faqs = [
     {
@@ -55,7 +63,6 @@ function Help() {
 
   const handleSendEmail = async () => {
     setLoading(true)
-
     try {
       const emailBody = `
 User: ${userLogin}
@@ -65,10 +72,9 @@ Support Request
       `.trim()
 
       const mailtoLink = `mailto:support@inventory.local?subject=Support Request&body=${encodeURIComponent(emailBody)}`
-      
       window.location.href = mailtoLink
     } catch (error) {
-      alert("Error sending email", error.message)
+      alert("Error sending email: " + error.message)
     } finally {
       setLoading(false)
     }
@@ -77,7 +83,10 @@ Support Request
   return (
     <div className="help container">
       <div className="help__header">
-        <Header title="Help & Support" subtitle="Find answers to common questions or contact our support team." />
+        <Header
+          title="Help & Support"
+          subtitle="Find answers to common questions or contact our support team."
+        />
       </div>
 
       <div className="help__container">
