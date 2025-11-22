@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { ref, onValue } from "firebase/database"
 import { database } from "../../../../firebase/config"
@@ -8,12 +8,11 @@ import EmptyState from "../../../../components/inventory/empty-state/EmptyState"
 import illustration from "../../../../assets/app/welcome.svg"
 import "./item-list.css"
 
-function ItemList({ onSearch }) {
+function ItemList({ searchQuery = "" }) {
   const { id: inventoryId } = useParams()
   const navigate = useNavigate()
   const [inventoryName, setInventoryName] = useState("Inventory")
   const [items, setItems] = useState([])
-  const [filteredItems, setFilteredItems] = useState([]) // NEW
   const [loadingInv, setLoadingInv] = useState(true)
   const [loadingItems, setLoadingItems] = useState(true)
   const [error, setError] = useState("")
@@ -89,7 +88,6 @@ function ItemList({ onSearch }) {
         })
 
         setItems(list)
-        setFilteredItems(list) 
         setLoadingItems(false)
       },
       (err) => {
@@ -114,15 +112,11 @@ function ItemList({ onSearch }) {
     }
   }, [inventoryId])
 
-  const handleSearch = (query) => {
-    const q = (query || "").trim().toLowerCase()
+  const filteredItems = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase()
+    if (!q) return items
 
-    if (!q) {
-      setFilteredItems(items)
-      return
-    }
-
-    const next = items.filter((item) => {
+    return items.filter((item) => {
       const name = item.name?.toLowerCase() || ""
       const size = item.size?.toLowerCase() || ""
       const status = item.status?.toLowerCase() || ""
@@ -137,15 +131,7 @@ function ItemList({ onSearch }) {
         price.includes(q)
       )
     })
-
-    setFilteredItems(next)
-  }
-
-  useEffect(() => {
-    if (typeof onSearch === "function") {
-      onSearch(handleSearch)
-    }
-  }, [onSearch, items])
+  }, [items, searchQuery])
 
   const handleEditItem = (id) => {
     console.log("Edit item:", id)
@@ -186,7 +172,7 @@ function ItemList({ onSearch }) {
       {items.length === 0 ? (
         <>
           <div className="itemlist__header">
-            <h2 className="itemlist__title">{inventoryName} Inventory</h2>
+            <h2 className="itemlist__title">Overview of {inventoryName}</h2>
           </div>
           <EmptyState
             icon={illustration}
@@ -200,7 +186,7 @@ function ItemList({ onSearch }) {
       ) : (
         <>
           <div className="itemlist__header">
-            <h2 className="itemlist__title">{inventoryName} Inventory</h2>
+            <h2 className="itemlist__title">Overview of {inventoryName}</h2>
           </div>
 
           <InventoryStats 

@@ -22,11 +22,39 @@ function Sidebar({ isOpen, setIsOpen }) {
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
+  const isInventorySection =
+    location.pathname === "/inventory" ||
+    location.pathname.startsWith("/inventory/");
+
   const menuItems = [
-    { to: "/dashboard", label: "Dashboard", icon: <FaHome />, tooltip: "Dashboard" },
-    { to: "/inventory", label: "Inventory", icon: <FaBox />, tooltip: "Inventory" },
-    { to: "/help", label: "Help / FAQ", icon: <FaQuestionCircle />, tooltip: "Help / FAQ" },
-    { to: "/account-settings", label: "Account Settings", icon: <FaCog />, tooltip: "Account Settings" },
+    {
+      to: "/dashboard",
+      label: "Dashboard",
+      icon: <FaHome />,
+      tooltip: "Dashboard",
+      isActive: location.pathname === "/dashboard",
+    },
+    {
+      to: "/inventory",
+      label: "Inventory",
+      icon: <FaBox />,
+      tooltip: "Inventory",
+      isActive: isInventorySection,
+    },
+    {
+      to: "/help",
+      label: "Help / FAQ",
+      icon: <FaQuestionCircle />,
+      tooltip: "Help / FAQ",
+      isActive: location.pathname === "/help",
+    },
+    {
+      to: "/account-settings",
+      label: "Account Settings",
+      icon: <FaCog />,
+      tooltip: "Account Settings",
+      isActive: location.pathname === "/account-settings",
+    },
   ];
 
   const handleLogout = async () => {
@@ -44,7 +72,8 @@ function Sidebar({ isOpen, setIsOpen }) {
     }
   };
 
-  const resolvedName = displayName || currentUser?.displayName || currentUser?.email || "User";
+  const resolvedName =
+    displayName || currentUser?.displayName || currentUser?.email || "User";
   const resolvedEmail = currentUser?.email || "";
 
   return (
@@ -69,21 +98,18 @@ function Sidebar({ isOpen, setIsOpen }) {
 
             <hr className="sidebar__divider" />
 
-            {menuItems.map((item) => {
-              const isActive = location.pathname === item.to;
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={`sidebar__menu-item ${isActive ? "is-active" : ""}`}
-                  data-tooltip={item.tooltip}
-                  onClick={handleMenuItemClick}
-                >
-                  {item.icon}
-                  {isOpen && <span className="sidebar__text">{item.label}</span>}
-                </Link>
-              );
-            })}
+            {menuItems.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`sidebar__menu-item ${item.isActive ? "is-active" : ""}`}
+                data-tooltip={item.tooltip}
+                onClick={handleMenuItemClick}
+              >
+                {item.icon}
+                {isOpen && <span className="sidebar__text">{item.label}</span>}
+              </Link>
+            ))}
 
             <hr className="sidebar__divider" />
 
@@ -115,12 +141,8 @@ function Sidebar({ isOpen, setIsOpen }) {
               <FaUserCircle className="sidebar__profile-icon" />
               {isOpen && (
                 <div className="sidebar__profile-info">
-                  <span className="sidebar__profile-name">
-                    {resolvedName}
-                  </span>
-                  <span className="sidebar__profile-email">
-                    {resolvedEmail}
-                  </span>
+                  <span className="sidebar__profile-name">{resolvedName}</span>
+                  <span className="sidebar__profile-email">{resolvedEmail}</span>
                 </div>
               )}
             </div>

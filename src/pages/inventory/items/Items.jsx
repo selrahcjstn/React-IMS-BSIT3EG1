@@ -1,11 +1,15 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import Header from "../../../components/inventory/header/Header"
 import ItemsHeader from "../../../features/app/items/items-header/ItemsHeader"
 import ItemList from "../../../features/app/items/items-list/ItemList"
 import "./items.css"
 
 function Items() {
-  const [searchHandler, setSearchHandler] = useState(() => () => {})
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const handleHeaderSearch = useCallback((value) => {
+    setSearchQuery(value)
+  }, [])
 
   return (
     <div className="inventory container">
@@ -15,12 +19,9 @@ function Items() {
       />  
       <div>
         <ItemsHeader
-
-          onSearch={(value) => searchHandler(value)}
+          onSearch={handleHeaderSearch}
         />
-        <ItemList
-          onSearch={(handler) => setSearchHandler(() => handler)}
-        />
+        <ItemList searchQuery={searchQuery} />
       </div>
     </div>
   )
