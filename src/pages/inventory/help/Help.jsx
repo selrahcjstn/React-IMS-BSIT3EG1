@@ -128,7 +128,7 @@ Support Request
 
           <section className="help__section">
             <h2 className="help__section-title">Direct Contact</h2>
-            <DirectContact email="support@inventory.local" />
+            <DirectContact email="istokkit.support@gmail.com" />
           </section>
         </aside>
       </div>
