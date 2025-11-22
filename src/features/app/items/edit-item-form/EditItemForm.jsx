@@ -76,7 +76,7 @@ function EditItemForm({
   const isPriceValid = formData.price && parseFloat(formData.price) >= MIN_PRICE
 
   return (
-    <div className="edit-item__content">
+    <div className="edit-item__content container">
       <form className="edit-item__form" onSubmit={onSubmit}>
         
         <section className="edit-item__section">

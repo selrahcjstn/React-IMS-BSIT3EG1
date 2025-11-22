@@ -3,7 +3,7 @@ import "./add-new-item-header.css";
 
 function AddNewItemHeader({ onBack, inventoryName, title, action}) {
   return (
-    <div className="add-new-item__header">
+    <div className="add-new-item__header container">
       <button
         className="add-new-item__back-btn"
         onClick={onBack}

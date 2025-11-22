@@ -76,7 +76,7 @@ function AddNewItemForm({
   const isPriceValid = formData.price && parseFloat(formData.price) >= MIN_PRICE
 
   return (
-    <div className="add-new-item__content">
+    <div className="add-new-item__content container">
       <form className="add-new-item__form" onSubmit={onSubmit}>
         
         <section className="add-new-item__section">
