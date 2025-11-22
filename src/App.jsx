@@ -15,6 +15,7 @@ import AddNewItem from "./pages/inventory/add-new-item/AddNewItem";
 import EditItemPage from "./pages/inventory/edit-item-page/EditItemPage";
 import AccountSettings from "./pages/inventory/account-settings/AccountSettings";
 import Help from "./pages/inventory/help/Help";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route element={<AuthenticationRoute />}>
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Register />} />
+          <Route path="/auth/forgot-password" element={<ForgotPassword />} />
         </Route>
 
         {/* Private Routes */}

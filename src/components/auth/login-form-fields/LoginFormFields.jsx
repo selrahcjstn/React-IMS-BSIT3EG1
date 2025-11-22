@@ -35,7 +35,7 @@ function LoginFormFields({email, password, setEmail, setPassword, setError}) {
         />
       </CustomInput>
 
-      <Link className="login__forgot" to="/forgot-password">
+      <Link className="login__forgot" to="/auth/forgot-password">
         Forgot password?
       </Link>
 
